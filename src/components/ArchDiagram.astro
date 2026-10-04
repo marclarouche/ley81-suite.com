@@ -1,0 +1,70 @@
+---
+import type { Lang } from '../config';
+const { lang } = Astro.props as { lang: Lang };
+const c = {
+  es: {
+    label: 'Diagrama de arquitectura: el usuario interactúa con una interfaz no confiable (WebView de Tauri), que solo puede llegar al núcleo de confianza en Rust a través de un puente IPC; el núcleo usa la base de datos local, la bóveda de claves del sistema operativo y el autenticador de la plataforma.',
+    user: 'Usuario',
+    webview: 'WebView de Tauri: interfaz no confiable',
+    webviewD: ["Content-Security-Policy: script-src 'self' · connect-src ipc: únicamente", 'sin scripts en línea ni evaluados'],
+    ipc: 'Puente IPC',
+    core: 'Núcleo en Rust: de confianza',
+    coreD: ['Permisos concedidos: solo core:default + dialog:default', 'sin permiso de sistema de archivos, ejecución de shell ni cliente HTTP para la interfaz'],
+    db: ['Base de datos local', 'SQLCipher: AES-256 en reposo', '(un algoritmo aprobado por FIPS)'],
+    vault: ['Bóveda de claves del SO', 'Windows DPAPI / llavero de macOS', 'la clave nunca está en texto plano en disco'],
+    auth: ['Autenticador de la plataforma', 'Windows Hello / Touch ID', 'sin contraseña que la aplicación vea o guarde'],
+    ports: 'Puertos: ninguno a la escucha · hoy no se realiza ninguna conexión saliente. El código incluye un cliente de actualizaciones firmadas (Ed25519 + SHA-256, un único origen fijo) que ninguna pantalla activa actualmente.',
+    p1: 'La interfaz se trata como hostil por diseño: solo llega al núcleo en Rust mediante el conjunto reducido de comandos IPC que la aplicación registra, y solo dentro de los permisos que se muestran arriba. Ningún componente abre un puerto a la escucha; el "tráfico" interno son llamadas de función dentro del proceso y acceso a archivos locales, no saltos de red.',
+    p2: 'Los datos en reposo están protegidos de dos maneras a la vez: la base de datos está cifrada con SQLCipher, y la clave que la abre está guardada en la bóveda protegida del sistema operativo. Por eso un archivo de base de datos copiado no sirve sin comprometer también esa cuenta específica del sistema operativo. El inicio de sesión usa el hardware biométrico de la propia plataforma.',
+    verified: 'Estos valores se verificaron en la configuración de la aplicación (tauri.conf.json y capabilities/default.json), no se suponen.',
+  },
+  en: {
+    label: 'Architecture diagram: the user interacts with an untrusted interface (Tauri WebView), which can reach the trusted Rust core only through an IPC bridge; the core uses the local database, the operating-system key vault and the platform authenticator.',
+    user: 'User',
+    webview: 'Tauri WebView: untrusted UI',
+    webviewD: ["Content-Security-Policy: script-src 'self' · connect-src ipc: only", "no inline or eval'd script"],
+    ipc: 'IPC bridge',
+    core: 'Rust core: trusted',
+    coreD: ['Capability grant: core:default + dialog:default only', 'no filesystem, shell-exec or HTTP-client permission for the UI'],
+    db: ['Local database', 'SQLCipher: AES-256 at rest', '(a FIPS-approved algorithm)'],
+    vault: ['OS key vault', 'Windows DPAPI / macOS Keychain', 'key never plaintext on disk'],
+    auth: ['Platform authenticator', 'Windows Hello / Touch ID', 'no password the app sees or stores'],
+    ports: 'Ports: none listening · no outbound connection is made today. The code includes a signed-update client (Ed25519 + SHA-256, one fixed origin) that no screen currently triggers.',
+    p1: 'The interface is treated as hostile by design: it can reach the Rust core only through the small set of IPC commands the application registers, and only within the capability grant shown above. No component opens a listening port; internal “traffic” means in-process function calls and local file I/O, not network hops.',
+    p2: 'Data at rest is protected two ways at once: the database is SQLCipher-encrypted, and the key that unlocks it is held in the operating system’s protected vault. So a copied database file is useless without also compromising that specific OS account. Sign-in runs through the platform’s own biometric hardware.',
+    verified: 'These values were verified against the application’s configuration (tauri.conf.json and capabilities/default.json), not assumed.',
+  },
+}[lang];
+---
+<figure class="arch" role="img" aria-label={c.label}>
+  <div class="box plain"><strong>{c.user}</strong></div>
+  <div class="arrow" aria-hidden="true"></div>
+  <div class="box untrusted"><strong>{c.webview}</strong>{c.webviewD.map((d) => <span>{d}</span>)}</div>
+  <div class="arrow" aria-hidden="true"><em>{c.ipc}</em></div>
+  <div class="box trusted"><strong>{c.core}</strong>{c.coreD.map((d) => <span>{d}</span>)}</div>
+  <div class="fan" aria-hidden="true"></div>
+  <div class="trio">
+    {[c.db, c.vault, c.auth].map(([h, a, b]) => <div class="box plain"><strong>{h}</strong><span>{a}</span><span>{b}</span></div>)}
+  </div>
+  <p class="ports">{c.ports}</p>
+</figure>
+<p>{c.p1}</p>
+<p>{c.p2}</p>
+<p class="muted">{c.verified}</p>
+
+<style>
+  .arch { margin: 2rem auto; max-width: 52rem; display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .box { background: var(--paper); border: 2px solid var(--text); padding: .8rem 1.1rem; text-align: center; width: 100%; max-width: 40rem; font-size: .95rem; line-height: 1.45; }
+  .box strong { display: block; font-size: 1.05rem; margin-bottom: .2rem; }
+  .box span { display: block; }
+  .untrusted { border-color: var(--danger); } .untrusted strong { color: var(--danger); }
+  .trusted { border-color: var(--teal-text); } .trusted strong { color: var(--teal-text); }
+  .arrow { position: relative; width: 2px; height: 2.6rem; background: var(--text); margin: 0; }
+  .arrow::after { content: ''; position: absolute; bottom: -1px; left: -5px; border: 6px solid transparent; border-top: 9px solid var(--text); border-bottom: 0; }
+  .arrow em { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-style: normal; font-size: .85rem; white-space: nowrap; }
+  .fan { width: 2px; height: 1.6rem; background: var(--text); }
+  .trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem; width: 100%; }
+  .trio .box { max-width: none; font-size: .88rem; }
+  .ports { margin: 1.4rem 0 0; border: 2px dashed var(--teal-text); color: var(--teal-text); padding: .7rem 1rem; font-size: .9rem; text-align: center; max-width: 40rem; }
+  @media (max-width: 700px) { .trio { grid-template-columns: 1fr; } }
+</style>

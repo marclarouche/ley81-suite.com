@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import ArchDiagram from '../../components/ArchDiagram.astro';
 import { getStaticPaths as gsp, type Lang } from '../../config';
 export const getStaticPaths = gsp;
 const lang = Astro.params.lang as Lang;
@@ -35,6 +36,7 @@ const c = {
       'El código de recuperación existe para el caso de un equipo perdido y sí puede abrir el proyecto en otro computador, junto con los archivos. Guárdelo aparte y fuera de línea, y nunca junto al equipo. Es de un solo uso: al usarlo se emite uno nuevo.',
       'Un equipo robado y ya desbloqueado, con su sesión abierta, queda protegido solo por la seguridad del propio equipo. Recomendamos cifrado de disco completo, bloqueo de pantalla y cerrar sesión.',
     ],
+    archH: 'Arquitectura y modelo de amenazas',
     cryptoH: 'Criptografía',
     cryptoLede: 'Los algoritmos que protegen la base de datos y la evidencia están aprobados por FIPS: AES-256, SHA-256 y Ed25519. La derivación de claves con Argon2 es la excepción, como se explica abajo.',
     cryptoHead: ['Uso', 'Algoritmo', 'Norma'],
@@ -80,6 +82,7 @@ const c = {
       'The recovery code exists for a lost computer and can open the project on another computer together with the files. Keep it separate and offline, never with the computer. It is single-use: using it issues a new one.',
       'A stolen computer that is already unlocked, with the user signed in, is protected only by the computer’s own security. We recommend full-disk encryption, a screen lock and signing out.',
     ],
+    archH: 'Architecture & threat model',
     cryptoH: 'Cryptography',
     cryptoLede: 'The algorithms that protect the database and evidence files are FIPS-approved: AES-256, SHA-256 and Ed25519. Argon2 key derivation is the one exception, explained below.',
     cryptoHead: ['Use', 'Algorithm', 'Standard'],
@@ -102,6 +105,10 @@ const c = {
     <h2>{c.doH}</h2><ul class="list">{c.does.map((x) => <li>{x}</li>)}</ul>
     <h2>{c.notH}</h2><ul class="list">{c.nots.map((x) => <li>{x}</li>)}</ul>
     <p class="muted">{c.site}</p>
+  </div></section>
+  <section class="block paper" id="architecture"><div class="wrap">
+    <h2>{c.archH}</h2>
+    <ArchDiagram lang={lang} />
   </div></section>
   <section class="block" id="stolen"><div class="wrap prose">
     <h2>{c.stolenH}</h2>
