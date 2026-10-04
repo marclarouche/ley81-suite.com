@@ -17,6 +17,8 @@ export const ui = {
       legal: 'Legal',
       privacy: 'Privacidad',
       terms: 'Términos',
+      gdpr: 'Protección de datos (RGPD)',
+      accessibility: 'Accesibilidad',
       disclaimer:
         'Ley81·Suite apoya la documentación y la evaluación del cumplimiento. No sustituye el criterio de un profesional calificado ni garantiza el cumplimiento legal.',
       rights: 'Todos los derechos reservados.',
@@ -41,6 +43,8 @@ export const ui = {
       legal: 'Legal',
       privacy: 'Privacy',
       terms: 'Terms',
+      gdpr: 'Data protection (GDPR)',
+      accessibility: 'Accessibility',
       disclaimer:
         'Ley81·Suite supports compliance documentation and assessment. It does not replace the judgment of a qualified professional or guarantee legal compliance.',
       rights: 'All rights reserved.',

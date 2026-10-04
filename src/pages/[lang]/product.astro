@@ -8,6 +8,7 @@ const c = {
     title: 'Producto', desc: 'Panel, Sistemas, Brechas, Evidencia e Informes: el flujo completo de Ley81·Suite.',
     h1: 'Del inventario de IA a la atestación', lede: 'Cinco áreas de trabajo que siguen el método GOVERN → MAP → MEASURE → MANAGE.',
     caption: 'Vista previa de diseño. No es una captura de la versión final.',
+    alt: 'Vista previa de la pantalla',
     items: [
       ['Panel', 'Preparación por marco activo, avance por fase y brechas por severidad. Dos diseños: Marcador y Libro mayor.', '03-dashboard-a-scoreboard.png'],
       ['Sistemas', 'Inventario de sistemas de IA con categoría de datos, base legal, mecanismo de transferencia, supervisión humana, estado del acuerdo de tratamiento de datos y nivel de riesgo según la Ley de IA de la UE.', '05-ai-systems.png'],
@@ -21,6 +22,7 @@ const c = {
     title: 'Product', desc: 'Dashboard, Systems, Gaps, Evidence and Reports: the full Ley81·Suite workflow.',
     h1: 'From AI inventory to attestation', lede: 'Five work areas that follow the GOVERN → MAP → MEASURE → MANAGE method.',
     caption: 'Design preview. Not a capture of the final release.',
+    alt: 'Preview of the screen',
     items: [
       ['Dashboard', 'Readiness per active framework, phase progress and gaps by severity. Two layouts: Scoreboard and Ledger.', '03-dashboard-a-scoreboard.png'],
       ['Systems', 'AI systems inventory with data category, legal basis, transfer mechanism, human-in-the-loop, DPA status and EU AI Act risk level.', '05-ai-systems.png'],
@@ -38,7 +40,7 @@ const c = {
     <section class={`block ${i % 2 ? '' : 'paper'}`}>
       <div class="wrap hero-grid">
         <div style={i % 2 ? 'order:2' : ''}><h2>{h}</h2><p class="lede">{p}</p></div>
-        <figure style="margin:0"><img class="shot" src={`/img/${img}`} alt="" width="1200" height="800" loading="lazy" /><figcaption class="caption">{c.caption}</figcaption></figure>
+        <figure style="margin:0"><img class="shot" src={`/img/${img}`} alt={`${c.alt}: ${h}`} width="1200" height="800" loading="lazy" /><figcaption class="caption">{c.caption}</figcaption></figure>
       </div>
     </section>
   ))}

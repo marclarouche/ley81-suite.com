@@ -1,0 +1,47 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getStaticPaths as gsp, type Lang, CONTACT_EMAIL } from '../../config';
+export const getStaticPaths = gsp;
+const lang = Astro.params.lang as Lang;
+const c = {
+  es: { title: 'Protección de datos (RGPD)', desc: 'Cómo tratamos los datos personales en este sitio web, tus derechos bajo el RGPD y la Ley 81 de Panamá, y cómo ejercerlos.',
+    h1: 'Protección de datos (RGPD)',
+    notice: 'Borrador pendiente de revisión legal. Los campos entre corchetes deben completarse y el texto debe ser revisado por un abogado calificado antes del lanzamiento.',
+    sections: [
+      ['Qué datos tratamos en este sitio', ['Este sitio no usa cookies de seguimiento, analítica ni scripts de terceros, y no tiene formularios que guarden datos.', 'Si nos escribes por correo (por ejemplo, para solicitar una demo), tratamos tu nombre, dirección de correo y el contenido de tu mensaje.', 'Como cualquier servidor web, el proveedor de alojamiento y red (Cloudflare) puede procesar tu dirección IP y datos técnicos de la solicitud para entregar el sitio y protegerlo de abusos.']],
+      ['Finalidad y base jurídica', ['Responder tu consulta o coordinar una demostración: medidas precontractuales a petición tuya y nuestro interés legítimo en atender solicitudes (art. 6.1.b y 6.1.f RGPD).', 'Seguridad y entrega del sitio: interés legítimo (art. 6.1.f).']],
+      ['Responsable del tratamiento', ['[Pendiente: razón social, dirección y datos de contacto del responsable.]']],
+      ['Conservación y destinatarios', ['[Pendiente: plazo de conservación de los correos de consulta.] No vendemos tus datos ni los usamos para publicidad. Solo los comparten los proveedores que nos prestan servicios de correo y alojamiento, bajo contrato.', '[Pendiente: confirmar proveedores de correo y transferencias internacionales, y las garantías aplicables.]']],
+      ['Tus derechos', ['Acceso, rectificación, supresión, limitación del tratamiento, portabilidad y oposición, según el RGPD y la Ley 81 de 2019 de Panamá (incluidos los derechos de acceso, rectificación, cancelación, oposición y portabilidad).', 'Para ejercerlos, escríbenos al correo indicado abajo. También puedes presentar una reclamación ante tu autoridad de control de protección de datos.']],
+      ['La aplicación Ley81·Suite', ['La aplicación funciona de forma local: los datos de tus clientes permanecen en tu equipo y no los recibimos. Quien usa la aplicación es el responsable de esos datos; nosotros no los tratamos.']],
+    ],
+    contact: 'Contacto para asuntos de protección de datos:',
+  },
+  en: { title: 'Data protection (GDPR)', desc: 'How we handle personal data on this website, your rights under the GDPR and Panama’s Law 81, and how to exercise them.',
+    h1: 'Data protection (GDPR)',
+    notice: 'Draft pending legal review. Bracketed fields must be completed and the text reviewed by a qualified lawyer before launch.',
+    sections: [
+      ['What data we process on this site', ['This site uses no tracking cookies, analytics or third-party scripts, and has no forms that store data.', 'If you email us (for example to request a demo), we process your name, email address and the content of your message.', 'Like any web server, our hosting and network provider (Cloudflare) may process your IP address and technical request data to deliver the site and protect it from abuse.']],
+      ['Purpose and legal basis', ['Replying to your enquiry or arranging a demo: steps at your request before a contract, and our legitimate interest in handling requests (GDPR art. 6(1)(b) and 6(1)(f)).', 'Delivering and securing the site: legitimate interest (art. 6(1)(f)).']],
+      ['Controller', ['[Pending: legal name, address and contact details of the controller.]']],
+      ['Retention and recipients', ['[Pending: retention period for enquiry emails.] We do not sell your data or use it for advertising. It is shared only with the providers that supply our email and hosting, under contract.', '[Pending: confirm email providers and any international transfers, and the safeguards that apply.]']],
+      ['Your rights', ['Access, rectification, erasure, restriction of processing, portability and objection, under the GDPR and Panama’s Law 81 of 2019 (including its access, rectification, cancellation, objection and portability rights).', 'To exercise them, email us at the address below. You may also lodge a complaint with your data-protection supervisory authority.']],
+      ['The Ley81·Suite application', ['The application runs locally: your clients’ data stays on your machine and we do not receive it. Whoever uses the application is the controller of that data; we do not process it.']],
+    ],
+    contact: 'Contact for data-protection matters:',
+  },
+}[lang];
+---
+<Base lang={lang} slug="gdpr" title={c.title} description={c.desc} noindex>
+  <div class="page-head"><div class="wrap"><h1>{c.h1}</h1></div></div>
+  <section class="block"><div class="wrap prose">
+    <p class="notice">{c.notice}</p>
+    {c.sections.map(([h, items]) => (
+      <>
+        <h2>{h}</h2>
+        {items.map((x) => <p>{x}</p>)}
+      </>
+    ))}
+    <p>{c.contact} <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
+  </div></section>
+</Base>

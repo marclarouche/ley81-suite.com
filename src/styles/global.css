@@ -5,7 +5,7 @@
 
 :root {
   --navy: #1b3a5c; --navy-deep: #12283f;
-  --teal: #0088b0; --teal-dark: #2bb3dd;
+  --teal: #0088b0; --teal-text: #00708f; --teal-dark: #2bb3dd;
   --bg: #f3f2f2; --surface: #eae9e9; --paper: #fff;
   --text: #201e1d; --muted: #5a5653; --rule: #cfcdcc;
   --ok: #2f7d4f; --warn: #9a5b12; --danger: #aa0b56;
@@ -16,7 +16,7 @@
 html { scroll-behavior: smooth; }
 body { margin: 0; background: var(--bg); color: var(--text); font: 400 1.125rem/1.65 var(--serif); -webkit-font-smoothing: antialiased; }
 img { max-width: 100%; height: auto; display: block; }
-a { color: var(--teal); text-underline-offset: 3px; }
+a { color: var(--teal-text); text-underline-offset: 3px; }
 a:hover { color: var(--navy); }
 :focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
 .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.25rem; }
@@ -28,7 +28,7 @@ h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); letter-spacing: -.01em; }
 h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
 h3 { font-size: 1.25rem; }
 p { margin: 0 0 1em; }
-.eyebrow { font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--teal); font-weight: 600; margin-bottom: .8rem; }
+.eyebrow { font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--teal-text); font-weight: 600; margin-bottom: .8rem; }
 .lede { font-size: 1.3rem; color: var(--muted); max-width: 46rem; }
 .muted { color: var(--muted); }
 
@@ -39,7 +39,7 @@ p { margin: 0 0 1em; }
 .site-header nav { flex: 1; }
 .site-header ul { display: flex; gap: 1.1rem; list-style: none; margin: 0; padding: 0; flex-wrap: wrap; }
 .site-header nav a { color: var(--text); text-decoration: none; font-size: 1rem; }
-.site-header nav a:hover, .site-header nav a[aria-current] { color: var(--teal); text-decoration: underline; }
+.site-header nav a:hover, .site-header nav a[aria-current] { color: var(--teal-text); text-decoration: underline; }
 .actions { display: flex; align-items: center; gap: 1rem; }
 .lang { font-size: .95rem; }
 .btn { display: inline-block; background: var(--navy); color: #fff; text-decoration: none; padding: .65rem 1.2rem; border: 2px solid var(--navy); font-weight: 600; font-size: 1rem; }

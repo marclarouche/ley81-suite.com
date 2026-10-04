@@ -26,6 +26,8 @@ const c = {
     platformP: 'La primera versión se lanza para macOS, con inicio de sesión mediante Touch ID. Windows (con Windows Hello) llegará después.',
     ctaH: '¿Quieres verlo funcionar?',
     ctaP: 'Solicita una demostración y conversamos sobre tu caso.',
+    alt1: 'Vista previa del panel de preparación de Ley81·Suite, con el porcentaje de cumplimiento por marco.',
+    alt2: 'Vista previa del registro de brechas de Ley81·Suite, con severidad y responsables.',
   },
   en: {
     title: 'Ley81·Suite: AI governance and data-protection compliance, on your own machine',
@@ -47,6 +49,8 @@ const c = {
     platformP: 'The first release launches on macOS, with Touch ID sign-in. Windows (with Windows Hello) follows.',
     ctaH: 'Want to see it in action?',
     ctaP: 'Request a demo and we will talk through your case.',
+    alt1: 'Preview of the Ley81·Suite readiness dashboard, showing the compliance percentage per framework.',
+    alt2: 'Preview of the Ley81·Suite gap register, showing severity and owners.',
   },
 }[lang];
 ---
@@ -63,7 +67,7 @@ const c = {
         </div>
       </div>
       <figure style="margin:0">
-        <img class="shot" src="/img/03-dashboard-a-scoreboard.png" alt="" width="1200" height="800" />
+        <img class="shot" src="/img/03-dashboard-a-scoreboard.png" alt={c.alt1} width="1200" height="800" />
         <figcaption class="caption">{c.shotCap}</figcaption>
       </figure>
     </div>
@@ -91,7 +95,7 @@ const c = {
         <p class="lede">{c.shotP}</p>
         <p><a href={`/${lang}/product/`}>{t.cta.more} →</a></p>
       </div>
-      <img class="shot" src="/img/06-gap-register.png" alt="" width="1200" height="800" loading="lazy" />
+      <img class="shot" src="/img/06-gap-register.png" alt={c.alt2} width="1200" height="800" loading="lazy" />
     </div>
   </section>
 
