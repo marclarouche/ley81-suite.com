@@ -22,7 +22,21 @@ const c = {
       'El Certificado de autoevaluación incluye un hash SHA-256 de integridad del contenido; no es una firma digital ni una certificación legal.',
       'La aplicación no garantiza el cumplimiento legal: apoya la documentación y la evaluación.',
     ],
-    site: 'Este sitio no usa cookies de seguimiento ni scripts de terceros.' },
+    site: 'Este sitio no usa cookies de seguimiento ni scripts de terceros.',
+    cryptoH: 'Criptografía',
+    cryptoLede: 'Los algoritmos que protegen la base de datos y la evidencia están aprobados por FIPS: AES-256, SHA-256 y Ed25519. La derivación de claves con Argon2 es la excepción, como se explica abajo.',
+    cryptoHead: ['Uso', 'Algoritmo', 'Norma'],
+    cryptoRows: [
+      ['Base de datos del proyecto (cifrado en reposo, con autenticación por página)', 'AES-256 con HMAC, mediante SQLCipher', 'FIPS 197; FIPS 198-1'],
+      ['Clave maestra de cada proyecto', '256 bits aleatorios del generador del sistema operativo, entregados a SQLCipher como clave directa', 'Generador de bits aleatorios del sistema operativo'],
+      ['Protección de la clave maestra y cifrado de evidencia', 'AES-256-GCM', 'FIPS 197; NIST SP 800-38D'],
+      ['Hash de integridad de informes y verificación de actualizaciones', 'SHA-256', 'FIPS 180-4'],
+      ['Firma de manifiestos de actualización', 'Ed25519', 'FIPS 186-5'],
+    ],
+    cryptoNotes: [
+      'Argon2: la clave que envuelve la clave maestra se deriva con Argon2, un estándar moderno y robusto que no es una función de derivación aprobada por FIPS.',
+      'Estos son algoritmos aprobados por FIPS. Las implementaciones no son módulos criptográficos validados FIPS 140-2/140-3.',
+    ] },
   en: { title: 'Security & privacy', desc: 'How Ley81·Suite protects your data: local-first, encrypted at rest, roles and an audit trail. What we claim and what we don’t.',
     h1: 'Security & privacy', lede: 'An honest summary of what the product does today.',
     doH: 'What it does today',
@@ -41,7 +55,21 @@ const c = {
       'The Certificate of Self-Assessment carries a SHA-256 content integrity hash; it is not a digital signature or a legal certification.',
       'The application does not guarantee legal compliance: it supports documentation and assessment.',
     ],
-    site: 'This website uses no tracking cookies and no third-party scripts.' },
+    site: 'This website uses no tracking cookies and no third-party scripts.',
+    cryptoH: 'Cryptography',
+    cryptoLede: 'The algorithms that protect the database and evidence files are FIPS-approved: AES-256, SHA-256 and Ed25519. Argon2 key derivation is the one exception, explained below.',
+    cryptoHead: ['Use', 'Algorithm', 'Standard'],
+    cryptoRows: [
+      ['Project database (encrypted at rest, with per-page authentication)', 'AES-256 with HMAC, via SQLCipher', 'FIPS 197; FIPS 198-1'],
+      ['Each project’s master key', '256 random bits from the operating system’s generator, handed to SQLCipher as a raw key', 'Operating-system random bit generator'],
+      ['Master-key protection and evidence-file encryption', 'AES-256-GCM', 'FIPS 197; NIST SP 800-38D'],
+      ['Report integrity hash and update verification', 'SHA-256', 'FIPS 180-4'],
+      ['Update-manifest signing', 'Ed25519', 'FIPS 186-5'],
+    ],
+    cryptoNotes: [
+      'Argon2: the key that wraps the master key is derived with Argon2, a modern and strong standard that is not a FIPS-approved key-derivation function.',
+      'These are FIPS-approved algorithms. The implementations are not FIPS 140-2/140-3 validated cryptographic modules.',
+    ] },
 }[lang];
 ---
 <Base lang={lang} slug="security" title={c.title} description={c.desc}>
@@ -50,5 +78,14 @@ const c = {
     <h2>{c.doH}</h2><ul class="list">{c.does.map((x) => <li>{x}</li>)}</ul>
     <h2>{c.notH}</h2><ul class="list">{c.nots.map((x) => <li>{x}</li>)}</ul>
     <p class="muted">{c.site}</p>
+  </div></section>
+  <section class="block paper" id="crypto"><div class="wrap">
+    <h2>{c.cryptoH}</h2>
+    <p class="lede">{c.cryptoLede}</p>
+    <table>
+      <thead><tr>{c.cryptoHead.map((h) => <th>{h}</th>)}</tr></thead>
+      <tbody>{c.cryptoRows.map(([a, b, d]) => <tr><th scope="row">{a}</th><td>{b}</td><td>{d}</td></tr>)}</tbody>
+    </table>
+    <ul class="list" style="margin-top:1.5rem">{c.cryptoNotes.map((x) => <li>{x}</li>)}</ul>
   </div></section>
 </Base>

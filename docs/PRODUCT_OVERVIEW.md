@@ -37,6 +37,7 @@ Ley81·Suite is a local-first desktop application that helps consultants and com
 
 ## What we must not say
 - That it is certified, audited by a third party, "SOC 2", "ISO 27001 certified", or "FedRAMP/CMMC" anything. It is not a CMMC tool (an earlier scaffold was; all of that has been removed).
+- That it is **FIPS 140-2/140-3 validated or certified** (a module validation; deliberately not pursued). Accurate: "uses FIPS-approved algorithms (AES-256, SHA-256, Ed25519)". Argon2 key derivation is not FIPS-approved, so never say *all* algorithms are.
 - That the Certificate is a digital signature or legal certification. It is a self-assessment with an integrity hash.
 - That it guarantees legal compliance. It supports documentation and assessment; a qualified person still makes the determination.
 - Anything about Panama's AI bill (Proyecto de Ley 588): it passed the Assembly on 2026-08-19 but was **not yet sanctioned** as of 2026-10-04. Do not describe it as law or as supported until it is promulgated and the product supports it.
