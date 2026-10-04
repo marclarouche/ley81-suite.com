@@ -44,7 +44,10 @@ Ley81·Suite is a local-first desktop application that helps consultants and com
 - macOS as shipping, until live-tested and signed.
 
 ## Not built yet (don't promise)
-License activation/enforcement, in-app update delivery, Stripe purchase flow, Bill 588 support, CAC/PIV smart-card sign-in, a logo upload / white-label option for consulting firms, logos in Word reports.
+In-app update delivery, Stripe purchase flow, Bill 588 support, CAC/PIV smart-card sign-in, a logo upload / white-label option for consulting firms, logos in Word reports.
+
+## Licensing (built 2026-10-04, not yet shipped to customers)
+Offline, machine-locked licence file (Ed25519-signed). No licence for this machine: the app will not open past the Activation screen. Licence past its expiry date (annual maintenance not renewed): everything keeps working except report generation, until a renewed licence is imported. See `PHASE2_PLAN.md`.
 
 ## Stack (for context)
 Tauri v2 (Rust backend, React frontend), SQLCipher, WebAuthn (Windows Hello), LocalAuthentication + Keychain (macOS). Roughly 300 automated Rust tests.

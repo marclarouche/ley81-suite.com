@@ -8,3 +8,6 @@ dist/
 
 # internal, never publish
 docs/reference/
+
+# machine-specific dev licences, never commit
+tools/local/
