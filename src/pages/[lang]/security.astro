@@ -23,6 +23,18 @@ const c = {
       'La aplicación no garantiza el cumplimiento legal: apoya la documentación y la evaluación.',
     ],
     site: 'Este sitio no usa cookies de seguimiento ni scripts de terceros.',
+    stolenH: 'Si le roban los archivos o el equipo',
+    stolenLede: 'Copiar los archivos de un proyecto a otro computador no da acceso a los datos.',
+    stolen: [
+      'La clave que abre la base de datos no está en los archivos. Se guarda en el almacén protegido del sistema operativo (Windows DPAPI, ligado a la cuenta de Windows; o el llavero de inicio de sesión de macOS), y el archivo de claves del proyecto solo contiene una referencia.',
+      'Si alguien copia la base de datos, la evidencia y el archivo de claves a otro equipo, la clave no está allí: el proyecto no se puede abrir y el acceso a la base de datos es denegado.',
+      'Incluso en el equipo original, abrir un proyecto exige Touch ID (macOS) o Windows Hello (Windows).',
+    ],
+    stolenCaveatH: 'Lo que debe saber',
+    stolenCaveats: [
+      'El código de recuperación existe para el caso de un equipo perdido y sí puede abrir el proyecto en otro computador, junto con los archivos. Guárdelo aparte y fuera de línea, y nunca junto al equipo. Es de un solo uso: al usarlo se emite uno nuevo.',
+      'Un equipo robado y ya desbloqueado, con su sesión abierta, queda protegido solo por la seguridad del propio equipo. Recomendamos cifrado de disco completo, bloqueo de pantalla y cerrar sesión.',
+    ],
     cryptoH: 'Criptografía',
     cryptoLede: 'Los algoritmos que protegen la base de datos y la evidencia están aprobados por FIPS: AES-256, SHA-256 y Ed25519. La derivación de claves con Argon2 es la excepción, como se explica abajo.',
     cryptoHead: ['Uso', 'Algoritmo', 'Norma'],
@@ -56,6 +68,18 @@ const c = {
       'The application does not guarantee legal compliance: it supports documentation and assessment.',
     ],
     site: 'This website uses no tracking cookies and no third-party scripts.',
+    stolenH: 'If files or a computer are stolen',
+    stolenLede: 'Copying a project’s files to another computer does not give access to the data.',
+    stolen: [
+      'The key that opens the database is not in the files. It is held in the operating system’s protected store (Windows DPAPI, bound to the Windows account; or the macOS login Keychain), and the project’s keyfile holds only a reference to it.',
+      'If someone copies the database, the evidence and the keyfile to another machine, the key is not there: the project cannot be opened and access to the database is denied.',
+      'Even on the original machine, opening a project requires Touch ID (macOS) or Windows Hello (Windows).',
+    ],
+    stolenCaveatH: 'What you should know',
+    stolenCaveats: [
+      'The recovery code exists for a lost computer and can open the project on another computer together with the files. Keep it separate and offline, never with the computer. It is single-use: using it issues a new one.',
+      'A stolen computer that is already unlocked, with the user signed in, is protected only by the computer’s own security. We recommend full-disk encryption, a screen lock and signing out.',
+    ],
     cryptoH: 'Cryptography',
     cryptoLede: 'The algorithms that protect the database and evidence files are FIPS-approved: AES-256, SHA-256 and Ed25519. Argon2 key derivation is the one exception, explained below.',
     cryptoHead: ['Use', 'Algorithm', 'Standard'],
@@ -78,6 +102,13 @@ const c = {
     <h2>{c.doH}</h2><ul class="list">{c.does.map((x) => <li>{x}</li>)}</ul>
     <h2>{c.notH}</h2><ul class="list">{c.nots.map((x) => <li>{x}</li>)}</ul>
     <p class="muted">{c.site}</p>
+  </div></section>
+  <section class="block" id="stolen"><div class="wrap prose">
+    <h2>{c.stolenH}</h2>
+    <p class="lede">{c.stolenLede}</p>
+    <ul class="list">{c.stolen.map((x) => <li>{x}</li>)}</ul>
+    <h3>{c.stolenCaveatH}</h3>
+    <ul class="list">{c.stolenCaveats.map((x) => <li>{x}</li>)}</ul>
   </div></section>
   <section class="block paper" id="crypto"><div class="wrap">
     <h2>{c.cryptoH}</h2>
