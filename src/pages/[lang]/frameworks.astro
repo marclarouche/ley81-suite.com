@@ -1,0 +1,38 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getStaticPaths as gsp, type Lang } from '../../config';
+export const getStaticPaths = gsp;
+const lang = Astro.params.lang as Lang;
+const c = {
+  es: { title: 'Marcos normativos', desc: 'Ley 81 de 2019 y Decreto 285 de Panamá, RGPD, Ley de IA de la UE e ISO/IEC 42001 en Ley81·Suite.',
+    h1: 'Marcos normativos cubiertos', lede: 'El conjunto de marcos activos se elige por cliente y determina la preparación y los filtros en toda la aplicación.',
+    rows: [
+      ['Ley 81 de 2019 y Decreto Ejecutivo 285', 'Protección de datos personales en Panamá. El contenido se verificó contra el texto de la Gaceta Oficial.'],
+      ['RGPD (GDPR)', 'Reglamento general de protección de datos de la Unión Europea.'],
+      ['Ley de IA de la UE', '37 artículos, actualizados con los cambios del "Digital Omnibus" de 2026. Catálogo contrastado con el AI Act Service Desk de la Comisión Europea.'],
+      ['ISO/IEC 42001', 'Sistema de gestión de IA. Quinto marco, opcional.'],
+    ],
+    h: ['Marco', 'Qué cubre'],
+    note: 'Ley81·Suite apoya la documentación y la evaluación. Una persona calificada sigue siendo quien determina el cumplimiento.',
+  },
+  en: { title: 'Frameworks', desc: 'Panama Law 81 of 2019 and Decree 285, GDPR, the EU AI Act and ISO/IEC 42001 in Ley81·Suite.',
+    h1: 'Frameworks covered', lede: 'The set of active frameworks is chosen per client and drives readiness scoring and filtering throughout the application.',
+    rows: [
+      ['Law 81 of 2019 and Executive Decree 285', 'Personal data protection in Panama. Content checked against the official Gaceta Oficial text.'],
+      ['GDPR', 'The European Union’s General Data Protection Regulation.'],
+      ['EU AI Act', '37 articles, kept current with the 2026 Digital Omnibus changes. Catalog checked against the European Commission’s AI Act Service Desk.'],
+      ['ISO/IEC 42001', 'AI management system standard. An optional fifth framework.'],
+    ],
+    h: ['Framework', 'What it covers'],
+    note: 'Ley81·Suite supports documentation and assessment. A qualified person still makes the compliance determination.',
+  },
+}[lang];
+---
+<Base lang={lang} slug="frameworks" title={c.title} description={c.desc}>
+  <div class="page-head"><div class="wrap"><p class="eyebrow">{c.title}</p><h1>{c.h1}</h1><p class="lede">{c.lede}</p></div></div>
+  <section class="block"><div class="wrap">
+    <table><thead><tr><th>{c.h[0]}</th><th>{c.h[1]}</th></tr></thead>
+      <tbody>{c.rows.map(([a, b]) => <tr><th scope="row">{a}</th><td>{b}</td></tr>)}</tbody></table>
+    <p class="notice">{c.note}</p>
+  </div></section>
+</Base>

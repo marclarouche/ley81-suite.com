@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ley81-Suite — Title page samples with service provider</title>
+<style>
+@font-face{font-family:"Source Serif 4";font-weight:400;font-style:normal;src:url("file:///Users/cyberlifecoach/Projects/Ley81-Suite/app/node_modules/@fontsource/source-serif-4/files/source-serif-4-latin-400-normal.woff2")}
+@font-face{font-family:"Source Serif 4";font-weight:400;font-style:italic;src:url("file:///Users/cyberlifecoach/Projects/Ley81-Suite/app/node_modules/@fontsource/source-serif-4/files/source-serif-4-latin-400-italic.woff2")}
+@font-face{font-family:"Source Serif 4";font-weight:600;font-style:normal;src:url("file:///Users/cyberlifecoach/Projects/Ley81-Suite/app/node_modules/@fontsource/source-serif-4/files/source-serif-4-latin-600-normal.woff2")}
+@page{size:8.5in 11in;margin:0}
+:root{--navy:#1d3451;--teal:#0088b0;--ink:#1a1a1a;--muted:#696257;--rule:#cfd6de}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:"Source Serif 4",Georgia,serif;color:var(--ink)}
+.page{width:8.5in;height:11in;position:relative;overflow:hidden;page-break-after:always;background:#fff}
+.page:last-child{page-break-after:auto}
+.tag{position:absolute;top:.28in;right:.5in;font:600 8pt/1 "Helvetica Neue",Arial,sans-serif;letter-spacing:.12em;color:#9aa4b0;text-transform:uppercase}
+.brand{display:flex;align-items:center;gap:.14in}
+.brand img{width:.52in;height:.52in;border-radius:.09in}
+.brand .name{font-weight:600;font-size:19pt;color:var(--navy);letter-spacing:.01em}
+.brand .name i{font-style:normal;color:var(--teal)}
+.kicker{font:600 8.5pt/1 "Helvetica Neue",Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--teal)}
+.title{font-weight:600;color:var(--navy);line-height:1.12}
+.footer{position:absolute;left:.75in;right:.75in;bottom:.45in;border-top:1px solid var(--rule);padding-top:.12in;display:flex;justify-content:space-between;gap:.3in;font:8pt/1.45 "Helvetica Neue",Arial,sans-serif;color:var(--muted)}
+.footer b{color:var(--navy);font-weight:600}
+.footer .gen{white-space:nowrap;text-align:right;color:#8b94a0}
+.footer .gen em{font-style:normal;color:var(--navy);font-weight:600}
+
+/* ---------- A: classic centered ---------- */
+.A .top{padding:.9in .75in 0;display:flex;justify-content:center}
+.A .infoband{margin:.32in .75in 0;text-align:center;font:8.5pt/1.5 "Helvetica Neue",Arial,sans-serif;color:var(--muted);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:.1in 0}
+.A .body{position:absolute;top:3.6in;left:.75in;right:.75in;text-align:center}
+.A .title{font-size:34pt;margin:.22in 0 .18in}
+.A .sub{font-style:italic;font-size:13pt;color:var(--muted)}
+.A .client{margin-top:.55in;font-size:20pt;color:var(--ink)}
+.A .client small{display:block;font:600 8.5pt/1 "Helvetica Neue",Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.1in}
+.A .prep{position:absolute;left:0;right:0;top:7.65in;text-align:center}
+.A .prep .by{font:italic 11pt/1 "Source Serif 4",serif;color:var(--muted)}
+.A .prep .firm{margin-top:.1in;font-size:22pt;font-weight:600;color:var(--navy)}
+.A .prep .date{margin-top:.12in;font:9pt "Helvetica Neue",Arial,sans-serif;color:var(--muted)}
+.A .accent{width:.9in;height:3px;background:var(--teal);margin:.28in auto 0}
+
+/* ---------- B: left-aligned editorial with navy spine ---------- */
+.B .spine{position:absolute;left:0;top:0;bottom:0;width:.42in;background:var(--navy)}
+.B .spine:after{content:"";position:absolute;left:.42in;top:0;width:3px;height:100%;background:var(--teal)}
+.B .top{position:absolute;left:1.15in;top:.85in}
+.B .infoline{position:absolute;left:1.15in;right:.75in;top:1.75in;font:8.5pt/1.5 "Helvetica Neue",Arial,sans-serif;color:var(--muted);border-top:1px solid var(--rule);padding-top:.1in}
+.B .body{position:absolute;left:1.15in;right:.9in;top:3.45in}
+.B .title{font-size:38pt;margin:.18in 0 .2in}
+.B .sub{font-style:italic;font-size:13pt;color:var(--muted);max-width:6.3in}
+.B .client{margin-top:.5in;padding-left:.2in;border-left:3px solid var(--teal)}
+.B .client small{display:block;font:600 8pt/1 "Helvetica Neue",Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.07in}
+.B .client div{font-size:20pt}
+.B .prep{position:absolute;left:1.15in;top:7.7in}
+.B .prep .by{font:italic 11pt/1 "Source Serif 4",serif;color:var(--muted)}
+.B .prep .firm{margin-top:.09in;font-size:22pt;font-weight:600;color:var(--navy)}
+.B .prep .date{margin-top:.1in;font:9pt "Helvetica Neue",Arial,sans-serif;color:var(--muted)}
+.B .footer{left:1.15in}
+
+/* ---------- C: formal framed (certificate family) ---------- */
+.C .frame{position:absolute;inset:.35in;border:1.5px solid var(--navy)}
+.C .frame:before{content:"";position:absolute;inset:.07in;border:.5px solid var(--teal)}
+.C .top{position:absolute;top:.85in;left:0;right:0;display:flex;justify-content:center}
+.C .body{position:absolute;top:2.75in;left:1in;right:1in;text-align:center}
+.C .title{font-size:32pt;margin:.2in 0 .15in}
+.C .sub{font-style:italic;font-size:12.5pt;color:var(--muted)}
+.C .client{margin-top:.45in;font-size:19pt}
+.C .client small{display:block;font:600 8pt/1 "Helvetica Neue",Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.09in}
+.C .panel{position:absolute;left:1.2in;right:1.2in;top:6.55in;border:1px solid var(--rule);background:#f6f8fa;padding:.28in .3in;text-align:center}
+.C .panel .by{font:italic 10.5pt/1 "Source Serif 4",serif;color:var(--muted)}
+.C .panel .firm{margin-top:.1in;font-size:21pt;font-weight:600;color:var(--navy)}
+.C .panel .info{margin-top:.14in;font:8.5pt/1.55 "Helvetica Neue",Arial,sans-serif;color:var(--muted)}
+.C .panel .date{margin-top:.1in;font:600 8.5pt "Helvetica Neue",Arial,sans-serif;color:var(--navy)}
+.C .footer{left:.85in;right:.85in;bottom:.62in}
+</style>
+</head>
+<body>
+
+<!-- ======================= SAMPLE A ======================= -->
+<section class="page A">
+  <div class="tag">Sample A · Classic centered</div>
+  <div class="top"><div class="brand"><img src="file:///Users/cyberlifecoach/Projects/Ley81-Suite/app/src-tauri/icons/128x128@2x.png"><div class="name">Ley81<i>·</i>Suite</div></div></div>
+  <div class="infoband"><b style="color:var(--navy)">Meridian Cyber Advisory, S.A.</b> &nbsp;·&nbsp; Torre Global Bank, 18th Floor, 50th Street, Panama City<br>+507 390-5521 &nbsp;·&nbsp; contacto@meridiancyber.example &nbsp;·&nbsp; Contact: Laura Méndez</div>
+  <div class="body">
+    <div class="kicker">Compliance Report</div>
+    <h1 class="title">AI &amp; Data Protection<br>Compliance Attestation</h1>
+    <div class="sub">Law 81 of 2019 · Executive Decree 285 · GDPR · EU AI Act</div>
+    <div class="client"><small>Prepared for</small>Acme Digital Services, S.A.</div>
+  </div>
+  <div class="prep">
+    <div class="by">Prepared by</div>
+    <div class="firm">Meridian Cyber Advisory, S.A.</div>
+    <div class="accent"></div>
+    <div class="date">October 4, 2026</div>
+  </div>
+  <div class="footer">
+    <div><b>Meridian Cyber Advisory, S.A.</b> · Torre Global Bank, 18th Floor, 50th Street, Panama City<br>Tel. +507 390-5521 · contacto@meridiancyber.example · Contact: Laura Méndez</div>
+    <div class="gen">Generated by <em>Ley81·Suite</em><br>Page 1 of 12</div>
+  </div>
+</section>
+
+<!-- ======================= SAMPLE B ======================= -->
+<section class="page B">
+  <div class="tag">Sample B · Editorial with side bar</div>
+  <div class="spine"></div>
+  <div class="top"><div class="brand"><img src="file:///Users/cyberlifecoach/Projects/Ley81-Suite/app/src-tauri/icons/128x128@2x.png"><div class="name">Ley81<i>·</i>Suite</div></div></div>
+  <div class="infoline">Meridian Cyber Advisory, S.A. &nbsp;·&nbsp; Torre Global Bank, 18th Floor, 50th Street, Panama City<br>+507 390-5521 &nbsp;·&nbsp; contacto@meridiancyber.example &nbsp;·&nbsp; Contact: Laura Méndez</div>
+  <div class="body">
+    <div class="kicker">Compliance Report</div>
+    <h1 class="title">AI &amp; Data Protection<br>Compliance<br>Attestation</h1>
+    <div class="sub">Law 81 of 2019 · Executive Decree 285 · GDPR · EU AI Act</div>
+    <div class="client"><small>Prepared for</small><div>Acme Digital Services, S.A.</div></div>
+  </div>
+  <div class="prep">
+    <div class="by">Prepared by</div>
+    <div class="firm">Meridian Cyber Advisory, S.A.</div>
+    <div class="date">October 4, 2026</div>
+  </div>
+  <div class="footer">
+    <div><b>Meridian Cyber Advisory, S.A.</b> · Torre Global Bank, 18th Floor, 50th Street, Panama City<br>Tel. +507 390-5521 · contacto@meridiancyber.example · Contact: Laura Méndez</div>
+    <div class="gen">Generated by <em>Ley81·Suite</em><br>Page 1 of 12</div>
+  </div>
+</section>
+
+<!-- ======================= SAMPLE C ======================= -->
+<section class="page C">
+  <div class="tag" style="top:.5in">Sample C · Formal framed</div>
+  <div class="frame"></div>
+  <div class="top"><div class="brand"><img src="file:///Users/cyberlifecoach/Projects/Ley81-Suite/app/src-tauri/icons/128x128@2x.png"><div class="name">Ley81<i>·</i>Suite</div></div></div>
+  <div class="body">
+    <div class="kicker">Compliance Report</div>
+    <h1 class="title">AI &amp; Data Protection<br>Compliance Attestation</h1>
+    <div class="sub">Law 81 of 2019 · Executive Decree 285 · GDPR · EU AI Act</div>
+    <div class="client"><small>Prepared for</small>Acme Digital Services, S.A.</div>
+  </div>
+  <div class="panel">
+    <div class="by">Prepared by</div>
+    <div class="firm">Meridian Cyber Advisory, S.A.</div>
+    <div class="info">Torre Global Bank, 18th Floor, 50th Street, Panama City<br>+507 390-5521 · contacto@meridiancyber.example · Contact: Laura Méndez</div>
+    <div class="date">October 4, 2026</div>
+  </div>
+  <div class="footer">
+    <div><b>Meridian Cyber Advisory, S.A.</b><br>Tel. +507 390-5521 · contacto@meridiancyber.example</div>
+    <div class="gen">Generated by <em>Ley81·Suite</em> · Page 1 of 12</div>
+  </div>
+</section>
+
+</body>
+</html>

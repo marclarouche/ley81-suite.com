@@ -1,0 +1,28 @@
+---
+import { useUi } from '../i18n/ui';
+import type { Lang } from '../config';
+interface Props { lang: Lang; slug: string }
+const { lang, slug } = Astro.props;
+const t = useUi(lang);
+const other: Lang = lang === 'es' ? 'en' : 'es';
+const items = ['product', 'consultants', 'companies', 'frameworks', 'security'] as const;
+---
+<a class="skip" href="#main">{t.footer.skip}</a>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href={`/${lang}/`} aria-label="Ley81·Suite">
+      <img src="/brand/ley81-lockup-navy.svg" alt="Ley81·Suite" height="34" />
+    </a>
+    <nav aria-label="Principal">
+      <ul>
+        {items.map((k) => (
+          <li><a href={`/${lang}/${k}/`} aria-current={slug === k ? 'page' : undefined}>{t.nav[k]}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <div class="actions">
+      <a class="lang" href={`/${other}/${slug ? slug + '/' : ''}`} hreflang={other} lang={other}>{t.footer.switchLang}</a>
+      <a class="btn" href={`/${lang}/demo/`}>{t.nav.demo}</a>
+    </div>
+  </div>
+</header>

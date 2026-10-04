@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getStaticPaths as gsp, type Lang, CONTACT_EMAIL } from '../../config';
+export const getStaticPaths = gsp;
+const lang = Astro.params.lang as Lang;
+const c = {
+  es: { title: 'Solicitar una demo', desc: 'Solicita una demostración de Ley81·Suite.', h1: 'Solicitar una demo',
+    lede: 'Cuéntanos si eres consultor o empresa y qué marcos te interesan. Te responderemos para coordinar la demostración.',
+    btn: 'Escribir por correo', subject: 'Solicitud de demo de Ley81·Suite',
+    body: 'Hola,%0D%0A%0D%0AQuisiera solicitar una demo de Ley81·Suite.%0D%0A%0D%0ATipo (consultor / empresa):%0D%0AMarcos de interés:%0D%0A',
+    note: 'Por ahora las demostraciones se coordinan por correo. Aún no hay precios publicados.' },
+  en: { title: 'Request a demo', desc: 'Request a Ley81·Suite demonstration.', h1: 'Request a demo',
+    lede: 'Tell us whether you are a consultant or a company and which frameworks interest you. We will reply to arrange the demonstration.',
+    btn: 'Write us by email', subject: 'Ley81·Suite demo request',
+    body: 'Hello,%0D%0A%0D%0AI would like to request a demo of Ley81·Suite.%0D%0A%0D%0AType (consultant / company):%0D%0AFrameworks of interest:%0D%0A',
+    note: 'For now demos are arranged by email. Pricing is not published yet.' },
+}[lang];
+---
+<Base lang={lang} slug="demo" title={c.title} description={c.desc}>
+  <div class="page-head"><div class="wrap"><p class="eyebrow">{c.title}</p><h1>{c.h1}</h1><p class="lede">{c.lede}</p></div></div>
+  <section class="block"><div class="wrap prose">
+    <p><a class="btn" href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(c.subject)}&body=${c.body}`}>{c.btn}</a></p>
+    <p class="muted">{CONTACT_EMAIL}</p>
+    <p class="notice">{c.note}</p>
+  </div></section>
+</Base>

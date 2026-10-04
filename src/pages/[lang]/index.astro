@@ -1,0 +1,104 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getStaticPaths as gsp, type Lang } from '../../config';
+import { useUi } from '../../i18n/ui';
+export const getStaticPaths = gsp;
+const lang = Astro.params.lang as Lang;
+const t = useUi(lang);
+const c = {
+  es: {
+    title: 'Ley81·Suite: cumplimiento de IA y protección de datos, en tu equipo',
+    desc: 'Aplicación de escritorio para evaluar, documentar y atestiguar el cumplimiento de la Ley 81 de Panamá, el RGPD y la Ley de IA de la UE. Local, cifrada y bilingüe.',
+    eyebrow: 'Ley 81 de 2019 · RGPD · Ley de IA de la UE',
+    h1: 'Cumplimiento de IA y protección de datos, sin sacar la información de tu equipo.',
+    lede: 'Ley81·Suite es una aplicación de escritorio para consultores y empresas que necesitan evaluar, documentar y atestiguar el cumplimiento, empezando por la Ley 81 de 2019 de Panamá.',
+    benefits: [
+      ['Local y privada', 'Los datos de cada cliente viven en tu equipo, en una base de datos cifrada. No se requiere cuenta en la nube.'],
+      ['Tres marcos en un solo lugar', 'Ley 81 y Decreto 285, RGPD y Ley de IA de la UE, con ISO/IEC 42001 como opción. Activa los marcos que aplican a cada cliente.'],
+      ['Informes listos para el cliente', 'Plan de remediación y atestación, Certificado de autoevaluación e informe de estado, en español e inglés, con el nombre de tu firma.'],
+    ],
+    methodH: 'Un método claro: GOVERN → MAP → MEASURE → MANAGE',
+    method: [['Gobernar', 'Define alcance, marcos y responsables.'], ['Mapear', 'Inventario de sistemas de IA, datos y transferencias.'], ['Medir', 'Brechas con severidad calculada por probabilidad e impacto.'], ['Gestionar', 'Acciones, evidencia y atestación final.']],
+    shotH: 'De la brecha a la evidencia, en una sola herramienta',
+    shotP: 'Panel de preparación por marco, registro de brechas, bóveda de evidencia e informes.',
+    shotCap: 'Vista previa de diseño. No es una captura de la versión final.',
+    platformH: 'Lanzamiento inicial en macOS',
+    platformP: 'La primera versión se lanza para macOS, con inicio de sesión mediante Touch ID. Windows (con Windows Hello) llegará después.',
+    ctaH: '¿Quieres verlo funcionar?',
+    ctaP: 'Solicita una demostración y conversamos sobre tu caso.',
+  },
+  en: {
+    title: 'Ley81·Suite: AI governance and data-protection compliance, on your own machine',
+    desc: 'Desktop application to assess, document and attest compliance with Panama’s Law 81, GDPR and the EU AI Act. Local-first, encrypted and bilingual.',
+    eyebrow: 'Law 81 of 2019 · GDPR · EU AI Act',
+    h1: 'AI governance and data-protection compliance, without your data leaving your machine.',
+    lede: 'Ley81·Suite is a desktop application for consultants and companies who need to assess, document and attest compliance, starting with Panama’s Law 81 of 2019.',
+    benefits: [
+      ['Local and private', 'Each client’s data lives on your machine in an encrypted database. No cloud account required.'],
+      ['Three frameworks, one place', 'Law 81 and Decree 285, GDPR and the EU AI Act, with ISO/IEC 42001 as an option. Switch on the frameworks that apply to each client.'],
+      ['Client-ready reports', 'Remediation Plan & Attestation, Certificate of Self-Assessment and Status Report, in Spanish and English, carrying your firm’s name.'],
+    ],
+    methodH: 'A clear method: GOVERN → MAP → MEASURE → MANAGE',
+    method: [['Govern', 'Set scope, frameworks and owners.'], ['Map', 'Inventory AI systems, data and transfers.'], ['Measure', 'Gaps with severity calculated from likelihood and impact.'], ['Manage', 'Actions, evidence and the final attestation.']],
+    shotH: 'From gap to evidence in one tool',
+    shotP: 'Per-framework readiness dashboard, gap register, evidence vault and reports.',
+    shotCap: 'Design preview. Not a capture of the final release.',
+    platformH: 'Launching first on macOS',
+    platformP: 'The first release launches on macOS, with Touch ID sign-in. Windows (with Windows Hello) follows.',
+    ctaH: 'Want to see it in action?',
+    ctaP: 'Request a demo and we will talk through your case.',
+  },
+}[lang];
+---
+<Base lang={lang} slug="" title={c.title} description={c.desc}>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">{c.eyebrow}</p>
+        <h1>{c.h1}</h1>
+        <p class="lede">{c.lede}</p>
+        <div class="cta">
+          <a class="btn" href={`/${lang}/demo/`}>{t.cta.demo}</a>
+          <a class="btn ghost" href={`/${lang}/samples/`}>{t.cta.samples}</a>
+        </div>
+      </div>
+      <figure style="margin:0">
+        <img class="shot" src="/img/03-dashboard-a-scoreboard.png" alt="" width="1200" height="800" />
+        <figcaption class="caption">{c.shotCap}</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap cols-3">
+      {c.benefits.map(([h, p]) => <div class="card"><h3>{h}</h3><p>{p}</p></div>)}
+    </div>
+  </section>
+
+  <section class="block navy">
+    <div class="wrap">
+      <h2>{c.methodH}</h2>
+      <ol class="steps">
+        {c.method.map(([h, p]) => <li><strong>{h}</strong>{p}</li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="block paper">
+    <div class="wrap hero-grid">
+      <div>
+        <h2>{c.shotH}</h2>
+        <p class="lede">{c.shotP}</p>
+        <p><a href={`/${lang}/product/`}>{t.cta.more} →</a></p>
+      </div>
+      <img class="shot" src="/img/06-gap-register.png" alt="" width="1200" height="800" loading="lazy" />
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap cols-2">
+      <div><h2>{c.platformH}</h2><p>{c.platformP}</p></div>
+      <div class="card"><h3>{c.ctaH}</h3><p>{c.ctaP}</p><a class="btn" href={`/${lang}/demo/`}>{t.cta.demo}</a></div>
+    </div>
+  </section>
+</Base>

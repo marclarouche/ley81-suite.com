@@ -1,0 +1,54 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getStaticPaths as gsp, type Lang } from '../../config';
+export const getStaticPaths = gsp;
+const lang = Astro.params.lang as Lang;
+const c = {
+  es: { title: 'Seguridad y privacidad', desc: 'Cómo protege Ley81·Suite tus datos: local, cifrado en reposo, roles y bitácora de auditoría. Qué afirmamos y qué no.',
+    h1: 'Seguridad y privacidad', lede: 'Un resumen honesto de lo que el producto hace hoy.',
+    doH: 'Lo que hace hoy',
+    does: [
+      'Local primero: los datos del cliente viven en tu equipo, en una base SQLCipher cifrada; la bitácora de auditoría es una base cifrada aparte.',
+      'Evidencia cifrada en reposo.',
+      'Inicio de sesión con el autenticador de la plataforma (Touch ID en macOS; Windows Hello en Windows).',
+      'Roles (Administrador, Analista, Auditor, Visor) con segregación de funciones.',
+      'Códigos de recuperación de un solo uso; bloqueo de cuenta tras intentos fallidos; reautenticación en acciones sensibles.',
+      'Retención de la bitácora por 7 años, con depuración controlada por el Auditor; borrado criptográfico al eliminar un proyecto.',
+      'Evaluado internamente frente a CIS Controls v8, Grupo de Implementación 1 (IG1), y sometido a análisis estático y dinámico en septiembre de 2026.',
+    ],
+    notH: 'Lo que no afirmamos',
+    nots: [
+      'Estas son evaluaciones internas, no certificaciones ni auditorías de terceros.',
+      'El Certificado de autoevaluación incluye un hash SHA-256 de integridad del contenido; no es una firma digital ni una certificación legal.',
+      'La aplicación no garantiza el cumplimiento legal: apoya la documentación y la evaluación.',
+    ],
+    site: 'Este sitio no usa cookies de seguimiento ni scripts de terceros.' },
+  en: { title: 'Security & privacy', desc: 'How Ley81·Suite protects your data: local-first, encrypted at rest, roles and an audit trail. What we claim and what we don’t.',
+    h1: 'Security & privacy', lede: 'An honest summary of what the product does today.',
+    doH: 'What it does today',
+    does: [
+      'Local-first: client data lives on your machine in an encrypted SQLCipher database; the audit trail is a separate encrypted database.',
+      'Evidence files encrypted at rest.',
+      'Sign-in with the platform authenticator (Touch ID on macOS; Windows Hello on Windows).',
+      'Roles (Admin, Analyst, Auditor, Viewer) with segregation of duties.',
+      'Single-use recovery codes; account lockout after failed attempts; re-authentication for sensitive actions.',
+      '7-year audit-log retention with Auditor-gated purge; cryptographic erasure when a project is deleted.',
+      'Assessed internally against CIS Controls v8, Implementation Group 1 (IG1), and run through static and dynamic scans in September 2026.',
+    ],
+    notH: 'What we do not claim',
+    nots: [
+      'These are internal assessments, not third-party certifications or audits.',
+      'The Certificate of Self-Assessment carries a SHA-256 content integrity hash; it is not a digital signature or a legal certification.',
+      'The application does not guarantee legal compliance: it supports documentation and assessment.',
+    ],
+    site: 'This website uses no tracking cookies and no third-party scripts.' },
+}[lang];
+---
+<Base lang={lang} slug="security" title={c.title} description={c.desc}>
+  <div class="page-head"><div class="wrap"><p class="eyebrow">{c.title}</p><h1>{c.h1}</h1><p class="lede">{c.lede}</p></div></div>
+  <section class="block"><div class="wrap prose">
+    <h2>{c.doH}</h2><ul class="list">{c.does.map((x) => <li>{x}</li>)}</ul>
+    <h2>{c.notH}</h2><ul class="list">{c.nots.map((x) => <li>{x}</li>)}</ul>
+    <p class="muted">{c.site}</p>
+  </div></section>
+</Base>

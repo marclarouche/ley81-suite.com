@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="120" viewBox="0 0 520 120" role="img" aria-label="Ley81·Suite">
+  <g transform="translate(6 6) scale(1.08)">
+    <circle cx="50" cy="50" r="46" fill="none" stroke="#ffffff" stroke-width="4"/>
+    <circle cx="34" cy="36" r="12" fill="none" stroke="#ffffff" stroke-width="7"/>
+    <circle cx="34" cy="62" r="12" fill="none" stroke="#ffffff" stroke-width="7"/>
+    <circle cx="60" cy="49" r="4.5" fill="#2bb3dd"/>
+    <line x1="72" y1="26" x2="72" y2="74" stroke="#ffffff" stroke-width="7"/>
+  </g>
+  <text x="140" y="78" font-family="'Source Serif 4', Georgia, serif" font-weight="600" font-size="64" letter-spacing="-1" fill="#ffffff">Ley81<tspan fill="#2bb3dd">·</tspan>Suite</text>
+</svg>

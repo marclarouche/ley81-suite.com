@@ -1,0 +1,33 @@
+---
+import { useUi } from '../i18n/ui';
+import type { Lang } from '../config';
+const { lang } = Astro.props as { lang: Lang };
+const t = useUi(lang);
+---
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <img src="/brand/ley81-lockup-white.svg" alt="Ley81·Suite" height="30" />
+        <p class="muted">{t.tagline}</p>
+      </div>
+      <nav aria-label="Footer">
+        <ul>
+          <li><a href={`/${lang}/product/`}>{t.nav.product}</a></li>
+          <li><a href={`/${lang}/frameworks/`}>{t.nav.frameworks}</a></li>
+          <li><a href={`/${lang}/samples/`}>{t.nav.samples}</a></li>
+          <li><a href={`/${lang}/security/`}>{t.nav.security}</a></li>
+          <li><a href={`/${lang}/demo/`}>{t.nav.demo}</a></li>
+        </ul>
+      </nav>
+      <nav aria-label={t.footer.legal}>
+        <ul>
+          <li><a href={`/${lang}/privacy/`}>{t.footer.privacy}</a></li>
+          <li><a href={`/${lang}/terms/`}>{t.footer.terms}</a></li>
+        </ul>
+      </nav>
+    </div>
+    <p class="fine">{t.footer.disclaimer}</p>
+    <p class="fine">© {new Date().getFullYear()} Ley81·Suite. {t.footer.rights}</p>
+  </div>
+</footer>

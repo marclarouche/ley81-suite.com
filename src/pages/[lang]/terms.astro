@@ -1,0 +1,28 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getStaticPaths as gsp, type Lang } from '../../config';
+export const getStaticPaths = gsp;
+const lang = Astro.params.lang as Lang;
+const isPrivacy = 'terms' === 'privacy';
+const c = {
+  es: { title: isPrivacy ? 'Política de privacidad' : 'Términos de uso',
+    h1: isPrivacy ? 'Política de privacidad' : 'Términos de uso',
+    notice: 'Borrador pendiente de revisión legal. Este texto es provisional y no debe considerarse definitivo hasta que lo revise un abogado calificado en Panamá.',
+    body: isPrivacy
+      ? ['Este sitio web no utiliza cookies de seguimiento ni scripts de terceros.', 'La aplicación Ley81·Suite funciona de forma local: los datos de tus clientes permanecen en tu equipo.', 'Si nos escribes por correo para solicitar una demo, usaremos tus datos solo para responderte. [Pendiente: responsable, base legal, plazos de conservación y derechos de los titulares conforme a la Ley 81 de 2019.]']
+      : ['[Pendiente: licencia de uso, alcance, mantenimiento y actualizaciones, limitación de responsabilidad, ley aplicable.]', 'Ley81·Suite apoya la documentación y la evaluación del cumplimiento. No sustituye el criterio de un profesional calificado ni garantiza el cumplimiento legal.'] },
+  en: { title: isPrivacy ? 'Privacy policy' : 'Terms of use',
+    h1: isPrivacy ? 'Privacy policy' : 'Terms of use',
+    notice: 'Draft pending legal review. This text is provisional and must not be treated as final until reviewed by a qualified lawyer in Panama.',
+    body: isPrivacy
+      ? ['This website uses no tracking cookies and no third-party scripts.', 'The Ley81·Suite application runs locally: your clients’ data stays on your machine.', 'If you email us to request a demo, we will use your details only to reply. [Pending: controller, legal basis, retention periods and data-subject rights under Law 81 of 2019.]']
+      : ['[Pending: licence grant, scope, maintenance and updates, limitation of liability, governing law.]', 'Ley81·Suite supports compliance documentation and assessment. It does not replace the judgment of a qualified professional or guarantee legal compliance.'] },
+}[lang];
+---
+<Base lang={lang} slug="terms" title={c.title} description={c.title} noindex>
+  <div class="page-head"><div class="wrap"><h1>{c.h1}</h1></div></div>
+  <section class="block"><div class="wrap prose">
+    <p class="notice">{c.notice}</p>
+    {c.body.map((x) => <p>{x}</p>)}
+  </div></section>
+</Base>

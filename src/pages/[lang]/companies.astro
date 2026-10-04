@@ -1,0 +1,27 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getStaticPaths as gsp, type Lang } from '../../config';
+import { useUi } from '../../i18n/ui';
+export const getStaticPaths = gsp;
+const lang = Astro.params.lang as Lang;
+const t = useUi(lang);
+const c = {
+  es: { title: 'Para empresas', desc: 'Instalación para una sola organización, con roles, segregación de funciones y bitácora de auditoría.',
+    h1: 'Para empresas y pymes', lede: 'Una instalación para tu organización, con un equipo y roles claros.',
+    pts: [['Roles definidos', 'Administrador, Analista, Auditor y Visor, con segregación de funciones: el Auditor es dueño de la bitácora de auditoría.'],
+      ['Bitácora de auditoría', 'Base de datos cifrada y separada, con retención de 7 años y depuración controlada por el Auditor.'],
+      ['Acceso seguro', 'Inicio de sesión con el autenticador de la plataforma, códigos de recuperación de un solo uso, bloqueo de cuenta y reautenticación en acciones sensibles.'],
+      ['Sin dependencia de la nube', 'Tus datos permanecen en tu infraestructura. No se requiere una cuenta en la nube.']] },
+  en: { title: 'For companies', desc: 'Single-organisation install with roles, segregation of duties and an audit trail.',
+    h1: 'For companies and SMEs', lede: 'One install for your organisation, with a team and clear roles.',
+    pts: [['Defined roles', 'Admin, Analyst, Auditor and Viewer, with segregation of duties: the Auditor owns the audit trail.'],
+      ['Audit trail', 'A separate encrypted database with 7-year retention and Auditor-gated purge.'],
+      ['Secure access', 'Sign-in with the platform authenticator, single-use recovery codes, account lockout and re-authentication for sensitive actions.'],
+      ['No cloud dependency', 'Your data stays on your infrastructure. No cloud account required.']] },
+}[lang];
+---
+<Base lang={lang} slug="companies" title={c.title} description={c.desc}>
+  <div class="page-head"><div class="wrap"><p class="eyebrow">{c.title}</p><h1>{c.h1}</h1><p class="lede">{c.lede}</p></div></div>
+  <section class="block"><div class="wrap cols-2">{c.pts.map(([h, p]) => <div class="card"><h3>{h}</h3><p>{p}</p></div>)}</div></section>
+  <section class="block paper"><div class="wrap"><a class="btn" href={`/${lang}/demo/`}>{t.cta.demo}</a></div></section>
+</Base>

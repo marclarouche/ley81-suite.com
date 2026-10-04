@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/broadsheet-fd145519-0c9f-4b12-95db-8dc0af65236a/styles.css">
+<script src="_ds/broadsheet-fd145519-0c9f-4b12-95db-8dc0af65236a/_ds_bundle.js"></script>
+<style>
+  body { margin: 0; }
+  a:hover { color: var(--color-accent-600); }
+  .kick { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent); }
+  .lang .seg-opt { padding: 3px 9px; font-size: 11px; letter-spacing: 0.06em; }
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body)">
+
+<sc-if value="{{ isLogin }}" hint-placeholder-val="{{ true }}">
+  <div style="min-height:100vh;display:grid;grid-template-columns:1.15fr 1fr">
+    <div style="padding:60px 60px 40px;display:flex;flex-direction:column;justify-content:space-between">
+      <div>
+        <div style="height:3px;background:var(--color-text)"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;gap:20px">
+          <span class="kick" style="color:var(--color-text)">{{ t.dateline }}</span>
+          <div class="seg lang">
+            <label class="seg-opt"><input type="radio" name="lang" checked="{{ isEs }}" onChange="{{ pickEs }}">ES</label>
+            <label class="seg-opt"><input type="radio" name="lang" checked="{{ isEn }}" onChange="{{ pickEn }}">EN</label>
+          </div>
+        </div>
+        <div style="height:1px;background:var(--color-text)"></div>
+      </div>
+      <div style="max-width:620px">
+        <div class="cmyk-head" style="font-family:var(--font-heading);font-weight:600;font-size:76px;line-height:1.02;letter-spacing:-0.02em">
+          <span class="paper">Ley81<span style="color:var(--color-accent)">·</span>Suite</span>
+          <span class="plate plate-c" aria-hidden="true">Ley81·Suite</span>
+          <span class="plate plate-m" aria-hidden="true">Ley81·Suite</span>
+          <span class="plate plate-y" aria-hidden="true">Ley81·Suite</span>
+        </div>
+        <p style="font-size:22px;line-height:1.4;max-width:26ch;margin:24px 0 0">{{ t.tagline }}</p>
+      </div>
+      <div class="kick" style="color:color-mix(in srgb, var(--color-text) 50%, transparent)">{{ t.phaseLine }}</div>
+    </div>
+
+    <div style="display:flex;align-items:center;padding:60px 60px 60px 0">
+      <div style="width:100%;max-width:340px">
+        <div class="kick" style="margin-bottom:8px">{{ t.installKicker }}</div>
+        <div class="seg" style="margin-bottom:32px">
+          <label class="seg-opt"><input type="radio" name="install" checked="{{ isConsultor }}" onChange="{{ pickConsultor }}">{{ t.installConsultant }}</label>
+          <label class="seg-opt"><input type="radio" name="install" checked="{{ isPyme }}" onChange="{{ pickPyme }}">{{ t.installCompany }}</label>
+        </div>
+
+        <sc-if value="{{ isConsultor }}" hint-placeholder-val="{{ true }}">
+          <h3 style="margin-bottom:6px">{{ t.signIn }}</h3>
+          <p style="font-size:14px;color:color-mix(in srgb, var(--color-text) 65%, transparent);margin-bottom:26px">{{ t.deviceBound }}</p>
+
+          <div class="kick" style="margin-bottom:4px">{{ t.identityLabel }}</div>
+          <div style="font-family:var(--font-heading);font-weight:600;font-size:17px">A. Moreno</div>
+          <div style="font-size:13px;color:color-mix(in srgb, var(--color-text) 60%, transparent);margin-bottom:24px">consultoria.pa · MORENO-WS01</div>
+
+          <button class="btn btn-primary btn-block" onClick="{{ signIn }}">{{ t.helloBtn }}</button>
+          <p style="font-size:12px;color:color-mix(in srgb, var(--color-text) 55%, transparent);margin:10px 0 0">{{ t.helloAlt }}</p>
+          <p style="font-size:13px;margin:24px 0 0">{{ t.consultantScope }}</p>
+          <button class="btn btn-ghost btn-block" style="margin-top:14px" onClick="{{ goOnboarding }}">{{ t.newCompany }}</button>
+          <button class="btn btn-ghost btn-block" onClick="{{ noop }}">{{ t.otherDevice }}</button>
+        </sc-if>
+
+        <sc-if value="{{ isPyme }}" hint-placeholder-val="{{ false }}">
+          <h3 style="margin-bottom:6px">{{ t.inviteTitle }}</h3>
+          <p style="font-size:14px;color:color-mix(in srgb, var(--color-text) 65%, transparent);margin-bottom:26px">{{ t.inviteLead }}</p>
+
+          <div class="field" style="margin-bottom:8px">
+            <label for="l-code">{{ t.inviteLabel }}</label>
+            <input class="input" id="l-code" style="font-size:17px;letter-spacing:0.14em" placeholder="L81-4K7Q-9ZTD">
+          </div>
+          <p style="font-size:12px;color:color-mix(in srgb, var(--color-text) 55%, transparent);margin-bottom:20px">{{ t.inviteNote }}</p>
+
+          <button class="btn btn-primary btn-block" onClick="{{ signIn }}">{{ t.inviteBtn }}</button>
+          <div style="height:1px;background:var(--color-divider);margin:28px 0 22px"></div>
+          <div class="kick" style="margin-bottom:8px">{{ t.haveAccount }}</div>
+          <button class="btn btn-secondary btn-block" style="margin-top:0" onClick="{{ signIn }}">{{ t.helloBtn }}</button>
+          <p style="font-size:12px;color:color-mix(in srgb, var(--color-text) 55%, transparent);margin:14px 0 0">{{ t.companyRoles }}</p>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ isOnboarding }}" hint-placeholder-val="{{ false }}">
+  <div style="max-width:900px;margin:0 auto;padding:48px 40px 80px">
+    <div style="height:3px;background:var(--color-text)"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;gap:20px">
+      <span class="kick" style="color:var(--color-text)">{{ t.obStep }}</span>
+      <div class="seg lang">
+        <label class="seg-opt"><input type="radio" name="lang2" checked="{{ isEs }}" onChange="{{ pickEs }}">ES</label>
+        <label class="seg-opt"><input type="radio" name="lang2" checked="{{ isEn }}" onChange="{{ pickEn }}">EN</label>
+      </div>
+    </div>
+    <div style="height:1px;background:var(--color-text);margin-bottom:44px"></div>
+
+    <div style="display:flex;gap:2px;margin-bottom:48px">
+      <div style="flex:1"><div style="height:5px;background:var(--color-accent)"></div><div style="font-size:12px;padding-top:8px">{{ t.ob1 }}</div></div>
+      <div style="flex:1"><div style="height:5px;background:var(--color-accent)"></div><div style="font-size:12px;padding-top:8px;font-family:var(--font-heading);font-weight:600">{{ t.ob2 }}</div></div>
+      <div style="flex:1"><div style="height:5px;background:var(--color-neutral-300)"></div><div style="font-size:12px;padding-top:8px;color:color-mix(in srgb, var(--color-text) 50%, transparent)">{{ t.ob3 }}</div></div>
+      <div style="flex:1"><div style="height:5px;background:var(--color-neutral-300)"></div><div style="font-size:12px;padding-top:8px;color:color-mix(in srgb, var(--color-text) 50%, transparent)">{{ t.ob4 }}</div></div>
+    </div>
+
+    <h2 style="max-width:24ch">{{ t.obH }}</h2>
+    <p style="font-size:15px;max-width:58ch;color:color-mix(in srgb, var(--color-text) 70%, transparent)">{{ t.obP }}</p>
+
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:32px 0 40px;max-width:720px">
+      <sc-for list="{{ obSystems }}" as="s" hint-placeholder-count="4">
+        <label class="radio" style="align-items:flex-start;padding:14px;background:var(--color-surface);border-radius:var(--radius-md)">
+          <input type="checkbox" checked="{{ s.on }}" onChange="{{ s.toggle }}"><span class="dot"></span>
+          <span><span style="font-family:var(--font-heading);font-weight:600">{{ s.name }}</span><br><span style="font-size:12px;color:color-mix(in srgb, var(--color-text) 60%, transparent)">{{ s.use }}</span></span>
+        </label>
+      </sc-for>
+    </div>
+
+    <div style="display:flex;gap:12px;align-items:center">
+      <button class="btn btn-primary" onClick="{{ signIn }}">{{ t.continue }}</button>
+      <button class="btn btn-secondary" onClick="{{ goLogin }}">{{ t.back }}</button>
+      <span style="font-size:12px;color:color-mix(in srgb, var(--color-text) 50%, transparent);margin-left:auto">{{ t.obNote }}</span>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ inApp }}" hint-placeholder-val="{{ false }}">
+  <div style="display:grid;grid-template-columns:236px 1fr;min-height:100vh">
+
+    <aside style="padding:34px 24px 34px 34px;display:flex;flex-direction:column;gap:34px">
+      <div>
+        <div style="font-family:var(--font-heading);font-weight:600;font-size:20px;letter-spacing:-0.01em">Ley81<span style="color:var(--color-accent)">·</span>Suite</div>
+        <div class="kick" style="margin-top:3px;color:color-mix(in srgb, var(--color-text) 50%, transparent)">{{ t.brandSub }}</div>
+      </div>
+
+      <nav class="nav" style="flex-direction:column;align-items:stretch;gap:var(--space-2);padding:0">
+        <a href="#" aria-current="{{ curPanel }}" onClick="{{ goPanel }}">{{ t.navPanel }}</a>
+        <a href="#" aria-current="{{ curSistemas }}" onClick="{{ goSistemas }}">{{ t.navSistemas }}</a>
+        <a href="#" aria-current="{{ curBrechas }}" onClick="{{ goBrechas }}">{{ t.navBrechas }}</a>
+        <a href="#" aria-current="{{ curEvidencia }}" onClick="{{ goEvidencia }}">{{ t.navEvidencia }}</a>
+        <a href="#" aria-current="{{ curInformes }}" onClick="{{ goInformes }}">{{ t.navInformes }}</a>
+        <a href="#" aria-current="{{ curAjustes }}" onClick="{{ goAjustes }}">{{ t.navAjustes }}</a>
+      </nav>
+
+      <div style="margin-top:auto">
+        <div class="kick" style="margin-bottom:6px">{{ t.session }}</div>
+        <div style="font-size:14px;font-family:var(--font-heading);font-weight:600">{{ t.roleName }}</div>
+        <div style="font-size:12px;color:color-mix(in srgb, var(--color-text) 60%, transparent)">A. Moreno</div>
+        <button class="btn btn-ghost" style="padding-left:0;margin-top:8px" onClick="{{ toggleRole }}">{{ t.changeRole }}</button>
+        <button class="btn btn-ghost" style="padding-left:0;display:block" onClick="{{ goLogin }}">{{ t.signOut }}</button>
+      </div>
+    </aside>
+
+    <main style="padding:34px 44px 80px 0;min-width:0">
+      <div style="height:3px;background:var(--color-text)"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;gap:20px">
+        <span class="kick" style="color:var(--color-text)">{{ t.clientLine }}</span>
+        <div style="display:flex;align-items:center;gap:14px">
+          <span class="kick">{{ t.frameworkLine }}</span>
+          <div class="seg lang">
+            <label class="seg-opt"><input type="radio" name="lang3" checked="{{ isEs }}" onChange="{{ pickEs }}">ES</label>
+            <label class="seg-opt"><input type="radio" name="lang3" checked="{{ isEn }}" onChange="{{ pickEn }}">EN</label>
+          </div>
+        </div>
+      </div>
+      <div style="height:1px;background:var(--color-text);margin-bottom:40px"></div>
+
+      <sc-if value="{{ isPanel }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:40px">
+          <h2 style="margin:0">{{ t.panelH }}</h2>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="kick">{{ t.layoutLabel }}</span>
+            <div class="seg">
+              <label class="seg-opt"><input type="radio" name="dash" checked="{{ isDashA }}" onChange="{{ pickDashA }}">{{ t.layoutA }}</label>
+              <label class="seg-opt"><input type="radio" name="dash" checked="{{ isDashB }}" onChange="{{ pickDashB }}">{{ t.layoutB }}</label>
+            </div>
+          </div>
+        </div>
+
+        <sc-if value="{{ isDashA }}" hint-placeholder-val="{{ true }}">
+          <div style="display:grid;grid-template-columns:minmax(0,340px) 1fr;gap:64px;align-items:start">
+            <div>
+              <div class="kick" style="margin-bottom:14px">{{ t.readinessKicker }}</div>
+              <div class="cmyk-num" style="font-family:var(--font-heading);font-weight:600;font-size:132px">
+                <span class="paper">{{ score }}</span>
+                <span class="plate plate-c" aria-hidden="true">{{ score }}</span>
+                <span class="plate plate-m" aria-hidden="true">{{ score }}</span>
+                <span class="plate plate-y" aria-hidden="true">{{ score }}</span>
+              </div>
+              <p style="font-size:15px;max-width:32ch;margin-top:22px">{{ t.readinessBody }}</p>
+              <button class="btn btn-primary" style="margin-top:8px" onClick="{{ goInformes }}">{{ t.genAttest }}</button>
+            </div>
+
+            <div>
+              <div class="kick" style="margin-bottom:16px">{{ t.phaseKicker }}</div>
+              <div style="display:flex;gap:2px;margin-bottom:8px">
+                <sc-for list="{{ t.phases }}" as="p" hint-placeholder-count="4">
+                  <div style="flex:1">
+                    <div style="height:6px;background:{{ p.bar }}"></div>
+                    <div style="font-size:12px;padding-top:8px">{{ p.name }}</div>
+                    <div style="font-size:11px;color:color-mix(in srgb, var(--color-text) 55%, transparent)">{{ p.state }}</div>
+                  </div>
+                </sc-for>
+              </div>
+
+              <div class="kick" style="margin:44px 0 10px">{{ t.sevKicker }}</div>
+              <table class="table">
+                <thead><tr>
+                  <th>{{ t.sevC1 }}</th><th>{{ t.sevC2 }}</th><th>{{ t.sevC3 }}</th><th>{{ t.sevC4 }}</th>
+                </tr></thead>
+                <tbody>
+                  <sc-for list="{{ t.sevRows }}" as="r" hint-placeholder-count="4">
+                    <tr><td>{{ r.a }}</td><td>{{ r.b }}</td><td>{{ r.c }}</td><td>{{ r.d }}</td></tr>
+                  </sc-for>
+                </tbody>
+              </table>
+              <sc-if value="{{ noSev }}" hint-placeholder-val="{{ false }}">
+                <p style="font-size:13px;margin-top:12px;color:color-mix(in srgb, var(--color-text) 60%, transparent)">{{ t.sevEmpty }}</p>
+              </sc-if>
+              <button class="btn btn-ghost" style="padding-left:0;margin-top:10px" onClick="{{ goBrechas }}">{{ t.seeAllGaps }}</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isDashB }}" hint-placeholder-val="{{ false }}">
+          <div>
+            <div style="display:flex;align-items:baseline;gap:36px;margin-bottom:40px;flex-wrap:wrap">
+              <sc-for list="{{ t.stats }}" as="s" hint-placeholder-count="4">
+                <div>
+                  <div class="kick">{{ s.label }}</div>
+                  <div style="font-family:var(--font-heading);font-weight:600;font-size:44px;line-height:1;color:{{ s.color }}">{{ s.value }}</div>
+                </div>
+              </sc-for>
+              <button class="btn btn-primary" style="margin-left:auto" onClick="{{ goInformes }}">{{ t.genAttest }}</button>
+            </div>
+
+            <div class="kick" style="margin-bottom:10px">{{ t.ledgerKicker }}</div>
+            <table class="table">
+              <thead><tr>
+                <th style="width:34%">{{ t.ledC1 }}</th><th>{{ t.ledC2 }}</th><th>{{ t.ledC3 }}</th><th>{{ t.ledC4 }}</th><th>{{ t.ledC5 }}</th>
+              </tr></thead>
+              <tbody>
+                <sc-for list="{{ t.ledgerRows }}" as="r" hint-placeholder-count="6">
+                  <tr style="cursor:pointer" onClick="{{ openGap }}">
+                    <td>{{ r.a }}</td><td>{{ r.b }}</td><td>{{ r.c }}</td><td>{{ r.d }}</td>
+                    <td><span class="tag {{ r.tag }}">{{ r.e }}</span></td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+        </sc-if>
+      </sc-if>
+
+      <sc-if value="{{ isSistemas }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px">
+          <div>
+            <h2 style="margin-bottom:2px">{{ t.sysH }}</h2>
+            <p class="kick" style="margin:0">{{ t.sysSub }}</p>
+          </div>
+          <button class="btn btn-primary" onClick="{{ goForm }}">{{ t.sysCta }}</button>
+        </div>
+        <table class="table">
+          <thead><tr>
+            <th style="width:26%">{{ t.sysC1 }}</th><th>{{ t.sysC2 }}</th><th>{{ t.sysC3 }}</th><th>{{ t.sysC4 }}</th><th>{{ t.sysC5 }}</th><th>{{ t.sysC6 }}</th>
+          </tr></thead>
+          <tbody>
+            <sc-for list="{{ t.sysRows }}" as="r" hint-placeholder-count="7">
+              <tr style="cursor:pointer" onClick="{{ openGap }}">
+                <td>{{ r.a }}</td><td>{{ r.b }}</td><td>{{ r.c }}</td><td>{{ r.d }}</td><td>{{ r.e }}</td>
+                <td><span class="tag {{ r.tag }}">{{ r.f }}</span></td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </sc-if>
+
+      <sc-if value="{{ isBrechas }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:28px">
+          <div>
+            <h2 style="margin-bottom:2px">{{ t.gapsH }}</h2>
+            <p class="kick" style="margin:0">{{ t.gapsSub }}</p>
+          </div>
+          <button class="btn btn-primary" onClick="{{ goForm }}">{{ t.gapsCta }}</button>
+        </div>
+
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:24px;flex-wrap:wrap">
+          <input class="input" style="width:260px" placeholder="{{ t.searchPh }}">
+          <div class="seg">
+            <label class="seg-opt"><input type="radio" name="f" checked="{{ yes }}">{{ t.filterAll }}</label>
+            <label class="seg-opt"><input type="radio" name="f">{{ t.filterOpen }}</label>
+            <label class="seg-opt"><input type="radio" name="f">{{ t.filterDone }}</label>
+          </div>
+          <span style="font-size:12px;color:color-mix(in srgb, var(--color-text) 55%, transparent);margin-left:auto">{{ t.gapsCount }}</span>
+        </div>
+
+        <table class="table">
+          <thead><tr>
+            <th style="width:80px">{{ t.gapC1 }}</th><th style="width:32%">{{ t.gapC2 }}</th><th>{{ t.gapC3 }}</th><th>{{ t.gapC4 }}</th><th>{{ t.gapC5 }}</th><th>{{ t.gapC6 }}</th>
+          </tr></thead>
+          <tbody>
+            <sc-for list="{{ t.gapRows }}" as="r" hint-placeholder-count="9">
+              <tr style="cursor:pointer" onClick="{{ openGap }}">
+                <td>{{ r.a }}</td><td>{{ r.b }}</td><td>{{ r.c }}</td><td>{{ r.d }}</td><td>{{ r.e }}</td>
+                <td><span class="tag {{ r.tag }}">{{ r.f }}</span></td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </sc-if>
+
+      <sc-if value="{{ isGap }}" hint-placeholder-val="{{ false }}">
+        <button class="btn btn-ghost" style="padding-left:0;margin-bottom:18px" onClick="{{ goBrechas }}">{{ t.backToGaps }}</button>
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:64px;align-items:start">
+          <div>
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+              <span style="font-family:var(--font-heading);font-weight:600;font-size:13px;letter-spacing:0.1em">GAP-01</span>
+              <span class="tag tag-accent">{{ t.statusDone }}</span>
+              <span class="tag tag-outline">{{ t.gapArticle }}</span>
+            </div>
+            <h2 style="max-width:28ch">{{ t.gapTitle }}</h2>
+            <p style="font-size:15px;max-width:62ch;margin-top:18px">{{ t.gapDesc }}</p>
+
+            <div class="kick" style="margin:44px 0 10px">{{ t.actionKicker }}</div>
+            <p style="font-size:15px;max-width:62ch">{{ t.actionBody }}</p>
+
+            <div class="kick" style="margin:44px 0 10px">{{ t.evidKicker }}</div>
+            <table class="table">
+              <thead><tr><th>{{ t.evC1 }}</th><th>{{ t.evC2 }}</th><th>{{ t.evC3 }}</th><th></th></tr></thead>
+              <tbody>
+                <sc-for list="{{ t.gapEvidence }}" as="r" hint-placeholder-count="3">
+                  <tr><td>{{ r.a }}</td><td>{{ r.b }}</td><td>{{ r.c }}</td><td><a href="#" onClick="{{ noop }}">{{ t.view }}</a></td></tr>
+                </sc-for>
+              </tbody>
+            </table>
+            <button class="btn btn-secondary" style="margin-top:14px" onClick="{{ noop }}">{{ t.addEvidence }}</button>
+
+            <div class="kick" style="margin:44px 0 10px">{{ t.logKicker }}</div>
+            <div style="display:flex;flex-direction:column;gap:14px;max-width:62ch">
+              <sc-for list="{{ t.gapLog }}" as="r" hint-placeholder-count="3">
+                <div style="display:flex;gap:16px">
+                  <span style="font-size:12px;min-width:92px;color:color-mix(in srgb, var(--color-text) 55%, transparent)">{{ r.date }}</span>
+                  <span style="font-size:14px">{{ r.text }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:26px">
+            <div><div class="kick">{{ t.sPhase }}</div><div style="font-size:15px;font-family:var(--font-heading);font-weight:600">MANAGE · {{ t.phase4 }}</div></div>
+            <div><div class="kick">{{ t.sOwner }}</div><div style="font-size:15px">{{ t.ownerIT }}</div></div>
+            <div><div class="kick">{{ t.sSystems }}</div><div style="font-size:15px">{{ t.sysA }}<br>{{ t.sysB }}</div></div>
+            <div>
+              <div class="kick">{{ t.sFrameworks }}</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:5px">
+                <span class="tag tag-neutral">Ley 81</span><span class="tag tag-neutral">D.E. 285</span><span class="tag tag-neutral">GDPR Art. 5</span>
+              </div>
+            </div>
+            <div><div class="kick">{{ t.sExecuted }}</div><div style="font-size:15px">{{ t.gapDate }}</div></div>
+            <button class="btn btn-primary" onClick="{{ goInformes }}">{{ t.includeAttest }}</button>
+            <button class="btn btn-secondary" onClick="{{ goForm }}">{{ t.editGap }}</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isForm }}" hint-placeholder-val="{{ false }}">
+        <button class="btn btn-ghost" style="padding-left:0;margin-bottom:18px" onClick="{{ goBrechas }}">{{ t.backToGaps }}</button>
+        <h2 style="margin-bottom:40px">{{ t.formH }}</h2>
+
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:64px;align-items:start;max-width:960px">
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <div class="field"><label for="f-t">{{ t.fTitle }}</label><input class="input" id="f-t" placeholder="{{ t.fTitlePh }}"></div>
+            <div class="field"><label for="f-d">{{ t.fDesc }}</label><textarea class="input" id="f-d" placeholder="{{ t.fDescPh }}"></textarea></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+              <div class="field"><label for="f-s">{{ t.fSystem }}</label>
+                <select class="input" id="f-s"><option>{{ t.sysTrans }}</option><option>{{ t.sysRag }}</option><option>{{ t.sysScore }}</option></select></div>
+              <div class="field"><label for="f-p">{{ t.fPhase }}</label>
+                <select class="input" id="f-p"><option>MAP</option><option>MEASURE</option><option selected="{{ yes }}">MANAGE</option><option>GOVERN</option></select></div>
+            </div>
+            <div>
+              <div style="font-size:12px;color:color-mix(in srgb, var(--color-text) 70%, transparent);margin-bottom:8px">{{ t.fFrameworks }}</div>
+              <div style="display:flex;gap:16px;flex-wrap:wrap">
+                <sc-for list="{{ fwForm }}" as="f" hint-placeholder-count="4">
+                  <label class="radio"><input type="checkbox" checked="{{ f.on }}" onChange="{{ f.toggle }}"><span class="dot"></span>{{ f.label }}</label>
+                </sc-for>
+              </div>
+            </div>
+            <div class="field"><label for="f-a">{{ t.fAction }}</label><textarea class="input" id="f-a" placeholder="{{ t.fActionPh }}"></textarea></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+              <div class="field"><label for="f-r">{{ t.fOwner }}</label>
+                <select class="input" id="f-r"><option>{{ t.ownerIT }}</option><option>{{ t.ownerLegal }}</option><option>{{ t.ownerCompliance }}</option><option>{{ t.ownerSystems }}</option></select></div>
+              <div class="field"><label for="f-f">{{ t.fDue }}</label><input class="input" id="f-f" type="date" value="2026-10-15"></div>
+            </div>
+            <div style="display:flex;gap:12px;margin-top:6px">
+              <button class="btn btn-primary" onClick="{{ goBrechas }}">{{ t.fSave }}</button>
+              <button class="btn btn-secondary" onClick="{{ goBrechas }}">{{ t.fCancel }}</button>
+            </div>
+          </div>
+
+          <div>
+            <div class="kick" style="margin-bottom:10px">{{ t.fSeverityK }}</div>
+            <div style="font-family:var(--font-heading);font-weight:600;font-size:32px;color:var(--color-accent-2);line-height:1">{{ t.critical }}</div>
+            <p style="font-size:13px;margin-top:10px;color:color-mix(in srgb, var(--color-text) 70%, transparent)">{{ t.fSeverityWhy }}</p>
+            <p style="font-size:13px;color:color-mix(in srgb, var(--color-text) 70%, transparent)">{{ t.fSeverityNote }}</p>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isEvidencia }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px">
+          <div>
+            <h2 style="margin-bottom:2px">{{ t.evH }}</h2>
+            <p class="kick" style="margin:0">{{ t.evSub }}</p>
+          </div>
+          <button class="btn btn-primary" onClick="{{ noop }}">{{ t.evCta }}</button>
+        </div>
+        <table class="table">
+          <thead><tr>
+            <th style="width:34%">{{ t.evC1 }}</th><th>{{ t.evC2 }}</th><th>{{ t.evVaultGap }}</th><th>{{ t.evVaultBy }}</th><th>{{ t.evC3 }}</th>
+          </tr></thead>
+          <tbody>
+            <sc-for list="{{ t.evRows }}" as="r" hint-placeholder-count="7">
+              <tr><td>{{ r.a }}</td><td>{{ r.b }}</td><td><a href="#" onClick="{{ openGap }}">{{ r.c }}</a></td><td>{{ r.d }}</td><td>{{ r.e }}</td></tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </sc-if>
+
+      <sc-if value="{{ isInformes }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px">
+          <h2 style="margin:0">{{ t.repH }}</h2>
+          <div style="display:flex;gap:10px">
+            <button class="btn btn-secondary" onClick="{{ noop }}">{{ t.repSign }}</button>
+            <button class="btn btn-primary" onClick="{{ noop }}">{{ t.repExport }}</button>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:230px minmax(0,1fr);gap:48px;align-items:start">
+          <div>
+            <div class="kick" style="margin-bottom:12px">{{ t.repTemplates }}</div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <a href="#" onClick="{{ noop }}" style="font-size:14px;text-decoration:none;color:var(--color-accent)">{{ t.rep1 }}</a>
+              <a href="#" onClick="{{ noop }}" style="font-size:14px;text-decoration:none;color:inherit">{{ t.rep2 }}</a>
+              <a href="#" onClick="{{ noop }}" style="font-size:14px;text-decoration:none;color:inherit">{{ t.rep3 }}</a>
+              <a href="#" onClick="{{ noop }}" style="font-size:14px;text-decoration:none;color:inherit">{{ t.rep4 }}</a>
+              <a href="#" onClick="{{ noop }}" style="font-size:14px;text-decoration:none;color:inherit">{{ t.rep5 }}</a>
+            </div>
+            <div class="kick" style="margin:36px 0 12px">{{ t.repFormat }}</div>
+            <div class="seg" style="flex-direction:column;align-items:stretch">
+              <label class="seg-opt" style="justify-content:flex-start"><input type="radio" name="fmt" checked="{{ yes }}">{{ t.repFmt1 }}</label>
+              <label class="seg-opt" style="justify-content:flex-start;border-left:none;border-top:1px solid var(--color-divider)"><input type="radio" name="fmt">{{ t.repFmt2 }}</label>
+              <label class="seg-opt" style="justify-content:flex-start;border-left:none;border-top:1px solid var(--color-divider)"><input type="radio" name="fmt">{{ t.repFmt3 }}</label>
+            </div>
+          </div>
+
+          <div style="background:#fff;box-shadow:var(--shadow-md);padding:48px 52px;max-width:820px">
+            <div style="font-family:var(--font-heading);font-weight:600;font-size:19px;letter-spacing:0.02em">{{ t.docTitle }}</div>
+            <div style="font-size:13px;color:color-mix(in srgb, var(--color-text) 65%, transparent);margin-top:4px">{{ t.docSub }}</div>
+            <div style="height:2px;background:var(--color-text);margin:20px 0 18px"></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 28px;font-size:13px;margin-bottom:28px">
+              <div><span style="color:color-mix(in srgb, var(--color-text) 60%, transparent)">{{ t.docClient }} </span>Distribuidora Istmo, S.A.</div>
+              <div><span style="color:color-mix(in srgb, var(--color-text) 60%, transparent)">{{ t.docDate }} </span>{{ t.docDateVal }}</div>
+              <div><span style="color:color-mix(in srgb, var(--color-text) 60%, transparent)">{{ t.docGaps }} </span>{{ t.docGapsVal }}</div>
+              <div><span style="color:color-mix(in srgb, var(--color-text) 60%, transparent)">{{ t.docAuditor }} </span>A. Moreno</div>
+            </div>
+
+            <div class="kick" style="color:var(--color-text);margin-bottom:8px">{{ t.docSection1 }}</div>
+            <table class="table" style="font-size:12px">
+              <thead><tr>
+                <th>{{ t.gapC1 }}</th><th>{{ t.gapC2 }}</th><th>{{ t.docActionCol }}</th><th>{{ t.gapC4 }}</th><th>{{ t.gapC5 }}</th><th>{{ t.gapC6 }}</th>
+              </tr></thead>
+              <tbody>
+                <sc-for list="{{ t.docRows }}" as="r" hint-placeholder-count="4">
+                  <tr><td>{{ r.a }}</td><td>{{ r.b }}</td><td>{{ r.c }}</td><td>{{ r.d }}</td><td>{{ r.e }}</td><td>{{ r.f }}</td></tr>
+                </sc-for>
+              </tbody>
+            </table>
+
+            <div class="kick" style="color:var(--color-text);margin:32px 0 8px">{{ t.docSection2 }}</div>
+            <p style="font-size:13px;line-height:1.6">{{ t.docDeclaration }}</p>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:44px">
+              <div><div style="height:1px;background:var(--color-text)"></div><div style="font-size:12px;margin-top:6px">{{ t.docSign1 }}</div></div>
+              <div><div style="height:1px;background:var(--color-text)"></div><div style="font-size:12px;margin-top:6px">{{ t.docSign2 }}</div></div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isAjustes }}" hint-placeholder-val="{{ false }}">
+        <h2 style="margin-bottom:44px">{{ t.setH }}</h2>
+
+        <div style="display:grid;grid-template-columns:minmax(0,420px) minmax(0,340px);gap:72px;align-items:start">
+          <div style="display:flex;flex-direction:column;gap:22px">
+            <div>
+              <div class="kick" style="margin-bottom:14px">{{ t.setCompany }}</div>
+              <div class="field" style="margin-bottom:16px"><label for="s-n">{{ t.setLegalName }}</label><input class="input" id="s-n" value="Distribuidora Istmo, S.A."></div>
+              <div class="field" style="margin-bottom:16px"><label for="s-r">{{ t.setTaxId }}</label><input class="input" id="s-r" value="155712345-2-2021 DV 44"></div>
+              <div class="field"><label for="s-o">{{ t.setDpo }}</label><input class="input" id="s-o" value="L. Cedeño"></div>
+            </div>
+
+            <div>
+              <div class="kick" style="margin-bottom:12px">{{ t.setFrameworks }}</div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <sc-for list="{{ fwSettings }}" as="f" hint-placeholder-count="5">
+                  <label class="radio"><input type="checkbox" checked="{{ f.on }}" onChange="{{ f.toggle }}"><span class="dot"></span>{{ f.label }}</label>
+                </sc-for>
+              </div>
+              <p style="font-size:12px;color:color-mix(in srgb, var(--color-text) 55%, transparent);margin:10px 0 0">{{ fwCount }}</p>
+            </div>
+
+            <div>
+              <div class="kick" style="margin-bottom:12px">{{ t.setLanguage }}</div>
+              <div class="seg">
+                <label class="seg-opt"><input type="radio" name="lang4" checked="{{ isEs }}" onChange="{{ pickEs }}">Español</label>
+                <label class="seg-opt"><input type="radio" name="lang4" checked="{{ isEn }}" onChange="{{ pickEn }}">English</label>
+              </div>
+              <p style="font-size:12px;color:color-mix(in srgb, var(--color-text) 55%, transparent);margin-top:8px">{{ t.setLanguageNote }}</p>
+            </div>
+
+            <button class="btn btn-primary" style="align-self:flex-start" onClick="{{ noop }}">{{ t.setSave }}</button>
+          </div>
+
+          <div>
+            <div class="kick" style="margin-bottom:12px">{{ t.setTeam }}</div>
+            <table class="table" style="font-size:13px">
+              <thead><tr><th>{{ t.setPerson }}</th><th>{{ t.setRole }}</th></tr></thead>
+              <tbody>
+                <sc-for list="{{ t.team }}" as="r" hint-placeholder-count="4">
+                  <tr><td>{{ r.a }}</td><td>{{ r.b }}</td></tr>
+                </sc-for>
+              </tbody>
+            </table>
+            <button class="btn btn-ghost" style="padding-left:0;margin-top:10px" onClick="{{ noop }}">{{ t.setInvite }}</button>
+
+            <div class="kick" style="margin:40px 0 10px">{{ t.setRetention }}</div>
+            <p style="font-size:13px;color:color-mix(in srgb, var(--color-text) 70%, transparent)">{{ t.setRetentionBody }}</p>
+          </div>
+        </div>
+      </sc-if>
+
+    </main>
+  </div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;language&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;es&quot;,&quot;en&quot;],&quot;default&quot;:&quot;es&quot;,&quot;tsType&quot;:&quot;'es' | 'en'&quot;,&quot;section&quot;:&quot;Interface&quot;},&quot;dashboard&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;a&quot;,&quot;b&quot;],&quot;default&quot;:&quot;a&quot;,&quot;tsType&quot;:&quot;'a' | 'b'&quot;,&quot;section&quot;:&quot;Panel&quot;}}">
+const CYAN = 'var(--color-accent)';
+const MAG = 'var(--color-accent-2)';
+const INK = 'var(--color-text)';
+
+const ES = {
+  dateline: 'Ley 81 de 2019 · ANTAI · Panamá',
+  tagline: 'Cumplimiento de privacidad, datos e IA — demostrable, no declarado.',
+  phaseLine: 'Gobernanza IA · GOVERN → MAP → MEASURE → MANAGE',
+  installKicker: 'Tipo de instalación',
+  installConsultant: 'Consultor',
+  installCompany: 'Empresa',
+  deviceBound: 'Su acceso está vinculado a este equipo — sin contraseña.',
+  identityLabel: 'Identidad del dispositivo',
+  helloBtn: 'Continuar con Windows Hello',
+  helloAlt: 'En macOS: Touch ID. En ambos casos la clave no sale del dispositivo.',
+  consultantScope: 'El administrador de la instalación le asignó el rol de Consultor: administrador, analista y auditor en un solo acceso.',
+  otherDevice: 'Registrar otro dispositivo →',
+  inviteTitle: 'Canjear invitación',
+  inviteLead: 'El administrador de su empresa le envió un código de un solo uso.',
+  inviteLabel: 'Código de invitación',
+  inviteNote: 'El código define su rol — analista, auditor o administrador. Caduca en 72 horas.',
+  inviteBtn: 'Canjear y registrar este equipo',
+  haveAccount: 'Ya tengo acceso',
+  companyRoles: 'En una instalación de empresa los roles van separados por acceso: cada persona ve solo lo que su rol permite.',
+  signIn: 'Iniciar sesión',
+  email: 'Correo corporativo',
+  password: 'Contraseña',
+  enterAs: 'Entrar como',
+  roleConsultor: 'Consultor · cartera de clientes',
+  rolePyme: 'Oficial de cumplimiento · una empresa',
+  enterPanel: 'Acceder al panel',
+  newCompany: 'Dar de alta una empresa cliente →',
+  twofa: 'Autenticación de dos factores requerida por política interna.',
+
+  obStep: 'Alta de empresa · Paso 2 de 4',
+  ob1: 'Datos de la empresa', ob2: 'Inventario de sistemas de IA', ob3: 'Marcos aplicables', ob4: 'Responsables',
+  obH: '¿Qué sistemas de IA toca su operación?',
+  obP: 'Detectamos estos servicios en su dominio y facturación. Confirme los que procesan datos personales — cada uno abre su propia ficha de riesgo y su DPA.',
+  obSystems: [
+    { name: 'OpenAI · ChatGPT / API', use: 'Atención al cliente, redacción', on: true },
+    { name: 'Anthropic · Claude API', use: 'Análisis de documentos internos', on: true },
+    { name: 'AWS Bedrock · RAG interno', use: 'Base vectorial con datos de clientes', on: true },
+    { name: 'Microsoft 365 Copilot', use: 'Correo y documentos', on: false }
+  ],
+  continue: 'Continuar', back: 'Atrás',
+  obNote: 'Puede añadir sistemas más tarde desde Inventario.',
+
+  brandSub: 'Gobernanza IA',
+  navPanel: 'Panel', navSistemas: 'Sistemas de IA', navBrechas: 'Brechas',
+  navEvidencia: 'Evidencia', navInformes: 'Informes', navAjustes: 'Ajustes',
+  session: 'Sesión', changeRole: 'Cambiar de vista', signOut: 'Salir',
+  frameworkLine: 'Ley 81 · GDPR · EU AI Act — 24 Ago 2026',
+
+  panelH: 'Estado de cumplimiento',
+  layoutLabel: 'Disposición', layoutA: 'A · Marcador', layoutB: 'B · Libro mayor',
+  readinessKicker: 'Índice de preparación',
+  readinessBody: (d, n) => d + ' de ' + n + ' brechas remediadas en los marcos activos.' + (n > 0 && d === n ? ' Listo para atestación, pendiente de firma del representante legal.' : ' La atestación queda bloqueada hasta cerrar las restantes.'),
+  genAttest: 'Generar atestación',
+  phaseKicker: 'Avance por fase',
+  phases: [
+    { name: 'GOVERN', state: 'Completa', bar: CYAN },
+    { name: 'MAP', state: 'Completa', bar: CYAN },
+    { name: 'MEASURE', state: 'Completa', bar: CYAN },
+    { name: 'MANAGE', state: 'Firma pendiente', bar: MAG }
+  ],
+  sevKicker: 'Brechas por severidad',
+  sevC1: 'Marco', sevC2: 'Abiertas', sevC3: 'Críticas', sevC4: 'Preparación',
+  sevRows: [
+    { k: 'ley81', a: 'Ley 81 de 2019 · ANTAI', b: '0', c: '0', d: '100%', open: 0, ready: 100 },
+    { k: 'decree', a: 'Decreto Ejecutivo 285', b: '0', c: '0', d: '100%', open: 0, ready: 100 },
+    { k: 'gdpr', a: 'GDPR', b: '2', c: '1', d: '78%', open: 2, ready: 78 },
+    { k: 'aiact', a: 'EU AI Act', b: '3', c: '0', d: '64%', open: 3, ready: 64 }
+  ],
+  sevEmpty: 'Ningún marco activo — active al menos uno en Ajustes.',
+  seeAllGaps: 'Ver todas las brechas →',
+  stats: [
+    { label: 'Preparación', value: '87%', color: INK },
+    { label: 'Brechas abiertas', value: '5', color: MAG },
+    { label: 'Sistemas de IA', value: '7', color: INK },
+    { label: 'DPAs firmados', value: '4 / 7', color: INK }
+  ],
+  ledgerKicker: 'Libro mayor de cumplimiento',
+  ledC1: 'Marco / obligación', ledC2: 'Fase', ledC3: 'Evidencia', ledC4: 'Vence', ledC5: 'Estado',
+  ledgerRows: [
+    { k: 'ley81', a: 'Ley 81 · Consentimiento y transparencia', b: 'MANAGE', c: '3 documentos', d: '—', e: 'Remediada', tag: 'tag-accent' },
+    { k: 'ley81', a: 'Ley 81 · Derechos ARCO en bases vectoriales', b: 'MANAGE', c: '2 documentos', d: '—', e: 'Remediada', tag: 'tag-accent' },
+    { k: 'gdpr', a: 'GDPR · Art. 28 encargados del tratamiento', b: 'MEASURE', c: '1 documento', d: '12 Sep 2026', e: 'Crítica', tag: 'tag-accent-2' },
+    { k: 'gdpr', a: 'GDPR · Registro de actividades (RoPA)', b: 'MAP', c: 'Sin evidencia', d: '30 Sep 2026', e: 'Abierta', tag: 'tag-neutral' },
+    { k: 'aiact', a: 'EU AI Act · Clasificación de riesgo por sistema', b: 'MAP', c: 'Parcial', d: '15 Oct 2026', e: 'Abierta', tag: 'tag-neutral' },
+    { k: 'aiact', a: 'EU AI Act · Registro de incidentes graves', b: 'GOVERN', c: 'Sin evidencia', d: '15 Oct 2026', e: 'Abierta', tag: 'tag-neutral' }
+  ],
+
+  sysH: 'Inventario de sistemas de IA',
+  sysSub: '7 registros',
+  sysCta: 'Registrar sistema',
+  sysC1: 'Sistema', sysC2: 'Proveedor', sysC3: 'Datos personales', sysC4: 'Riesgo · AI Act', sysC5: 'DPA', sysC6: 'Estado',
+  sysRows: [
+    { a: 'Asistente de atención', b: 'OpenAI', c: 'Nombre, correo, historial', d: 'Riesgo limitado', e: 'Firmado', f: 'Conforme', tag: 'tag-accent' },
+    { a: 'Análisis de contratos', b: 'Anthropic', c: 'Datos de empleados', d: 'Riesgo limitado', e: 'Firmado', f: 'Conforme', tag: 'tag-accent' },
+    { a: 'RAG interno · base vectorial', b: 'AWS Bedrock', c: 'Clientes, facturación', d: 'Alto riesgo', e: 'Firmado', f: '2 brechas', tag: 'tag-accent-2' },
+    { a: 'Scoring de crédito interno', b: 'Modelo propio', c: 'Financieros', d: 'Alto riesgo', e: 'N/A', f: '1 brecha', tag: 'tag-accent-2' },
+    { a: 'Copilot en M365', b: 'Microsoft', c: 'Correo, documentos', d: 'Riesgo limitado', e: 'Firmado', f: 'Conforme', tag: 'tag-accent' },
+    { a: 'Transcripción de reuniones', b: 'Otter', c: 'Voz, participantes', d: 'Riesgo limitado', e: 'Pendiente', f: 'En revisión', tag: 'tag-neutral' },
+    { a: 'Filtro de currículums', b: 'Modelo propio', c: 'Candidatos', d: 'Alto riesgo', e: 'N/A', f: 'En revisión', tag: 'tag-neutral' }
+  ],
+
+  gapsH: 'Brechas y remediación',
+  gapsSub: 'Fase 4 · MANAGE',
+  gapsCta: 'Nueva brecha',
+  searchPh: 'Buscar por ID, sistema o responsable',
+  filterAll: 'Todas', filterOpen: 'Abiertas', filterDone: 'Remediadas',
+  gapsCount: (n, d) => n + ' registros · ' + d + ' remediadas',
+  gapC1: 'ID', gapC2: 'Brecha', gapC3: 'Marco', gapC4: 'Responsable', gapC5: 'Fecha', gapC6: 'Estado',
+  gapRows: [
+    { k: 'ley81', a: 'GAP-01', b: 'Configuración de filtros de sanitización en ChatGPT / Claude APIs', c: 'Ley 81', d: 'Oficial de Datos / IT', e: '10 Ago 2026', f: 'Completado', tag: 'tag-accent' },
+    { k: 'ley81', a: 'GAP-02', b: 'Actualización de términos de privacidad y formulario de consentimiento', c: 'Ley 81', d: 'Asesor Legal', e: '15 Ago 2026', f: 'Completado', tag: 'tag-accent' },
+    { k: 'ley81', a: 'GAP-03', b: 'Protocolo ARCO para bases de datos vectoriales / RAG interno', c: 'Ley 81', d: 'Líder de Sistemas', e: '18 Ago 2026', f: 'Completado', tag: 'tag-accent' },
+    { k: 'ley81', a: 'GAP-04', b: 'Firma de addendums de procesamiento de datos (DPAs) y SCCs', c: 'Ley 81', d: 'Compliance Officer', e: '22 Ago 2026', f: 'Completado', tag: 'tag-accent' },
+    { k: 'gdpr', a: 'GAP-05', b: 'Contratos Art. 28 sin cláusulas de subencargados', c: 'GDPR', d: 'Asesor Legal', e: '12 Sep 2026', f: 'Crítica', tag: 'tag-accent-2' },
+    { k: 'gdpr', a: 'GAP-06', b: 'Registro de actividades de tratamiento incompleto', c: 'GDPR', d: 'Compliance Officer', e: '30 Sep 2026', f: 'Abierta', tag: 'tag-neutral' },
+    { k: 'aiact', a: 'GAP-07', b: 'Clasificación de riesgo pendiente en 3 sistemas', c: 'EU AI Act', d: 'Líder de Sistemas', e: '15 Oct 2026', f: 'Abierta', tag: 'tag-neutral' },
+    { k: 'aiact', a: 'GAP-08', b: 'Sin procedimiento de registro de incidentes graves', c: 'EU AI Act', d: 'Oficial de Datos / IT', e: '15 Oct 2026', f: 'Abierta', tag: 'tag-neutral' },
+    { k: 'aiact', a: 'GAP-09', b: 'Scoring de crédito sin evaluación de impacto', c: 'EU AI Act', d: 'Gerencia', e: '01 Nov 2026', f: 'Abierta', tag: 'tag-neutral' }
+  ],
+
+  backToGaps: '← Brechas',
+  statusDone: 'Completado',
+  gapArticle: 'Ley 81 · Art. 4',
+  gapTitle: 'Configuración de filtros de sanitización en ChatGPT / Claude APIs',
+  gapDesc: 'Los prompts enviados a proveedores de modelos incluían datos personales identificables de clientes sin anonimización previa, fuera del alcance del consentimiento recogido y sin base legal para la transferencia internacional.',
+  actionKicker: 'Acción correctiva implementada',
+  actionBody: 'Middleware de anonimización previo a la llamada a la API, con lista de entidades PII y registro de sustituciones. Política firmada por el Oficial de Datos.',
+  evidKicker: 'Evidencia de cumplimiento',
+  evC1: 'Documento', evC2: 'Tipo', evC3: 'Fecha',
+  view: 'Ver', addEvidence: 'Añadir evidencia',
+  gapEvidence: [
+    { a: 'middleware-anonimizacion-v2.pdf', b: 'Especificación técnica', c: '08 Ago 2026' },
+    { a: 'policy-signoff-oficial-datos.pdf', b: 'Política firmada', c: '10 Ago 2026' },
+    { a: 'log-pruebas-sanitizacion.csv', b: 'Registro de pruebas', c: '10 Ago 2026' }
+  ],
+  logKicker: 'Bitácora',
+  gapLog: [
+    { date: '10 Ago 2026', text: 'Estado cambiado a Completado por A. Moreno.' },
+    { date: '10 Ago 2026', text: 'Evidencia verificada contra la guía ANTAI de minimización.' },
+    { date: '02 Ago 2026', text: 'Brecha detectada en la fase MEASURE — muestreo de 400 prompts.' }
+  ],
+  sPhase: 'Fase', phase4: 'Fase 4',
+  sOwner: 'Responsable', sSystems: 'Sistemas afectados', sFrameworks: 'Marcos', sExecuted: 'Ejecución',
+  sysA: 'Asistente de atención', sysB: 'Análisis de contratos',
+  gapDate: '10 Ago 2026',
+  includeAttest: 'Incluir en atestación', editGap: 'Editar brecha',
+
+  formH: 'Nueva brecha',
+  fTitle: 'Título de la brecha',
+  fTitlePh: 'p. ej. Retención indefinida de transcripciones de voz',
+  fDesc: 'Descripción del hallazgo',
+  fDescPh: 'Qué se observó, en qué sistema y con qué muestra.',
+  fSystem: 'Sistema afectado', fPhase: 'Fase',
+  sysTrans: 'Transcripción de reuniones', sysRag: 'RAG interno · base vectorial', sysScore: 'Scoring de crédito interno',
+  fFrameworks: 'Marcos afectados',
+  decree: 'Decreto Ejecutivo 285',
+  fAction: 'Acción correctiva propuesta',
+  fActionPh: 'Qué se implementará y qué evidencia lo probará.',
+  fOwner: 'Responsable', fDue: 'Fecha objetivo',
+  ownerIT: 'Oficial de Datos / IT', ownerLegal: 'Asesor Legal', ownerCompliance: 'Compliance Officer', ownerSystems: 'Líder de Sistemas',
+  fSave: 'Guardar brecha', fCancel: 'Cancelar',
+  fSeverityK: 'Severidad calculada', critical: 'Crítica',
+  fSeverityWhy: 'Datos personales sensibles + transferencia internacional + sin base legal registrada.',
+  fSeverityNote: 'Al guardar, la brecha entra en el plan de remediación y bloquea la atestación hasta su cierre.',
+
+  evH: 'Repositorio de evidencia',
+  evSub: '24 documentos',
+  evCta: 'Subir documento',
+  evVaultGap: 'Brecha', evVaultBy: 'Subido por',
+  evRows: [
+    { a: 'middleware-anonimizacion-v2.pdf', b: 'Especificación técnica', c: 'GAP-01', d: 'Oficial de Datos', e: '08 Ago 2026' },
+    { a: 'policy-signoff-oficial-datos.pdf', b: 'Política firmada', c: 'GAP-01', d: 'A. Moreno', e: '10 Ago 2026' },
+    { a: 'adenda-privacidad-web.pdf', b: 'Aviso público', c: 'GAP-02', d: 'Asesor Legal', e: '15 Ago 2026' },
+    { a: 'sop-borrado-embeddings.docx', b: 'Procedimiento', c: 'GAP-03', d: 'Líder de Sistemas', e: '18 Ago 2026' },
+    { a: 'dpa-openai-firmado.pdf', b: 'DPA', c: 'GAP-04', d: 'Compliance Officer', e: '22 Ago 2026' },
+    { a: 'dpa-microsoft-firmado.pdf', b: 'DPA', c: 'GAP-04', d: 'Compliance Officer', e: '22 Ago 2026' },
+    { a: 'sccs-aws-anexo-ii.pdf', b: 'SCC', c: 'GAP-04', d: 'Asesor Legal', e: '22 Ago 2026' }
+  ],
+
+  repH: 'Informes y atestación',
+  repSign: 'Enviar a firma', repExport: 'Exportar PDF',
+  repTemplates: 'Plantillas',
+  rep1: 'Fase 4 · Plan de remediación y atestación',
+  rep2: 'Fase 2 · Mapa de sistemas de IA',
+  rep3: 'Fase 3 · Medición y muestreo',
+  rep4: 'Registro de actividades (RoPA)',
+  rep5: 'Resumen ejecutivo para gerencia',
+  repFormat: 'Formato',
+  repFmt1: 'PDF firmado', repFmt2: 'DOCX editable', repFmt3: 'Paquete de evidencia (ZIP)',
+  docTitle: 'PLAN DE REMEDIACIÓN Y ATESTACIÓN DE CUMPLIMIENTO IA',
+  docSub: 'Fase 4: MANAGE — Cierre de Brechas y Certificación (Ley 81 de 2019 / ANTAI)',
+  docClient: 'Cliente / PYME:', docDate: 'Fecha de cierre:', docDateVal: '24 de Agosto de 2026',
+  docGaps: 'Estado de brechas:', docGapsVal: '4 de 4 remediadas (100%)',
+  docAuditor: 'Auditor certificador:',
+  docSection1: '1. Plan accionable de remediación ejecutado',
+  docActionCol: 'Acción correctiva',
+  docRows: [
+    { a: 'GAP-01', b: 'Filtros de sanitización en ChatGPT / Claude APIs', c: 'Middleware de anonimización + policy sign-off', d: 'Oficial de Datos / IT', e: '10 Ago 2026', f: 'Completado' },
+    { a: 'GAP-02', b: 'Términos de privacidad y consentimiento web', c: 'Adenda pública de uso de algoritmos / IA', d: 'Asesor Legal', e: '15 Ago 2026', f: 'Completado' },
+    { a: 'GAP-03', b: 'Protocolo ARCO en bases vectoriales / RAG', c: 'SOP de borrado lógico y exclusión de embeddings PII', d: 'Líder de Sistemas', e: '18 Ago 2026', f: 'Completado' },
+    { a: 'GAP-04', b: 'Addendums de procesamiento (DPAs) y SCCs', c: 'DPAs firmados con OpenAI, Microsoft y AWS', d: 'Compliance Officer', e: '22 Ago 2026', f: 'Completado' }
+  ],
+  docSection2: 'Declaración oficial de atestación',
+  docDeclaration: 'Se certifica que Distribuidora Istmo, S.A. ha completado el ciclo integral de Gobernanza de Inteligencia Artificial (fases GOVERN, MAP, MEASURE y MANAGE), y que los sistemas de IA identificados operan bajo estándares acordes a la Ley 81 de 2019, el Decreto Ejecutivo 285 de 2021, las guías de la ANTAI y los lineamientos de transparencia del Proyecto de Ley 588.',
+  docSign1: 'Representante Legal / Gerente General',
+  docSign2: 'Consultor Senior de Cumplimiento IA & Datos',
+
+  setH: 'Ajustes',
+  setCompany: 'Empresa',
+  setLegalName: 'Razón social', setTaxId: 'RUC', setDpo: 'Oficial de protección de datos',
+  setFrameworks: 'Marcos activos',
+  fwLey81: 'Ley 81 de 2019 · Panamá', fwDecree: 'Decreto Ejecutivo 285 de 2021',
+  fwGdpr: 'GDPR · Reglamento (UE) 2016/679', fwAiAct: 'EU AI Act · Reglamento (UE) 2024/1689',
+  setLanguage: 'Idioma de la interfaz',
+  setLanguageNote: 'Se aplica a toda la interfaz y a los informes generados.',
+  setSave: 'Guardar cambios',
+  setTeam: 'Equipo y permisos', setPerson: 'Persona', setRole: 'Rol · acceso',
+  team: [
+    { a: 'A. Moreno', b: 'Consultor · admin, analista y auditor' },
+    { a: 'L. Cedeño', b: 'Administrador · gestiona invitaciones' },
+    { a: 'R. Batista', b: 'Analista · edita brechas y evidencia' },
+    { a: 'C. Him', b: 'Auditor · solo lectura y firma de hallazgos' },
+    { a: 'M. Quintero', b: 'Representante legal · solo firma' }
+  ],
+  setInvite: 'Enviar código de invitación →',
+  setRetention: 'Retención de registros',
+  setRetentionBody: 'La bitácora de cumplimiento se conserva 7 años y no puede editarse retroactivamente.',
+
+  fwShort: ['Ley 81 de 2019', 'Decreto Ejecutivo 285', 'GDPR', 'EU AI Act'],
+  fwCount: (n) => n + ' de 5 marcos activos',
+  roleConsultorShort: 'Consultor · admin + analista + auditor',
+  rolePymeShort: 'Analista de cumplimiento',
+  clientPortfolio: 'Cartera · 12 clientes — viendo Distribuidora Istmo, S.A.',
+  clientSingle: 'Distribuidora Istmo, S.A.'
+};
+
+const EN = {
+  dateline: 'Law 81 of 2019 · ANTAI · Panama',
+  tagline: 'Privacy, data and AI compliance you can prove, not just claim.',
+  phaseLine: 'AI governance · GOVERN → MAP → MEASURE → MANAGE',
+  installKicker: 'Install type',
+  installConsultant: 'Consultant',
+  installCompany: 'Company',
+  deviceBound: 'Your access is bound to this machine — no password.',
+  identityLabel: 'Device identity',
+  helloBtn: 'Continue with Windows Hello',
+  helloAlt: 'On macOS: Touch ID. Either way the key never leaves the device.',
+  consultantScope: 'The install admin granted you the Consultant role: admin, analyst and auditor in a single sign-in.',
+  otherDevice: 'Enrol another device →',
+  inviteTitle: 'Redeem invitation',
+  inviteLead: 'Your company admin sent you a single-use code.',
+  inviteLabel: 'Invitation code',
+  inviteNote: 'The code sets your role — analyst, auditor or admin. It expires in 72 hours.',
+  inviteBtn: 'Redeem and enrol this machine',
+  haveAccount: 'I already have access',
+  companyRoles: 'In a company install the roles are split by sign-in: each person sees only what their role allows.',
+  signIn: 'Sign in',
+  email: 'Work email',
+  password: 'Password',
+  enterAs: 'Sign in as',
+  roleConsultor: 'Consultant · client portfolio',
+  rolePyme: 'Compliance officer · single company',
+  enterPanel: 'Go to dashboard',
+  newCompany: 'Set up a client company →',
+  twofa: 'Two-factor authentication required by internal policy.',
+
+  obStep: 'Company setup · Step 2 of 4',
+  ob1: 'Company details', ob2: 'AI system inventory', ob3: 'Applicable frameworks', ob4: 'Owners',
+  obH: 'Which AI systems does your operation touch?',
+  obP: 'We detected these services across your domain and billing. Confirm the ones that process personal data — each one opens its own risk record and DPA.',
+  obSystems: [
+    { name: 'OpenAI · ChatGPT / API', use: 'Customer support, drafting', on: true },
+    { name: 'Anthropic · Claude API', use: 'Internal document analysis', on: true },
+    { name: 'AWS Bedrock · internal RAG', use: 'Vector store with customer data', on: true },
+    { name: 'Microsoft 365 Copilot', use: 'Mail and documents', on: false }
+  ],
+  continue: 'Continue', back: 'Back',
+  obNote: 'You can add systems later from Inventory.',
+
+  brandSub: 'AI governance',
+  navPanel: 'Dashboard', navSistemas: 'AI systems', navBrechas: 'Gaps',
+  navEvidencia: 'Evidence', navInformes: 'Reports', navAjustes: 'Settings',
+  session: 'Session', changeRole: 'Switch view', signOut: 'Sign out',
+  frameworkLine: 'Law 81 · GDPR · EU AI Act — 24 Aug 2026',
+
+  panelH: 'Compliance status',
+  layoutLabel: 'Layout', layoutA: 'A · Scoreboard', layoutB: 'B · Ledger',
+  readinessKicker: 'Readiness index',
+  readinessBody: (d, n) => d + ' of ' + n + ' gaps remediated across the active frameworks.' + (n > 0 && d === n ? ' Ready for attestation, pending the legal representative’s signature.' : ' Attestation stays blocked until the rest are closed.'),
+  genAttest: 'Generate attestation',
+  phaseKicker: 'Progress by phase',
+  phases: [
+    { name: 'GOVERN', state: 'Complete', bar: CYAN },
+    { name: 'MAP', state: 'Complete', bar: CYAN },
+    { name: 'MEASURE', state: 'Complete', bar: CYAN },
+    { name: 'MANAGE', state: 'Signature pending', bar: MAG }
+  ],
+  sevKicker: 'Gaps by severity',
+  sevC1: 'Framework', sevC2: 'Open', sevC3: 'Critical', sevC4: 'Readiness',
+  sevRows: [
+    { k: 'ley81', a: 'Law 81 of 2019 · ANTAI', b: '0', c: '0', d: '100%', open: 0, ready: 100 },
+    { k: 'decree', a: 'Executive Decree 285', b: '0', c: '0', d: '100%', open: 0, ready: 100 },
+    { k: 'gdpr', a: 'GDPR', b: '2', c: '1', d: '78%', open: 2, ready: 78 },
+    { k: 'aiact', a: 'EU AI Act', b: '3', c: '0', d: '64%', open: 3, ready: 64 }
+  ],
+  sevEmpty: 'No frameworks active — turn at least one on in Settings.',
+  seeAllGaps: 'See all gaps →',
+  stats: [
+    { label: 'Readiness', value: '87%', color: INK },
+    { label: 'Open gaps', value: '5', color: MAG },
+    { label: 'AI systems', value: '7', color: INK },
+    { label: 'DPAs signed', value: '4 / 7', color: INK }
+  ],
+  ledgerKicker: 'Compliance ledger',
+  ledC1: 'Framework / obligation', ledC2: 'Phase', ledC3: 'Evidence', ledC4: 'Due', ledC5: 'Status',
+  ledgerRows: [
+    { k: 'ley81', a: 'Law 81 · Consent and transparency', b: 'MANAGE', c: '3 documents', d: '—', e: 'Remediated', tag: 'tag-accent' },
+    { k: 'ley81', a: 'Law 81 · Data subject rights in vector stores', b: 'MANAGE', c: '2 documents', d: '—', e: 'Remediated', tag: 'tag-accent' },
+    { k: 'gdpr', a: 'GDPR · Art. 28 processor terms', b: 'MEASURE', c: '1 document', d: '12 Sep 2026', e: 'Critical', tag: 'tag-accent-2' },
+    { k: 'gdpr', a: 'GDPR · Record of processing (RoPA)', b: 'MAP', c: 'No evidence', d: '30 Sep 2026', e: 'Open', tag: 'tag-neutral' },
+    { k: 'aiact', a: 'EU AI Act · Risk classification per system', b: 'MAP', c: 'Partial', d: '15 Oct 2026', e: 'Open', tag: 'tag-neutral' },
+    { k: 'aiact', a: 'EU AI Act · Serious incident register', b: 'GOVERN', c: 'No evidence', d: '15 Oct 2026', e: 'Open', tag: 'tag-neutral' }
+  ],
+
+  sysH: 'AI system inventory',
+  sysSub: '7 records',
+  sysCta: 'Register system',
+  sysC1: 'System', sysC2: 'Vendor', sysC3: 'Personal data', sysC4: 'Risk · AI Act', sysC5: 'DPA', sysC6: 'Status',
+  sysRows: [
+    { a: 'Support assistant', b: 'OpenAI', c: 'Name, email, history', d: 'Limited risk', e: 'Signed', f: 'Compliant', tag: 'tag-accent' },
+    { a: 'Contract analysis', b: 'Anthropic', c: 'Employee data', d: 'Limited risk', e: 'Signed', f: 'Compliant', tag: 'tag-accent' },
+    { a: 'Internal RAG · vector store', b: 'AWS Bedrock', c: 'Customers, billing', d: 'High risk', e: 'Signed', f: '2 gaps', tag: 'tag-accent-2' },
+    { a: 'Internal credit scoring', b: 'In-house model', c: 'Financial', d: 'High risk', e: 'N/A', f: '1 gap', tag: 'tag-accent-2' },
+    { a: 'Copilot in M365', b: 'Microsoft', c: 'Mail, documents', d: 'Limited risk', e: 'Signed', f: 'Compliant', tag: 'tag-accent' },
+    { a: 'Meeting transcription', b: 'Otter', c: 'Voice, participants', d: 'Limited risk', e: 'Pending', f: 'In review', tag: 'tag-neutral' },
+    { a: 'Résumé screening', b: 'In-house model', c: 'Candidates', d: 'High risk', e: 'N/A', f: 'In review', tag: 'tag-neutral' }
+  ],
+
+  gapsH: 'Gaps and remediation',
+  gapsSub: 'Phase 4 · MANAGE',
+  gapsCta: 'New gap',
+  searchPh: 'Search by ID, system or owner',
+  filterAll: 'All', filterOpen: 'Open', filterDone: 'Remediated',
+  gapsCount: (n, d) => n + ' records · ' + d + ' remediated',
+  gapC1: 'ID', gapC2: 'Gap', gapC3: 'Framework', gapC4: 'Owner', gapC5: 'Date', gapC6: 'Status',
+  gapRows: [
+    { k: 'ley81', a: 'GAP-01', b: 'Sanitization filters not configured on ChatGPT / Claude APIs', c: 'Law 81', d: 'Data Officer / IT', e: '10 Aug 2026', f: 'Completed', tag: 'tag-accent' },
+    { k: 'ley81', a: 'GAP-02', b: 'Privacy terms and consent form out of date', c: 'Law 81', d: 'Legal Counsel', e: '15 Aug 2026', f: 'Completed', tag: 'tag-accent' },
+    { k: 'ley81', a: 'GAP-03', b: 'No data subject rights protocol for vector stores / internal RAG', c: 'Law 81', d: 'Systems Lead', e: '18 Aug 2026', f: 'Completed', tag: 'tag-accent' },
+    { k: 'ley81', a: 'GAP-04', b: 'Data processing addenda (DPAs) and SCCs unsigned', c: 'Law 81', d: 'Compliance Officer', e: '22 Aug 2026', f: 'Completed', tag: 'tag-accent' },
+    { k: 'gdpr', a: 'GAP-05', b: 'Art. 28 contracts missing sub-processor clauses', c: 'GDPR', d: 'Legal Counsel', e: '12 Sep 2026', f: 'Critical', tag: 'tag-accent-2' },
+    { k: 'gdpr', a: 'GAP-06', b: 'Record of processing activities incomplete', c: 'GDPR', d: 'Compliance Officer', e: '30 Sep 2026', f: 'Open', tag: 'tag-neutral' },
+    { k: 'aiact', a: 'GAP-07', b: 'Risk classification pending on 3 systems', c: 'EU AI Act', d: 'Systems Lead', e: '15 Oct 2026', f: 'Open', tag: 'tag-neutral' },
+    { k: 'aiact', a: 'GAP-08', b: 'No serious incident reporting procedure', c: 'EU AI Act', d: 'Data Officer / IT', e: '15 Oct 2026', f: 'Open', tag: 'tag-neutral' },
+    { k: 'aiact', a: 'GAP-09', b: 'Credit scoring has no impact assessment', c: 'EU AI Act', d: 'Management', e: '01 Nov 2026', f: 'Open', tag: 'tag-neutral' }
+  ],
+
+  backToGaps: '← Gaps',
+  statusDone: 'Completed',
+  gapArticle: 'Law 81 · Art. 4',
+  gapTitle: 'Sanitization filters not configured on ChatGPT / Claude APIs',
+  gapDesc: 'Prompts sent to model providers included identifiable customer personal data with no prior anonymization, outside the scope of the consent collected and with no legal basis for the international transfer.',
+  actionKicker: 'Corrective action implemented',
+  actionBody: 'Anonymization middleware ahead of the API call, with a PII entity list and a substitution log. Policy signed off by the Data Officer.',
+  evidKicker: 'Evidence of compliance',
+  evC1: 'Document', evC2: 'Type', evC3: 'Date',
+  view: 'View', addEvidence: 'Add evidence',
+  gapEvidence: [
+    { a: 'anonymization-middleware-v2.pdf', b: 'Technical specification', c: '08 Aug 2026' },
+    { a: 'policy-signoff-data-officer.pdf', b: 'Signed policy', c: '10 Aug 2026' },
+    { a: 'sanitization-test-log.csv', b: 'Test log', c: '10 Aug 2026' }
+  ],
+  logKicker: 'Audit log',
+  gapLog: [
+    { date: '10 Aug 2026', text: 'Status changed to Completed by A. Moreno.' },
+    { date: '10 Aug 2026', text: 'Evidence verified against the ANTAI minimization guidance.' },
+    { date: '02 Aug 2026', text: 'Gap detected in the MEASURE phase — sample of 400 prompts.' }
+  ],
+  sPhase: 'Phase', phase4: 'Phase 4',
+  sOwner: 'Owner', sSystems: 'Affected systems', sFrameworks: 'Frameworks', sExecuted: 'Executed',
+  sysA: 'Support assistant', sysB: 'Contract analysis',
+  gapDate: '10 Aug 2026',
+  includeAttest: 'Include in attestation', editGap: 'Edit gap',
+
+  formH: 'New gap',
+  fTitle: 'Gap title',
+  fTitlePh: 'e.g. Voice transcripts retained indefinitely',
+  fDesc: 'Finding description',
+  fDescPh: 'What was observed, in which system, and on what sample.',
+  fSystem: 'Affected system', fPhase: 'Phase',
+  sysTrans: 'Meeting transcription', sysRag: 'Internal RAG · vector store', sysScore: 'Internal credit scoring',
+  fFrameworks: 'Affected frameworks',
+  decree: 'Executive Decree 285',
+  fAction: 'Proposed corrective action',
+  fActionPh: 'What will be implemented and what evidence will prove it.',
+  fOwner: 'Owner', fDue: 'Target date',
+  ownerIT: 'Data Officer / IT', ownerLegal: 'Legal Counsel', ownerCompliance: 'Compliance Officer', ownerSystems: 'Systems Lead',
+  fSave: 'Save gap', fCancel: 'Cancel',
+  fSeverityK: 'Calculated severity', critical: 'Critical',
+  fSeverityWhy: 'Sensitive personal data + international transfer + no legal basis on record.',
+  fSeverityNote: 'On save, the gap enters the remediation plan and blocks attestation until it is closed.',
+
+  evH: 'Evidence vault',
+  evSub: '24 documents',
+  evCta: 'Upload document',
+  evVaultGap: 'Gap', evVaultBy: 'Uploaded by',
+  evRows: [
+    { a: 'anonymization-middleware-v2.pdf', b: 'Technical specification', c: 'GAP-01', d: 'Data Officer', e: '08 Aug 2026' },
+    { a: 'policy-signoff-data-officer.pdf', b: 'Signed policy', c: 'GAP-01', d: 'A. Moreno', e: '10 Aug 2026' },
+    { a: 'web-privacy-addendum.pdf', b: 'Public notice', c: 'GAP-02', d: 'Legal Counsel', e: '15 Aug 2026' },
+    { a: 'sop-embedding-deletion.docx', b: 'Procedure', c: 'GAP-03', d: 'Systems Lead', e: '18 Aug 2026' },
+    { a: 'dpa-openai-signed.pdf', b: 'DPA', c: 'GAP-04', d: 'Compliance Officer', e: '22 Aug 2026' },
+    { a: 'dpa-microsoft-signed.pdf', b: 'DPA', c: 'GAP-04', d: 'Compliance Officer', e: '22 Aug 2026' },
+    { a: 'sccs-aws-annex-ii.pdf', b: 'SCC', c: 'GAP-04', d: 'Legal Counsel', e: '22 Aug 2026' }
+  ],
+
+  repH: 'Reports and attestation',
+  repSign: 'Send for signature', repExport: 'Export PDF',
+  repTemplates: 'Templates',
+  rep1: 'Phase 4 · Remediation plan and attestation',
+  rep2: 'Phase 2 · AI system map',
+  rep3: 'Phase 3 · Measurement and sampling',
+  rep4: 'Record of processing activities (RoPA)',
+  rep5: 'Executive summary for management',
+  repFormat: 'Format',
+  repFmt1: 'Signed PDF', repFmt2: 'Editable DOCX', repFmt3: 'Evidence package (ZIP)',
+  docTitle: 'AI COMPLIANCE REMEDIATION AND ATTESTATION PLAN',
+  docSub: 'Phase 4: MANAGE — Gap closure and certification (Law 81 of 2019 / ANTAI)',
+  docClient: 'Client / SME:', docDate: 'Closing date:', docDateVal: '24 August 2026',
+  docGaps: 'Gap status:', docGapsVal: '4 of 4 remediated (100%)',
+  docAuditor: 'Certifying auditor:',
+  docSection1: '1. Remediation plan executed',
+  docActionCol: 'Corrective action',
+  docRows: [
+    { a: 'GAP-01', b: 'Sanitization filters on ChatGPT / Claude APIs', c: 'Anonymization middleware + policy sign-off', d: 'Data Officer / IT', e: '10 Aug 2026', f: 'Completed' },
+    { a: 'GAP-02', b: 'Web privacy terms and consent', c: 'Public addendum on algorithm / AI use', d: 'Legal Counsel', e: '15 Aug 2026', f: 'Completed' },
+    { a: 'GAP-03', b: 'Data subject rights protocol for vector stores / RAG', c: 'SOP for logical deletion and PII embedding exclusion', d: 'Systems Lead', e: '18 Aug 2026', f: 'Completed' },
+    { a: 'GAP-04', b: 'Processing addenda (DPAs) and SCCs', c: 'DPAs signed with OpenAI, Microsoft and AWS', d: 'Compliance Officer', e: '22 Aug 2026', f: 'Completed' }
+  ],
+  docSection2: 'Official attestation statement',
+  docDeclaration: 'This certifies that Distribuidora Istmo, S.A. has completed the full Artificial Intelligence Governance cycle (GOVERN, MAP, MEASURE and MANAGE phases), and that the identified AI systems operate to standards consistent with Law 81 of 2019, Executive Decree 285 of 2021, the ANTAI guidelines and the transparency provisions of Bill 588.',
+  docSign1: 'Legal Representative / General Manager',
+  docSign2: 'Senior AI & Data Compliance Consultant',
+
+  setH: 'Settings',
+  setCompany: 'Company',
+  setLegalName: 'Legal name', setTaxId: 'Tax ID (RUC)', setDpo: 'Data protection officer',
+  setFrameworks: 'Active frameworks',
+  fwLey81: 'Law 81 of 2019 · Panama', fwDecree: 'Executive Decree 285 of 2021',
+  fwGdpr: 'GDPR · Regulation (EU) 2016/679', fwAiAct: 'EU AI Act · Regulation (EU) 2024/1689',
+  setLanguage: 'Interface language',
+  setLanguageNote: 'Applies to the whole interface and to generated reports.',
+  setSave: 'Save changes',
+  setTeam: 'Team and permissions', setPerson: 'Person', setRole: 'Role · access',
+  team: [
+    { a: 'A. Moreno', b: 'Consultant · admin, analyst and auditor' },
+    { a: 'L. Cedeño', b: 'Admin · manages invitations' },
+    { a: 'R. Batista', b: 'Analyst · edits gaps and evidence' },
+    { a: 'C. Him', b: 'Auditor · read-only, signs findings' },
+    { a: 'M. Quintero', b: 'Legal representative · signature only' }
+  ],
+  setInvite: 'Send invitation code →',
+  setRetention: 'Record retention',
+  setRetentionBody: 'The compliance log is kept for 7 years and cannot be edited retroactively.',
+
+  fwShort: ['Law 81 of 2019', 'Executive Decree 285', 'GDPR', 'EU AI Act'],
+  fwCount: (n) => n + ' of 5 frameworks active',
+  roleConsultorShort: 'Consultant · admin + analyst + auditor',
+  rolePymeShort: 'Compliance analyst',
+  clientPortfolio: 'Portfolio · 12 clients — viewing Distribuidora Istmo, S.A.',
+  clientSingle: 'Distribuidora Istmo, S.A.'
+};
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      screen: 'login',
+      role: 'consultor',
+      dash: props.dashboard ?? 'a',
+      lang: props.language ?? 'es',
+      fw: { ley81: true, decree: true, gdpr: true, aiact: true, iso: false },
+      fwForm: { ley81: true, decree: false, gdpr: true, aiact: false },
+      obSys: [true, true, true, false]
+    };
+  }
+
+  toggleIn(bag, key) {
+    return () => this.setState((st) => ({ [bag]: Object.assign({}, st[bag], { [key]: !st[bag][key] }) }));
+  }
+
+  go(screen) { return (e) => { if (e) e.preventDefault(); this.setState({ screen }); window.scrollTo(0, 0); }; }
+
+  renderVals() {
+    const s = this.state.screen;
+    const role = this.state.role;
+    const lang = this.state.lang;
+    const base = lang === 'en' ? EN : ES;
+    const fw = this.state.fw;
+    const on = (r) => !r.k || fw[r.k];
+    const sevRows = base.sevRows.filter(on);
+    const ledgerRows = base.ledgerRows.filter(on);
+    const gapRows = base.gapRows.filter(on);
+    const doneGaps = gapRows.filter((r) => r.tag === 'tag-accent').length;
+    const openGaps = gapRows.length - doneGaps;
+    const readiness = sevRows.length
+      ? Math.round(sevRows.reduce((a, r) => a + r.ready, 0) / sevRows.length)
+      : 0;
+
+    const t = Object.assign({}, base, {
+      roleName: role === 'consultor' ? base.roleConsultorShort : base.rolePymeShort,
+      clientLine: role === 'consultor' ? base.clientPortfolio : base.clientSingle,
+      sevRows,
+      ledgerRows,
+      gapRows,
+      gapsCount: base.gapsCount(gapRows.length, doneGaps),
+      readinessBody: base.readinessBody(doneGaps, gapRows.length),
+      stats: base.stats.map((s, i) => (
+        i === 0 ? Object.assign({}, s, { value: readiness + '%' })
+        : i === 1 ? Object.assign({}, s, { value: String(openGaps) })
+        : s
+      ))
+    });
+
+    const fwSettingsDefs = [
+      ['ley81', base.fwLey81], ['decree', base.fwDecree], ['gdpr', base.fwGdpr],
+      ['aiact', base.fwAiAct], ['iso', 'ISO/IEC 42001']
+    ];
+    const fwSettings = fwSettingsDefs.map(([k, label]) => ({
+      label, on: this.state.fw[k], toggle: this.toggleIn('fw', k)
+    }));
+    const fwFormKeys = ['ley81', 'decree', 'gdpr', 'aiact'];
+    const fwForm = fwFormKeys.map((k, i) => ({
+      label: base.fwShort[i], on: this.state.fwForm[k], toggle: this.toggleIn('fwForm', k)
+    }));
+    const obSystems = base.obSystems.map((s, i) => ({
+      name: s.name, use: s.use, on: this.state.obSys[i],
+      toggle: () => this.setState((st) => {
+        const next = st.obSys.slice();
+        next[i] = !next[i];
+        return { obSys: next };
+      })
+    }));
+
+    return {
+      t,
+      fwSettings,
+      fwForm,
+      obSystems,
+      fwCount: base.fwCount(fwSettings.filter((f) => f.on).length),
+      yes: true,
+      noop: (e) => { if (e) e.preventDefault(); },
+      isLogin: s === 'login',
+      isOnboarding: s === 'onboarding',
+      inApp: s !== 'login' && s !== 'onboarding',
+      isPanel: s === 'panel',
+      isSistemas: s === 'sistemas',
+      isBrechas: s === 'brechas',
+      isGap: s === 'gap',
+      isForm: s === 'form',
+      isEvidencia: s === 'evidencia',
+      isInformes: s === 'informes',
+      isAjustes: s === 'ajustes',
+      curPanel: s === 'panel' ? 'page' : undefined,
+      curSistemas: s === 'sistemas' ? 'page' : undefined,
+      curBrechas: (s === 'brechas' || s === 'gap' || s === 'form') ? 'page' : undefined,
+      curEvidencia: s === 'evidencia' ? 'page' : undefined,
+      curInformes: s === 'informes' ? 'page' : undefined,
+      curAjustes: s === 'ajustes' ? 'page' : undefined,
+      goLogin: this.go('login'),
+      goOnboarding: this.go('onboarding'),
+      signIn: this.go('panel'),
+      goPanel: this.go('panel'),
+      goSistemas: this.go('sistemas'),
+      goBrechas: this.go('brechas'),
+      goEvidencia: this.go('evidencia'),
+      goInformes: this.go('informes'),
+      goAjustes: this.go('ajustes'),
+      goForm: this.go('form'),
+      openGap: this.go('gap'),
+      isConsultor: role === 'consultor',
+      isPyme: role === 'pyme',
+      pickConsultor: () => this.setState({ role: 'consultor' }),
+      pickPyme: () => this.setState({ role: 'pyme' }),
+      toggleRole: () => this.setState({ role: role === 'consultor' ? 'pyme' : 'consultor' }),
+      isEs: lang === 'es',
+      isEn: lang === 'en',
+      pickEs: () => this.setState({ lang: 'es' }),
+      pickEn: () => this.setState({ lang: 'en' }),
+      isDashA: this.state.dash === 'a',
+      isDashB: this.state.dash === 'b',
+      pickDashA: () => this.setState({ dash: 'a' }),
+      pickDashB: () => this.setState({ dash: 'b' }),
+      score: readiness + '%',
+      hasSev: sevRows.length > 0,
+      noSev: sevRows.length === 0
+    };
+  }
+}
+</script>
+</body>
+</html>
