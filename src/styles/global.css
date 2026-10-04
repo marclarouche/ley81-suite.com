@@ -102,3 +102,7 @@ th { color: var(--navy); border-bottom: 2px solid var(--navy); }
   .actions { margin-left: auto; }
   .btn { padding: .5rem .9rem; font-size: .95rem; }
 }
+.fig { margin: 0; }
+.order-2 { order: 2; }
+.mt-lg { margin-top: 1.5rem; }
+@media (max-width: 800px) { .order-2 { order: 0; } }

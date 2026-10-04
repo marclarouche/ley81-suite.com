@@ -39,8 +39,8 @@ const c = {
   {c.items.map(([h, p, img], i) => (
     <section class={`block ${i % 2 ? '' : 'paper'}`}>
       <div class="wrap hero-grid">
-        <div style={i % 2 ? 'order:2' : ''}><h2>{h}</h2><p class="lede">{p}</p></div>
-        <figure style="margin:0"><img class="shot" src={`/img/${img}`} alt={`${c.alt}: ${h}`} width="1200" height="800" loading="lazy" /><figcaption class="caption">{c.caption}</figcaption></figure>
+        <div class={i % 2 ? 'order-2' : undefined}><h2>{h}</h2><p class="lede">{p}</p></div>
+        <figure class="fig"><img class="shot" src={`/img/${img}`} alt={`${c.alt}: ${h}`} width="1200" height="800" loading="lazy" /><figcaption class="caption">{c.caption}</figcaption></figure>
       </div>
     </section>
   ))}
