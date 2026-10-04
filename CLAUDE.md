@@ -26,6 +26,7 @@ Read `README.md` first, then `docs/WEBSITE_REQUIREMENTS.md` and `docs/PRODUCT_OV
 - Pricing page: none yet, "Request a demo" (mailto) only. Contact address in `src/config.ts` is a placeholder.
 - macOS is the first platform announced (Windows follows). Do not call it final until it is live-tested, signed and notarized.
 - Privacy/Terms: placeholder drafts marked "pending legal review" (noindex). Spanish copy needs native/legal review.
+- **Update origin decided 2026-10-04:** the app uses `https://ley81-suite.com` (TLS) for signed updates and `/api/v1/updates/manifest`, not `enclave-ai.dev`. Licenses and patches are managed from admin pages on this site behind Cloudflare Access 2FA; the manifest and downloads stay public and signature-protected. App side is done (uncommitted until Marc says push); the server side is phase 2.
 - Run: `npm run dev` (port 4321), `npm run build`. Static assets for the site are copies in `public/`; `brand/` and `assets/` remain the sources.
 
 ## Still open (ask Marc before assuming)

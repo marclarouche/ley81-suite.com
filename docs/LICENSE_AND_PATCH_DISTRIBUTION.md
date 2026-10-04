@@ -35,7 +35,7 @@ Protect these by cryptography (signed manifests, hashes), not by login:
 Customers; licenses (id, customer, tier, seats, fingerprints[], issued_at, expires_at, status); releases (version, channel, files + hashes, notes, published_at); an admin audit log. Never store signing private keys here.
 
 ## 3. Open questions for Marc
-1. Which origin should the app use: `ley81-suite.com` (needs an app change) or keep sharing `enclave-ai.dev`?
+1. ~~Which origin should the app use?~~ **Decided 2026-10-04: `ley81-suite.com`.** The app's `PRODUCTION_ORIGIN` and manifest path (`/api/v1/updates/manifest`) were changed accordingly; old builds keep calling `enclave-ai.dev`, but none has shipped.
 2. Does Ley81-Suite adopt the Enclave licensing design (hardware-locked `license.lic`, Reports gated on maintenance), or something simpler for launch?
 3. Self-serve (Stripe) vs invoiced vs both; seat model for consultants (per consultant? per client?).
 4. Where does the manifest/license signing happen (offline vs KMS)? Same key for manifests and licenses, or separate keys?
