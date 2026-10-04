@@ -117,6 +117,27 @@ switch (cmd) {
     console.log(JSON.stringify(payload, null, 2));
     break;
   }
+  case 'sign-request': {
+    // Signs a request.json exported by the admin console's Licenses page.
+    // Everything in the licence comes from the request, so what gets signed is
+    // exactly what was entered in the console; only issued_at is added here.
+    const file = opts._[1] || die('usage: sign-request <request.json> [--out file.lic]');
+    let r;
+    try { r = JSON.parse(readFileSync(file, 'utf8')); } catch { die('could not read that request file as JSON'); }
+    if (r.version !== 1) die('unsupported request version');
+    for (const k of ['license_id', 'customer', 'product', 'fingerprint', 'expires_at']) if (typeof r[k] !== 'string' || !r[k]) die(`request is missing "${k}"`);
+    if (!/^lic_[0-9a-f]{12}$/.test(r.license_id)) die('request has a malformed license_id');
+    if (!/^[0-9a-f]{64}$/.test(r.fingerprint)) die('request has a malformed fingerprint');
+    if (Number.isNaN(Date.parse(r.expires_at))) die('request has a malformed expires_at');
+    if (r.product !== PRODUCT && !opts.product) die(`request is for product "${r.product}", not ${PRODUCT}`);
+    const payload = { license_id: r.license_id, customer: r.customer, product: r.product, fingerprint: r.fingerprint, issued_at: new Date().toISOString(), expires_at: r.expires_at };
+    const lic = signLicense(loadPrivateKey(opts), payload);
+    const out = opts.out || `${payload.license_id}.lic`;
+    writeFileSync(out, lic + '\n');
+    console.log(`Wrote ${out}`);
+    console.log(JSON.stringify(payload, null, 2));
+    break;
+  }
   case 'verify': {
     const file = opts._[1] || die('usage: verify <file.lic> [--pubkey <hex> | --key-file <seed>]');
     const pub = opts.pubkey || publicHex(loadPrivateKey(opts));
@@ -131,6 +152,7 @@ switch (cmd) {
   keygen [--name license]                       create a keypair; private key goes to the macOS Keychain
   pubkey [--key license]                        print the public key (hex)
   sign --customer "Acme" --fingerprint <64hex> --expires 2027-10-04 [--license-id lic_x] [--out f.lic]
+  sign-request <request.json> [--out f.lic]     sign a request exported from the admin console
   verify <file.lic> [--pubkey <hex>]            check a licence's signature
 
 Test fixtures only: add --key-file <path-to-hex-seed> to use a throwaway key instead of the Keychain.`);
