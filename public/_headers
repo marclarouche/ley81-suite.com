@@ -6,6 +6,19 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
   Cross-Origin-Opener-Policy: same-origin
 
+# HTML pages: tell Cloudflare not to rewrite them on the fly. Without
+# no-transform it injects its Web Analytics beacon and rewrites email
+# addresses to "[email protected]" (decoded by a script our CSP blocks).
+# Not set on /* because it would merge with the long asset caching below.
+/
+  Cache-Control: public, max-age=0, must-revalidate, no-transform
+
+/es/*
+  Cache-Control: public, max-age=0, must-revalidate, no-transform
+
+/en/*
+  Cache-Control: public, max-age=0, must-revalidate, no-transform
+
 # Sample PDFs are downloads/viewed in the browser's PDF viewer, which a
 # default-src 'none' policy can break.
 /samples/*
