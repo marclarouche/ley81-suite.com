@@ -4,35 +4,77 @@ import { getStaticPaths as gsp, type Lang } from '../../config';
 export const getStaticPaths = gsp;
 const lang = Astro.params.lang as Lang;
 const c = {
-  es: { title: 'Marcos normativos', desc: 'Ley 81 de 2019 y Decreto 285 de Panamá, RGPD, Ley de IA de la UE e ISO/IEC 42001 en Ley81·Suite.',
-    h1: 'Marcos normativos cubiertos', lede: 'El conjunto de marcos activos se elige por cliente y determina la preparación y los filtros en toda la aplicación.',
-    rows: [
-      ['Ley 81 de 2019 y Decreto Ejecutivo 285', 'Protección de datos personales en Panamá. El contenido se verificó contra el texto de la Gaceta Oficial.'],
-      ['RGPD (GDPR)', 'Reglamento general de protección de datos de la Unión Europea.'],
-      ['Ley de IA de la UE', '37 artículos, actualizados con los cambios del "Digital Omnibus" de 2026. Catálogo contrastado con el AI Act Service Desk de la Comisión Europea.'],
-      ['ISO/IEC 42001', 'Sistema de gestión de IA. Quinto marco, opcional.'],
-    ],
+  es: { title: 'Marcos normativos', desc: 'Diez marcos en Ley81·Suite: Ley 81 y Decreto 285 de Panamá, RGPD, NIST CSF 2.0, ISO/IEC 27001, Ley 478, Ley de IA de la UE, ISO/IEC 42001, COBIT 2019 y la Resolución AIG 07.',
+    h1: 'Diez marcos cubiertos', lede: 'Cada marco se activa o desactiva por cliente. El conjunto activo determina la preparación, los filtros y la redacción de los informes en toda la aplicación.',
     h: ['Marco', 'Qué cubre'],
-    note: 'Ley81·Suite apoya la documentación y la evaluación. Una persona calificada sigue siendo quien determina el cumplimiento.',
-  },
-  en: { title: 'Frameworks', desc: 'Panama Law 81 of 2019 and Decree 285, GDPR, the EU AI Act and ISO/IEC 42001 in Ley81·Suite.',
-    h1: 'Frameworks covered', lede: 'The set of active frameworks is chosen per client and drives readiness scoring and filtering throughout the application.',
-    rows: [
-      ['Law 81 of 2019 and Executive Decree 285', 'Personal data protection in Panama. Content checked against the official Gaceta Oficial text.'],
-      ['GDPR', 'The European Union’s General Data Protection Regulation.'],
-      ['EU AI Act', '37 articles, kept current with the 2026 Digital Omnibus changes. Catalog checked against the European Commission’s AI Act Service Desk.'],
-      ['ISO/IEC 42001', 'AI management system standard. An optional fifth framework.'],
+    groups: [
+      ['Privacidad y protección de datos', [
+        ['Ley 81 de 2019 y Decreto Ejecutivo 285', 'Protección de datos personales en Panamá. 25 controles verificados contra el texto de la Gaceta Oficial; el Decreto 285 se revisó artículo por artículo, incluidos la notificación de brechas, el oficial de protección de datos, los contratos con encargados y el expediente técnico.'],
+        ['RGPD (GDPR)', 'Reglamento general de protección de datos de la Unión Europea.'],
+      ]],
+      ['Estándares de seguridad de la información', [
+        ['NIST CSF 2.0', 'Las 106 subcategorías, tomadas del Core publicado por el propio NIST.'],
+        ['ISO/IEC 27001:2022', 'Cláusulas 4 a 10 y los 93 controles del Anexo A, con redacción propia. Incluye la Declaración de Aplicabilidad (SoA) con justificación obligatoria, exportable en PDF y Word.'],
+      ]],
+      ['Ciberdelincuencia', [
+        ['Ley 478 de 2025', '12 controles basados en los artículos que afectan a las organizaciones, contrastados con la Gaceta Oficial Digital No. 30337.'],
+      ]],
+      ['Inteligencia artificial', [
+        ['Ley de IA de la UE', '37 artículos, actualizados con los cambios del "Digital Omnibus" de 2026. Catálogo contrastado con el AI Act Service Desk de la Comisión Europea.'],
+        ['ISO/IEC 42001', 'Sistema de gestión de IA.'],
+      ]],
+      ['Gobierno y auditoría de TI', [
+        ['COBIT 2019', '40 objetivos de gobierno y gestión, con ids y nombres de ISACA y redacción propia.'],
+      ]],
+      ['Requisitos del sector público', [
+        ['Resolución AIG No. 07 de 2026', 'Las diez medidas mínimas de ciberseguridad más el alcance y el informe de autogestión, contrastadas con la Gaceta Oficial Digital No. 30524-B.'],
+      ]],
     ],
+    extra: 'Los controles relacionados entre marcos (por ejemplo, de Ley 81, Ley 478 y la Resolución AIG 07 hacia otros marcos) son sugerencias basadas en nuestro criterio, no una correspondencia oficial. Una evidencia puede vincularse a varios controles y revisarse en el control de destino, idealmente por una segunda persona.',
+    note: 'Ley81·Suite apoya la documentación y la evaluación; no certifica ni garantiza el cumplimiento de ningún marco. Una persona calificada sigue siendo quien determina el cumplimiento. El texto en español y los catálogos de la Ley 478 y la Resolución AIG 07 están pendientes de revisión legal.',
+  },
+  en: { title: 'Frameworks', desc: 'Ten frameworks in Ley81·Suite: Panama Law 81 and Decree 285, GDPR, NIST CSF 2.0, ISO/IEC 27001, Law 478, the EU AI Act, ISO/IEC 42001, COBIT 2019 and AIG Resolution 07.',
+    h1: 'Ten frameworks covered', lede: 'Each framework is switched on or off per client. The active set drives readiness scoring, filtering and report wording throughout the application.',
     h: ['Framework', 'What it covers'],
-    note: 'Ley81·Suite supports documentation and assessment. A qualified person still makes the compliance determination.',
+    groups: [
+      ['Privacy and data protection', [
+        ['Law 81 of 2019 and Executive Decree 285', 'Personal data protection in Panama. 25 controls checked against the official Gaceta Oficial text; Decree 285 was reviewed article by article, including breach notification, the data protection officer, processor contracts and the technical file.'],
+        ['GDPR', 'The European Union’s General Data Protection Regulation.'],
+      ]],
+      ['Information security standards', [
+        ['NIST CSF 2.0', 'All 106 subcategories, taken from NIST’s own published Core.'],
+        ['ISO/IEC 27001:2022', 'Clauses 4 to 10 and all 93 Annex A controls, in our own wording. Includes a Statement of Applicability (SoA) with mandatory justification, exportable as PDF and Word.'],
+      ]],
+      ['Cybercrime', [
+        ['Law 478 of 2025', '12 controls drawn from the articles that affect organizations, checked against Gaceta Oficial Digital No. 30337.'],
+      ]],
+      ['Artificial intelligence', [
+        ['EU AI Act', '37 articles, kept current with the 2026 Digital Omnibus changes. Catalog checked against the European Commission’s AI Act Service Desk.'],
+        ['ISO/IEC 42001', 'AI management system standard.'],
+      ]],
+      ['IT governance and audit', [
+        ['COBIT 2019', '40 governance and management objectives, using ISACA’s ids and names with our own wording.'],
+      ]],
+      ['Public-sector requirements', [
+        ['AIG Resolution No. 07 of 2026', 'The ten minimum cybersecurity measures plus scope and the self-management report, checked against Gaceta Oficial Digital No. 30524-B.'],
+      ]],
+    ],
+    extra: 'Related controls across frameworks (for example from Law 81, Law 478 and AIG Resolution 07 to other frameworks) are suggestions based on our own judgment, not an official mapping. One evidence file can be linked to several controls and reviewed on the target control, ideally by a second person.',
+    note: 'Ley81·Suite supports documentation and assessment; it does not certify or guarantee compliance with any framework. A qualified person still makes the compliance determination. The Spanish text and the Law 478 and AIG Resolution 07 catalogs are pending legal review.',
   },
 }[lang];
 ---
 <Base lang={lang} slug="frameworks" title={c.title} description={c.desc}>
   <div class="page-head"><div class="wrap"><p class="eyebrow">{c.title}</p><h1>{c.h1}</h1><p class="lede">{c.lede}</p></div></div>
   <section class="block"><div class="wrap">
-    <table><thead><tr><th>{c.h[0]}</th><th>{c.h[1]}</th></tr></thead>
-      <tbody>{c.rows.map(([a, b]) => <tr><th scope="row">{a}</th><td>{b}</td></tr>)}</tbody></table>
+    {c.groups.map(([g, rows]) => (
+      <>
+        <h2>{g}</h2>
+        <table><thead><tr><th>{c.h[0]}</th><th>{c.h[1]}</th></tr></thead>
+          <tbody>{rows.map(([a, b]) => <tr><th scope="row">{a}</th><td>{b}</td></tr>)}</tbody></table>
+      </>
+    ))}
+    <p>{c.extra}</p>
     <p class="notice">{c.note}</p>
   </div></section>
 </Base>

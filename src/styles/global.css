@@ -74,6 +74,10 @@ section.block.navy a { color: var(--teal-dark); }
 .prose h2 { margin-top: 2rem; font-size: 1.5rem; }
 .notice { border-left: 4px solid var(--warn); background: var(--paper); padding: 1rem 1.2rem; margin: 1.5rem 0; font-size: 1rem; }
 table { border-collapse: collapse; width: 100%; font-size: 1rem; background: var(--paper); }
+table { table-layout: fixed; }
+thead th:first-child { width: 14rem; }
+table + h2 { margin-top: 2.4rem; }
+h2 + table { margin-top: .8rem; }
 th, td { text-align: left; padding: .7rem .9rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
 th { color: var(--navy); border-bottom: 2px solid var(--navy); }
 
