@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/broadsheet-fd145519-0c9f-4b12-95db-8dc0af65236a/styles.css">
+<script src="_ds/broadsheet-fd145519-0c9f-4b12-95db-8dc0af65236a/_ds_bundle.js"></script>
+<style>
+  body { margin: 0; }
+  a { color: var(--color-accent-700); }
+  a:hover { color: var(--color-accent-600); }
+  .kick { font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent); }
+  .lang .seg-opt { padding: 3px 9px; font-size: 11px; letter-spacing: 0.06em; }
+  .topnav a { font-size: 14px; text-decoration: none; color: var(--color-text); }
+  .topnav a:hover { color: var(--color-accent-700); }
+  .topnav a[aria-current="page"] { color: var(--color-accent-700); font-weight: 600; }
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body)">
+<div style="max-width:1120px;margin:0 auto;padding:34px 40px 110px">
+
+  <div style="height:3px;background:var(--color-text)"></div>
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:24px;padding:9px 0">
+    <a href="#" onClick="{{ goHome }}" style="text-decoration:none;color:inherit;display:flex;align-items:center;gap:9px">
+      <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" style="display:block;flex-shrink:0">
+        <rect x="1" y="2" width="22" height="3" fill="var(--color-text)"></rect>
+        <rect x="1" y="8" width="22" height="1.2" fill="var(--color-text)"></rect>
+        <rect x="1" y="12" width="13" height="1.2" fill="var(--color-text)"></rect>
+        <rect x="1" y="16" width="13" height="1.2" fill="var(--color-text)"></rect>
+        <circle cx="19.5" cy="16" r="3.5" fill="var(--color-accent)"></circle>
+      </svg>
+      <span style="font-family:var(--font-heading);font-weight:600;font-size:18px;letter-spacing:-0.01em">Ley81<span style="color:var(--color-accent)">·</span>Suite</span>
+    </a>
+    <span class="kick" style="color:var(--color-text)">{{ t.dateline }}</span>
+    <div class="seg lang">
+      <label class="seg-opt"><input type="radio" name="wlang" checked="{{ isEs }}" onChange="{{ pickEs }}">ES</label>
+      <label class="seg-opt"><input type="radio" name="wlang" checked="{{ isEn }}" onChange="{{ pickEn }}">EN</label>
+    </div>
+  </div>
+  <div style="height:1px;background:var(--color-text)"></div>
+
+  <div class="topnav" style="display:flex;flex-wrap:wrap;gap:26px;align-items:center;padding:14px 0 0">
+    <a href="#" aria-current="{{ curProducto }}" onClick="{{ goProducto }}">{{ t.navProducto }}</a>
+    <a href="#" aria-current="{{ curComo }}" onClick="{{ goComo }}">{{ t.navComo }}</a>
+    <a href="#" aria-current="{{ curConsultores }}" onClick="{{ goConsultores }}">{{ t.navConsultores }}</a>
+    <a href="#" aria-current="{{ curEmpresas }}" onClick="{{ goEmpresas }}">{{ t.navEmpresas }}</a>
+    <a href="#" aria-current="{{ curSeguridad }}" onClick="{{ goSeguridad }}">{{ t.navSeguridad }}</a>
+    <a href="#" aria-current="{{ curMarcos }}" onClick="{{ goMarcos }}">{{ t.navMarcos }}</a>
+    <a href="#" aria-current="{{ curDocs }}" onClick="{{ goDocs }}">{{ t.navDocs }}</a>
+    <a href="#" aria-current="{{ curNosotros }}" onClick="{{ goNosotros }}">{{ t.navNosotros }}</a>
+    <a href="#" aria-current="{{ curContacto }}" onClick="{{ goContacto }}">{{ t.navContacto }}</a>
+    <button class="btn btn-primary" style="margin-left:auto;white-space:nowrap;flex-shrink:0" onClick="{{ goContacto }}">{{ t.cta }}</button>
+  </div>
+
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <div style="padding:88px 0 0">
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+        <svg width="76" height="76" viewBox="0 0 24 24" aria-hidden="true" style="display:block;flex-shrink:0">
+          <rect x="1" y="2" width="22" height="3" fill="var(--color-text)"></rect>
+          <rect x="1" y="8" width="22" height="1.2" fill="var(--color-text)"></rect>
+          <rect x="1" y="12" width="13" height="1.2" fill="var(--color-text)"></rect>
+          <rect x="1" y="16" width="13" height="1.2" fill="var(--color-text)"></rect>
+          <circle cx="19.5" cy="16" r="3.5" fill="var(--color-accent)"></circle>
+        </svg>
+        <div style="font-family:var(--font-heading);font-weight:600;font-size:92px;line-height:1.02;letter-spacing:-0.02em">Ley81<span style="color:var(--color-accent)">·</span>Suite</div>
+      </div>
+      <p style="font-size:26px;line-height:1.35;max-width:20ch;margin:30px 0 0;font-family:var(--font-heading);font-weight:600">{{ t.heroLead }}</p>
+      <p style="font-size:17px;line-height:1.55;max-width:56ch;margin:22px 0 0">{{ t.heroBody }}</p>
+      <div style="display:flex;gap:14px;align-items:center;margin-top:30px;flex-wrap:wrap">
+        <button class="btn btn-primary" onClick="{{ goContacto }}">{{ t.cta }}</button>
+        <button class="btn btn-secondary" onClick="{{ goComo }}">{{ t.ctaSecondary }}</button>
+        <span class="kick">{{ t.heroNote }}</span>
+      </div>
+    </div>
+
+    <div style="margin-top:80px;background:#fff;box-shadow:var(--shadow-md);padding:40px 44px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin-bottom:34px;flex-wrap:wrap">
+        <span class="kick" style="color:var(--color-text)">{{ t.shotKicker }}</span>
+        <span class="kick">{{ t.shotClient }}</span>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:64px;align-items:start">
+        <div>
+          <div class="kick" style="margin-bottom:14px">{{ t.readinessKicker }}</div>
+          <div style="font-family:var(--font-heading);font-weight:600;font-size:112px;line-height:0.9">87%</div>
+          <p style="font-size:14px;max-width:30ch;margin-top:22px">{{ t.readinessBody }}</p>
+        </div>
+        <div>
+          <div class="kick" style="margin-bottom:16px">{{ t.phaseKicker }}</div>
+          <div style="display:flex;gap:2px;margin-bottom:40px">
+            <sc-for list="{{ t.phases }}" as="p" hint-placeholder-count="4">
+              <div style="flex:1">
+                <div style="height:6px;background:{{ p.bar }}"></div>
+                <div style="font-size:12px;padding-top:8px">{{ p.name }}</div>
+                <div style="font-size:11px;color:color-mix(in srgb, var(--color-text) 55%, transparent)">{{ p.state }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div class="kick" style="margin-bottom:10px">{{ t.sevKicker }}</div>
+          <table class="table">
+            <thead><tr><th>{{ t.sevC1 }}</th><th>{{ t.sevC2 }}</th><th>{{ t.sevC3 }}</th><th>{{ t.sevC4 }}</th></tr></thead>
+            <tbody>
+              <sc-for list="{{ t.sevRows }}" as="r" hint-placeholder-count="4">
+                <tr><td>{{ r.a }}</td><td>{{ r.b }}</td><td>{{ r.c }}</td><td>{{ r.d }}</td></tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:96px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:56px">
+      <sc-for list="{{ t.pillars }}" as="p" hint-placeholder-count="3">
+        <div>
+          <div class="kick" style="margin-bottom:10px">{{ p.k }}</div>
+          <h3 style="margin:0 0 10px">{{ p.h }}</h3>
+          <p style="font-size:15px;line-height:1.6;margin:0">{{ p.p }}</p>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="margin-top:96px;display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:64px;align-items:start">
+      <div>
+        <h2 style="margin:0 0 12px">{{ t.audienceH }}</h2>
+        <p style="font-size:15px;line-height:1.6">{{ t.audienceP }}</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px">
+        <sc-for list="{{ t.audiences }}" as="a" hint-placeholder-count="4">
+          <div>
+            <div style="font-family:var(--font-heading);font-weight:600;font-size:17px;margin-bottom:6px">{{ a.h }}</div>
+            <p style="font-size:14px;line-height:1.6;margin:0">{{ a.p }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="margin-top:96px;max-width:60ch">
+      <h2 style="margin:0 0 14px">{{ t.closeH }}</h2>
+      <p style="font-size:16px;line-height:1.6">{{ t.closeP }}</p>
+      <button class="btn btn-primary" style="margin-top:12px" onClick="{{ goContacto }}">{{ t.cta }}</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isProducto }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:72px 0 0;max-width:62ch">
+      <div class="kick" style="margin-bottom:12px">{{ t.navProducto }}</div>
+      <h1 style="margin:0 0 18px;max-width:18ch">{{ t.prodH }}</h1>
+      <p style="font-size:17px;line-height:1.6">{{ t.prodP }}</p>
+    </div>
+    <div style="margin-top:72px;display:flex;flex-direction:column;gap:56px">
+      <sc-for list="{{ t.modules }}" as="m" hint-placeholder-count="6">
+        <div style="display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:56px;align-items:start">
+          <div>
+            <div class="kick" style="margin-bottom:6px">{{ m.n }}</div>
+            <h3 style="margin:0">{{ m.h }}</h3>
+          </div>
+          <div>
+            <p style="font-size:15px;line-height:1.6;margin:0 0 10px;max-width:62ch">{{ m.p }}</p>
+            <div style="font-size:13px;color:color-mix(in srgb, var(--color-text) 65%, transparent)">{{ m.d }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isComo }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:72px 0 0;max-width:62ch">
+      <div class="kick" style="margin-bottom:12px">{{ t.navComo }}</div>
+      <h1 style="margin:0 0 18px;max-width:20ch">{{ t.comoH }}</h1>
+      <p style="font-size:17px;line-height:1.6">{{ t.comoP }}</p>
+    </div>
+    <div style="margin-top:64px;display:flex;gap:2px">
+      <sc-for list="{{ t.phases }}" as="p" hint-placeholder-count="4">
+        <div style="flex:1"><div style="height:6px;background:{{ p.bar }}"></div><div style="font-size:12px;padding-top:8px">{{ p.name }}</div></div>
+      </sc-for>
+    </div>
+    <div style="margin-top:56px;display:flex;flex-direction:column;gap:52px">
+      <sc-for list="{{ t.steps }}" as="s" hint-placeholder-count="4">
+        <div style="display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:56px;align-items:start">
+          <div>
+            <div style="font-family:var(--font-heading);font-weight:600;font-size:56px;line-height:0.9;color:var(--color-accent-700)">{{ s.n }}</div>
+            <div class="kick" style="margin-top:14px">{{ s.phase }}</div>
+          </div>
+          <div>
+            <h3 style="margin:0 0 10px">{{ s.h }}</h3>
+            <p style="font-size:15px;line-height:1.6;margin:0 0 10px;max-width:62ch">{{ s.p }}</p>
+            <div style="font-size:13px;color:color-mix(in srgb, var(--color-text) 65%, transparent)">{{ s.out }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isConsultores }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:72px 0 0;max-width:62ch">
+      <div class="kick" style="margin-bottom:12px">{{ t.navConsultores }}</div>
+      <h1 style="margin:0 0 18px;max-width:20ch">{{ t.consH }}</h1>
+      <p style="font-size:17px;line-height:1.6">{{ t.consP }}</p>
+    </div>
+    <div style="margin-top:64px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px 64px">
+      <sc-for list="{{ t.consPoints }}" as="c" hint-placeholder-count="4">
+        <div>
+          <h3 style="margin:0 0 8px">{{ c.h }}</h3>
+          <p style="font-size:15px;line-height:1.6;margin:0">{{ c.p }}</p>
+        </div>
+      </sc-for>
+    </div>
+    <div style="margin-top:80px;max-width:62ch">
+      <div class="kick" style="margin-bottom:10px">{{ t.consRolesK }}</div>
+      <p style="font-size:15px;line-height:1.6">{{ t.consRolesP }}</p>
+      <button class="btn btn-primary" style="margin-top:10px" onClick="{{ goContacto }}">{{ t.cta }}</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isEmpresas }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:72px 0 0;max-width:62ch">
+      <div class="kick" style="margin-bottom:12px">{{ t.navEmpresas }}</div>
+      <h1 style="margin:0 0 18px;max-width:20ch">{{ t.empH }}</h1>
+      <p style="font-size:17px;line-height:1.6">{{ t.empP }}</p>
+    </div>
+    <div style="margin-top:64px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px 64px">
+      <sc-for list="{{ t.empPoints }}" as="c" hint-placeholder-count="4">
+        <div>
+          <h3 style="margin:0 0 8px">{{ c.h }}</h3>
+          <p style="font-size:15px;line-height:1.6;margin:0">{{ c.p }}</p>
+        </div>
+      </sc-for>
+    </div>
+    <div style="margin-top:80px">
+      <div class="kick" style="margin-bottom:10px">{{ t.empRolesK }}</div>
+      <table class="table" style="max-width:760px">
+        <thead><tr><th style="width:34%">{{ t.empRoleC1 }}</th><th>{{ t.empRoleC2 }}</th></tr></thead>
+        <tbody>
+          <sc-for list="{{ t.empRoles }}" as="r" hint-placeholder-count="5">
+            <tr><td>{{ r.a }}</td><td>{{ r.b }}</td></tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isSeguridad }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:72px 0 0;max-width:64ch">
+      <div class="kick" style="margin-bottom:12px">{{ t.navSeguridad }}</div>
+      <h1 style="margin:0 0 18px;max-width:18ch">{{ t.secH }}</h1>
+      <p style="font-size:18px;line-height:1.55">{{ t.secLead }}</p>
+      <p style="font-size:15px;line-height:1.6;color:color-mix(in srgb, var(--color-text) 72%, transparent)">{{ t.secSub }}</p>
+    </div>
+
+    <div style="margin-top:76px;display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:64px;align-items:start">
+      <div>
+        <div class="kick" style="margin-bottom:12px">{{ t.secAccessK }}</div>
+        <h2 style="margin:0 0 12px;max-width:14ch">{{ t.secAccessH }}</h2>
+        <p style="font-size:15px;line-height:1.6">{{ t.secAccessP }}</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px">
+        <sc-for list="{{ t.secAccess }}" as="a" hint-placeholder-count="4">
+          <div>
+            <div style="font-family:var(--font-heading);font-weight:600;font-size:16px;margin-bottom:6px">{{ a.h }}</div>
+            <p style="font-size:14px;line-height:1.6;margin:0">{{ a.p }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="margin-top:88px;display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:64px;align-items:start">
+      <div>
+        <div class="kick" style="margin-bottom:12px">{{ t.secDevK }}</div>
+        <h2 style="margin:0 0 12px;max-width:16ch">{{ t.secDevH }}</h2>
+        <p style="font-size:15px;line-height:1.6">{{ t.secDevP }}</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:26px">
+        <sc-for list="{{ t.secDev }}" as="d" hint-placeholder-count="6">
+          <div style="display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:32px;align-items:start">
+            <div style="font-family:var(--font-heading);font-weight:600;font-size:15px">{{ d.h }}</div>
+            <p style="font-size:14px;line-height:1.6;margin:0">{{ d.p }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="margin-top:88px">
+      <div class="kick" style="margin-bottom:12px">{{ t.secReportsK }}</div>
+      <h2 style="margin:0 0 12px;max-width:22ch">{{ t.secReportsH }}</h2>
+      <p style="font-size:15px;line-height:1.6;max-width:62ch;margin-bottom:26px">{{ t.secReportsP }}</p>
+      <table class="table">
+        <thead><tr><th style="width:32%">{{ t.secRepC1 }}</th><th>{{ t.secRepC2 }}</th><th>{{ t.secRepC3 }}</th><th>{{ t.secRepC4 }}</th></tr></thead>
+        <tbody>
+          <sc-for list="{{ t.secReports }}" as="r" hint-placeholder-count="6">
+            <tr><td>{{ r.a }}</td><td>{{ r.b }}</td><td>{{ r.c }}</td><td><span class="tag {{ r.tag }}">{{ r.d }}</span></td></tr>
+          </sc-for>
+        </tbody>
+      </table>
+      <p style="font-size:13px;color:color-mix(in srgb, var(--color-text) 60%, transparent);margin-top:12px">{{ t.secReportsNote }}</p>
+    </div>
+
+    <div style="margin-top:88px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:start">
+      <div>
+        <div class="kick" style="margin-bottom:12px">{{ t.secResidencyK }}</div>
+        <h2 style="margin:0 0 12px;max-width:18ch">{{ t.secResidencyH }}</h2>
+        <p style="font-size:15px;line-height:1.6;max-width:52ch">{{ t.secResidencyP }}</p>
+        <div style="display:flex;flex-direction:column;gap:18px;margin-top:26px">
+          <sc-for list="{{ t.secResidency }}" as="r" hint-placeholder-count="3">
+            <div>
+              <div style="font-family:var(--font-heading);font-weight:600;font-size:15px;margin-bottom:4px">{{ r.h }}</div>
+              <p style="font-size:14px;line-height:1.6;margin:0">{{ r.p }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <div class="kick" style="margin-bottom:12px">{{ t.secLogK }}</div>
+        <h2 style="margin:0 0 12px;max-width:18ch">{{ t.secLogH }}</h2>
+        <p style="font-size:15px;line-height:1.6;max-width:52ch">{{ t.secLogP }}</p>
+        <div style="display:flex;flex-direction:column;gap:18px;margin-top:26px">
+          <sc-for list="{{ t.secLog }}" as="r" hint-placeholder-count="3">
+            <div>
+              <div style="font-family:var(--font-heading);font-weight:600;font-size:15px;margin-bottom:4px">{{ r.h }}</div>
+              <p style="font-size:14px;line-height:1.6;margin:0">{{ r.p }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:88px">
+      <div class="kick" style="margin-bottom:12px">{{ t.secSubK }}</div>
+      <h2 style="margin:0 0 12px;max-width:24ch">{{ t.secSubH }}</h2>
+      <p style="font-size:15px;line-height:1.6;max-width:62ch;margin-bottom:26px">{{ t.secSubP }}</p>
+      <table class="table">
+        <thead><tr><th style="width:26%">{{ t.secSubC1 }}</th><th>{{ t.secSubC2 }}</th><th>{{ t.secSubC3 }}</th><th>{{ t.secSubC4 }}</th></tr></thead>
+        <tbody>
+          <sc-for list="{{ t.secSubs }}" as="r" hint-placeholder-count="5">
+            <tr><td>{{ r.a }}</td><td>{{ r.b }}</td><td>{{ r.c }}</td><td>{{ r.d }}</td></tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:88px;display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:64px;align-items:start">
+      <div>
+        <div class="kick" style="margin-bottom:12px">{{ t.secCertK }}</div>
+        <h2 style="margin:0 0 12px;max-width:16ch">{{ t.secCertH }}</h2>
+        <p style="font-size:15px;line-height:1.6">{{ t.secCertP }}</p>
+      </div>
+      <div>
+        <table class="table">
+          <thead><tr><th style="width:38%">{{ t.secCertC1 }}</th><th>{{ t.secCertC2 }}</th><th>{{ t.secCertC3 }}</th></tr></thead>
+          <tbody>
+            <sc-for list="{{ t.secCerts }}" as="r" hint-placeholder-count="4">
+              <tr><td>{{ r.a }}</td><td><span class="tag {{ r.tag }}">{{ r.b }}</span></td><td>{{ r.c }}</td></tr>
+            </sc-for>
+          </tbody>
+        </table>
+        <p style="font-size:13px;color:color-mix(in srgb, var(--color-text) 60%, transparent);margin-top:12px">{{ t.secCertNote }}</p>
+      </div>
+    </div>
+
+    <div style="margin-top:88px;max-width:62ch">
+      <div class="kick" style="margin-bottom:10px">{{ t.secDiscloseK }}</div>
+      <h2 style="margin:0 0 12px">{{ t.secDiscloseH }}</h2>
+      <p style="font-size:15px;line-height:1.6">{{ t.secDiscloseP }}</p>
+      <button class="btn btn-primary" style="margin-top:12px" onClick="{{ goContacto }}">{{ t.secDiscloseCta }}</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isMarcos }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:72px 0 0;max-width:62ch">
+      <div class="kick" style="margin-bottom:12px">{{ t.navMarcos }}</div>
+      <h1 style="margin:0 0 18px;max-width:20ch">{{ t.marH }}</h1>
+      <p style="font-size:17px;line-height:1.6">{{ t.marP }}</p>
+    </div>
+    <div style="margin-top:56px">
+      <table class="table">
+        <thead><tr><th style="width:28%">{{ t.marC1 }}</th><th>{{ t.marC2 }}</th><th>{{ t.marC3 }}</th><th>{{ t.marC4 }}</th></tr></thead>
+        <tbody>
+          <sc-for list="{{ t.marRows }}" as="r" hint-placeholder-count="5">
+            <tr><td>{{ r.a }}</td><td>{{ r.b }}</td><td>{{ r.c }}</td><td><span class="tag {{ r.tag }}">{{ r.d }}</span></td></tr>
+          </sc-for>
+        </tbody>
+      </table>
+      <p style="font-size:13px;color:color-mix(in srgb, var(--color-text) 60%, transparent);margin-top:12px">{{ t.marNote }}</p>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isDocs }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:72px 0 0;max-width:62ch">
+      <div class="kick" style="margin-bottom:12px">{{ t.navDocs }}</div>
+      <h1 style="margin:0 0 18px;max-width:20ch">{{ t.docsH }}</h1>
+      <p style="font-size:17px;line-height:1.6">{{ t.docsP }}</p>
+    </div>
+    <div style="margin-top:64px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px 64px">
+      <sc-for list="{{ t.docsSections }}" as="d" hint-placeholder-count="6">
+        <div>
+          <div class="kick" style="margin-bottom:8px">{{ d.k }}</div>
+          <h3 style="margin:0 0 8px">{{ d.h }}</h3>
+          <p style="font-size:14px;line-height:1.6;margin:0 0 8px">{{ d.p }}</p>
+          <a href="#" onClick="{{ noop }}" style="font-size:14px">{{ t.docsLink }}</a>
+        </div>
+      </sc-for>
+    </div>
+    <p style="font-size:13px;color:color-mix(in srgb, var(--color-text) 60%, transparent);margin-top:40px">{{ t.docsNote }}</p>
+  </sc-if>
+
+  <sc-if value="{{ isNosotros }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:72px 0 0;max-width:62ch">
+      <div class="kick" style="margin-bottom:12px">{{ t.navNosotros }}</div>
+      <h1 style="margin:0 0 18px;max-width:20ch">{{ t.aboutH }}</h1>
+      <p style="font-size:17px;line-height:1.6">{{ t.aboutP1 }}</p>
+      <p style="font-size:16px;line-height:1.6">{{ t.aboutP2 }}</p>
+    </div>
+    <div style="margin-top:72px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:56px">
+      <sc-for list="{{ t.aboutFacts }}" as="f" hint-placeholder-count="3">
+        <div>
+          <div class="kick" style="margin-bottom:8px">{{ f.k }}</div>
+          <div style="font-family:var(--font-heading);font-weight:600;font-size:17px;margin-bottom:6px">{{ f.h }}</div>
+          <p style="font-size:14px;line-height:1.6;margin:0">{{ f.p }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isContacto }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:72px 0 0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,380px);gap:80px;align-items:start">
+      <div>
+        <div class="kick" style="margin-bottom:12px">{{ t.navContacto }}</div>
+        <h1 style="margin:0 0 18px;max-width:18ch">{{ t.contH }}</h1>
+        <p style="font-size:17px;line-height:1.6;max-width:52ch">{{ t.contP }}</p>
+        <div style="display:flex;flex-direction:column;gap:18px;margin-top:44px;max-width:460px">
+          <div class="field"><label for="c-n">{{ t.contName }}</label><input class="input" id="c-n" placeholder="{{ t.contNamePh }}"></div>
+          <div class="field"><label for="c-e">{{ t.contEmail }}</label><input class="input" id="c-e" type="email" placeholder="{{ t.contEmailPh }}"></div>
+          <div class="field"><label for="c-t">{{ t.contType }}</label>
+            <select class="input" id="c-t"><option>{{ t.contType1 }}</option><option>{{ t.contType2 }}</option><option>{{ t.contType3 }}</option></select></div>
+          <div class="field"><label for="c-m">{{ t.contMsg }}</label><textarea class="input" id="c-m" placeholder="{{ t.contMsgPh }}"></textarea></div>
+          <button class="btn btn-primary" style="align-self:flex-start" onClick="{{ noop }}">{{ t.contSend }}</button>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:30px">
+        <sc-for list="{{ t.contBlocks }}" as="b" hint-placeholder-count="3">
+          <div>
+            <div class="kick" style="margin-bottom:6px">{{ b.k }}</div>
+            <div style="font-size:15px;line-height:1.6">{{ b.v }}</div>
+          </div>
+        </sc-for>
+        <p style="font-size:13px;color:color-mix(in srgb, var(--color-text) 60%, transparent);margin:0">{{ t.contNote }}</p>
+      </div>
+    </div>
+  </sc-if>
+
+  <div style="margin-top:110px">
+    <div style="height:1px;background:var(--color-text)"></div>
+    <div style="display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;padding-top:16px">
+      <span class="kick">{{ t.footLeft }}</span>
+      <span class="kick">{{ t.footRight }}</span>
+    </div>
+  </div>
+
+</div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;language&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;es&quot;,&quot;en&quot;],&quot;default&quot;:&quot;es&quot;,&quot;tsType&quot;:&quot;'es' | 'en'&quot;,&quot;section&quot;:&quot;Site&quot;},&quot;startPage&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;producto&quot;,&quot;como&quot;,&quot;consultores&quot;,&quot;empresas&quot;,&quot;seguridad&quot;,&quot;marcos&quot;,&quot;docs&quot;,&quot;nosotros&quot;,&quot;contacto&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Site&quot;}}">
+const CYAN = 'var(--color-accent)';
+const MAG = 'var(--color-accent-2)';
+
+const ES = {
+  dateline: 'Ley 81 de 2019 · ANTAI · Panamá',
+  navProducto: 'Producto', navComo: 'Cómo funciona', navConsultores: 'Para consultores',
+  navEmpresas: 'Para empresas', navSeguridad: 'Seguridad', navMarcos: 'Marcos',
+  navDocs: 'Docs', navNosotros: 'Nosotros', navContacto: 'Contacto',
+  cta: 'Solicitar acceso',
+  ctaSecondary: 'Ver cómo funciona',
+
+  heroLead: 'Cumplimiento de privacidad, datos e IA — demostrable, no declarado.',
+  heroBody: 'Ley81·Suite lleva a una empresa panameña por el ciclo completo de gobernanza de IA — GOVERN, MAP, MEASURE, MANAGE — y cierra con una atestación firmada respaldada por evidencia trazable, no por una declaración de buena voluntad.',
+  heroNote: 'Instalación de consultor o de empresa',
+  shotKicker: 'Panel de cumplimiento',
+  shotClient: 'Vista de ejemplo · Distribuidora Istmo, S.A.',
+  readinessKicker: 'Índice de preparación',
+  readinessBody: 'Cuatro de nueve brechas remediadas en los marcos activos. La atestación queda bloqueada hasta cerrar las restantes.',
+  phaseKicker: 'Avance por fase',
+  phases: [
+    { name: 'GOVERN', state: 'Completa', bar: CYAN },
+    { name: 'MAP', state: 'Completa', bar: CYAN },
+    { name: 'MEASURE', state: 'Completa', bar: CYAN },
+    { name: 'MANAGE', state: 'Firma pendiente', bar: MAG }
+  ],
+  sevKicker: 'Brechas por severidad',
+  sevC1: 'Marco', sevC2: 'Abiertas', sevC3: 'Críticas', sevC4: 'Preparación',
+  sevRows: [
+    { a: 'Ley 81 de 2019 · ANTAI', b: '0', c: '0', d: '100%' },
+    { a: 'Decreto Ejecutivo 285', b: '0', c: '0', d: '100%' },
+    { a: 'GDPR', b: '2', c: '1', d: '78%' },
+    { a: 'EU AI Act', b: '3', c: '0', d: '64%' }
+  ],
+  pillars: [
+    { k: 'Inventario', h: 'Cada sistema de IA, con nombre y responsable', p: 'Los servicios detectados en el dominio y la facturación entran como registros con datos tratados, nivel de riesgo del AI Act y estado del DPA.' },
+    { k: 'Remediación', h: 'Brechas con dueño, fecha y evidencia', p: 'Cada hallazgo lleva acción correctiva, responsable, plazo y los documentos que prueban su cierre. Sin evidencia, la brecha no se cierra.' },
+    { k: 'Atestación', h: 'Un informe que resiste una auditoría', p: 'El plan de remediación ejecutado, la declaración oficial y las firmas salen en un PDF con su paquete de evidencia adjunto.' }
+  ],
+  audienceH: 'Para quién es',
+  audienceP: 'Una sola herramienta, dos formas de instalarla: la cartera de un consultor o la operación interna de una empresa.',
+  audiences: [
+    { h: 'Consultores', p: 'Cartera de clientes, plantillas reutilizables y un solo acceso con rol de administrador, analista y auditor.' },
+    { h: 'Empresas y PYMES', p: 'Instalación propia, invitaciones por código y roles separados por acceso: cada persona ve solo lo que le toca.' },
+    { h: 'Asesoría legal', p: 'Artículos de la Ley 81, el Decreto 285 y el GDPR mapeados a obligaciones concretas y a su evidencia.' },
+    { h: 'IT y seguridad', p: 'Acceso vinculado al dispositivo, bitácora inmutable y residencia de datos declarada por instalación.' }
+  ],
+  closeH: 'Cumplir es una cosa; poder probarlo es otra.',
+  closeP: 'Ley81·Suite existe para lo segundo: convertir el trabajo de cumplimiento en un expediente verificable que se entrega a la ANTAI, a un cliente o a un auditor externo sin rehacerlo.',
+
+  prodH: 'Seis módulos, un solo expediente',
+  prodP: 'El producto se organiza como un libro de cumplimiento: inventario al frente, brechas y evidencia en el cuerpo, informes al cierre. Todo lo que se registra alimenta la atestación final.',
+  modules: [
+    { n: '01', h: 'Panel', p: 'Índice de preparación calculado sobre los marcos activos, avance por fase y brechas por severidad. Dos disposiciones: marcador o libro mayor.', d: 'El índice baja cuando entra una brecha crítica y sube solo con evidencia verificada.' },
+    { n: '02', h: 'Sistemas de IA', p: 'Inventario de proveedores y modelos propios con los datos personales que tratan, la clasificación de riesgo del EU AI Act y el estado del DPA.', d: 'Alta manual o desde los servicios detectados en dominio y facturación.' },
+    { n: '03', h: 'Brechas', p: 'Cada hallazgo con marco afectado, fase, responsable, fecha objetivo y severidad calculada. La severidad no se escribe a mano: se deriva del tipo de dato, la transferencia y la base legal.', d: 'Una brecha crítica abierta bloquea la atestación.' },
+    { n: '04', h: 'Evidencia', p: 'Repositorio de documentos ligados a su brecha: especificaciones, políticas firmadas, DPAs, SCCs y registros de prueba.', d: 'Cada documento guarda quién lo subió y cuándo.' },
+    { n: '05', h: 'Informes', p: 'Plantillas por fase y la atestación de cierre, con vista previa del documento antes de exportar.', d: 'PDF firmado, DOCX editable o paquete de evidencia en ZIP.' },
+    { n: '06', h: 'Ajustes', p: 'Datos de la empresa, marcos activos, equipo y permisos, idioma de la interfaz y de los informes.', d: 'Desactivar un marco retira sus brechas del índice, no del historial.' }
+  ],
+
+  comoH: 'Cuatro fases, en el orden en que las pide un auditor',
+  comoP: 'El ciclo sigue la estructura de gobernanza de IA que la ANTAI y el EU AI Act esperan ver documentada. Cada fase produce un artefacto; el último es la atestación.',
+  steps: [
+    { n: '1', phase: 'GOVERN', h: 'Definir quién responde', p: 'Se registran la empresa, el oficial de protección de datos, los marcos aplicables y el equipo con sus roles. Sin responsables nombrados no hay fase siguiente.', out: 'Artefacto: política de gobernanza y matriz de responsables.' },
+    { n: '2', phase: 'MAP', h: 'Mapear los sistemas de IA', p: 'Inventario de servicios y modelos, los datos personales que tocan y su clasificación de riesgo. Cada sistema abre su propia ficha y su DPA.', out: 'Artefacto: mapa de sistemas y registro de actividades de tratamiento.' },
+    { n: '3', phase: 'MEASURE', h: 'Medir contra los marcos', p: 'Muestreo real — prompts, transcripciones, salidas del modelo — contrastado con las obligaciones de cada marco activo. De aquí salen las brechas.', out: 'Artefacto: informe de medición con la muestra y el método.' },
+    { n: '4', phase: 'MANAGE', h: 'Cerrar y atestar', p: 'Cada brecha recibe acción correctiva, responsable y evidencia. Cuando todas cierran, la atestación pasa a firma del representante legal.', out: 'Artefacto: plan de remediación ejecutado y atestación firmada.' }
+  ],
+
+  consH: 'Una cartera de clientes en un solo expediente',
+  consP: 'La instalación de consultor asume que usted es administrador, analista y auditor a la vez, y que trabaja varias empresas en paralelo sin mezclar su evidencia.',
+  consPoints: [
+    { h: 'Alta de empresa en cuatro pasos', p: 'Datos de la empresa, inventario de sistemas detectados, marcos aplicables y responsables. El expediente queda abierto en fase GOVERN.' },
+    { h: 'Un acceso, tres roles', p: 'Administra la instalación, edita brechas y firma hallazgos sin cambiar de sesión ni pedir permisos a nadie.' },
+    { h: 'Plantillas que se reutilizan', p: 'Las brechas típicas de la Ley 81 y el AI Act se plantean una vez y se aplican a cada cliente nuevo con su propia evidencia.' },
+    { h: 'Informes con su firma', p: 'La atestación sale con dos firmas: el representante legal del cliente y el consultor certificador.' }
+  ],
+  consRolesK: 'Separación de clientes',
+  consRolesP: 'Cada empresa de la cartera tiene su propio expediente, su propia bitácora y su propia residencia de datos. Nada se comparte entre clientes, ni siquiera las plantillas ya rellenadas.',
+
+  empH: 'Cumplimiento interno, con los roles separados',
+  empP: 'La instalación de empresa reparte el trabajo entre las personas que ya lo hacen: legal escribe, sistemas remedia, auditoría verifica y la gerencia firma.',
+  empPoints: [
+    { h: 'Invitación por código', p: 'El administrador emite un código de un solo uso que caduca en 72 horas y define el rol de quien lo canjea.' },
+    { h: 'Sin contraseñas', p: 'El acceso se vincula al equipo con Windows Hello o Touch ID. La clave no sale del dispositivo.' },
+    { h: 'Evidencia en su sitio', p: 'Los documentos viven ligados a la brecha que prueban, no en una carpeta compartida que nadie vuelve a abrir.' },
+    { h: 'Estado listo para gerencia', p: 'El índice de preparación y las brechas críticas abiertas se leen sin explicación previa.' }
+  ],
+  empRolesK: 'Roles y acceso',
+  empRoleC1: 'Rol', empRoleC2: 'Qué puede hacer',
+  empRoles: [
+    { a: 'Administrador', b: 'Gestiona la instalación, las invitaciones y los marcos activos.' },
+    { a: 'Analista', b: 'Crea y edita brechas, sube evidencia, no firma.' },
+    { a: 'Auditor', b: 'Solo lectura sobre todo el expediente; firma hallazgos.' },
+    { a: 'Representante legal', b: 'Solo firma la atestación de cierre.' },
+    { a: 'Consultor externo', b: 'Acceso temporal a un expediente, revocable y registrado en bitácora.' }
+  ],
+
+  secH: 'Seguridad',
+  secLead: 'Una herramienta de cumplimiento que no puede acreditar su propia seguridad no sirve de nada.',
+  secSub: 'Esta página reúne cómo se controla el acceso, cómo está construido el software, dónde viven los datos y qué informes de seguridad puede pedir antes de firmar un contrato.',
+
+  secAccessK: 'Acceso',
+  secAccessH: 'Sin contraseñas que robar',
+  secAccessP: 'El acceso se vincula al equipo mediante el autenticador de la plataforma. No existe una base de contraseñas que comprometer, ni un correo de recuperación que suplantar.',
+  secAccess: [
+    { h: 'Windows Hello / Touch ID', p: 'Autenticación por hardware del dispositivo. La clave privada permanece en el enclave seguro y no se transmite.' },
+    { h: 'Alta de dispositivo explícita', p: 'Cada equipo nuevo se registra a mano por un administrador o mediante un código de un solo uso con caducidad de 72 horas.' },
+    { h: 'Roles separados por acceso', p: 'El rol se fija en el registro del dispositivo. Un analista no puede firmar, un auditor no puede editar.' },
+    { h: 'Revocación inmediata', p: 'Retirar un dispositivo corta la sesión en el acto y deja constancia en la bitácora del expediente.' }
+  ],
+
+  secDevK: 'Desarrollo',
+  secDevH: 'Cómo está construido el software',
+  secDevP: 'El ciclo de desarrollo sigue prácticas de codificación segura verificables en cada entrega, no un compromiso genérico en una página de marketing.',
+  secDev: [
+    { h: 'Modelado de amenazas', p: 'Cada módulo nuevo pasa por un análisis de amenazas documentado antes de escribirse el primer archivo. Los hallazgos entran como requisitos, no como recomendaciones.' },
+    { h: 'Revisión de código obligatoria', p: 'Ningún cambio llega a producción sin revisión de una segunda persona. Los cambios que tocan autenticación, cifrado o bitácora requieren además revisión de seguridad.' },
+    { h: 'Análisis estático y de dependencias', p: 'SAST y análisis de composición en cada integración. Una vulnerabilidad crítica en una dependencia bloquea la entrega hasta su resolución.' },
+    { h: 'OWASP ASVS como línea base', p: 'Los controles de la aplicación se verifican contra el Application Security Verification Standard; las desviaciones se registran con justificación y fecha de cierre.' },
+    { h: 'Secretos fuera del código', p: 'Credenciales y claves se gestionan en un almacén dedicado con rotación programada. El repositorio se analiza en busca de secretos filtrados en cada envío.' },
+    { h: 'Pruebas de penetración periódicas', p: 'Un tercero independiente ejecuta pruebas anuales y tras cada cambio arquitectónico mayor. El resumen ejecutivo se entrega bajo NDA.' }
+  ],
+
+  secReportsK: 'Informes de seguridad',
+  secReportsH: 'Qué puede pedir antes de firmar',
+  secReportsP: 'La documentación de seguridad se entrega a clientes y a sus auditores bajo acuerdo de confidencialidad. Solicítela desde Contacto indicando el marco que necesita acreditar.',
+  secRepC1: 'Documento', secRepC2: 'Contenido', secRepC3: 'Frecuencia', secRepC4: 'Estado',
+  secReports: [
+    { a: 'Resumen de pruebas de penetración', b: 'Alcance, hallazgos por severidad y estado de remediación', c: 'Anual', d: 'Bajo NDA', tag: 'tag-accent' },
+    { a: 'Informe de análisis estático', b: 'Cobertura SAST y hallazgos abiertos por criticidad', c: 'Por entrega', d: 'Bajo NDA', tag: 'tag-accent' },
+    { a: 'Inventario de dependencias (SBOM)', b: 'Componentes de terceros, versiones y licencias', c: 'Por versión', d: 'Bajo NDA', tag: 'tag-accent' },
+    { a: 'Política de desarrollo seguro', b: 'Ciclo de vida, revisión y criterios de bloqueo', c: 'Revisión anual', d: 'A solicitud', tag: 'tag-accent' },
+    { a: 'Plan de respuesta a incidentes', b: 'Clasificación, plazos de notificación y contactos', c: 'Revisión anual', d: 'A solicitud', tag: 'tag-accent' },
+    { a: 'Cuestionario de seguridad del cliente', b: 'Respuesta a su formulario interno de proveedores', c: 'A demanda', d: 'A solicitud', tag: 'tag-accent' }
+  ],
+  secReportsNote: 'Los plazos y el alcance concretos se confirman durante la incorporación. Ningún informe se publica sin revisión previa del cliente afectado.',
+
+  secResidencyK: 'Residencia de datos',
+  secResidencyH: 'Dónde viven los datos del cliente',
+  secResidencyP: 'La residencia se declara por instalación y queda escrita en el expediente, porque es un dato que la propia atestación tiene que poder citar.',
+  secResidency: [
+    { h: 'Datos del expediente', p: 'Brechas, evidencia y bitácora se almacenan en la región elegida al crear la instalación y no se replican fuera de ella.' },
+    { h: 'Evidencia documental', p: 'Los documentos se cifran en reposo y en tránsito; el acceso queda registrado por usuario y por documento.' },
+    { h: 'Sin entrenamiento con sus datos', p: 'El contenido de los expedientes no se utiliza para entrenar ni ajustar modelos, propios o de terceros.' }
+  ],
+
+  secLogK: 'Trazabilidad',
+  secLogH: 'Bitácora inmutable, siete años',
+  secLogP: 'El valor probatorio del expediente depende de que su historial no se pueda reescribir después del hecho.',
+  secLog: [
+    { h: 'Escritura de solo anexado', p: 'Cada cambio de estado, carga de evidencia y firma se anexa con marca de tiempo y autor. No existe edición retroactiva.' },
+    { h: 'Retención de siete años', p: 'La bitácora se conserva siete años, alineada con los plazos de conservación que exige la práctica de auditoría en Panamá.' },
+    { h: 'Exportable como prueba', p: 'La bitácora acompaña a la atestación en el paquete de evidencia, con su propio resumen de integridad.' }
+  ],
+
+  secSubK: 'Subencargados',
+  secSubH: 'Terceros con acceso a datos, declarados',
+  secSubP: 'La lista de subencargados se mantiene actualizada y los cambios se notifican con antelación. Cada uno opera bajo DPA firmado y, cuando aplica, cláusulas contractuales tipo.',
+  secSubC1: 'Subencargado', secSubC2: 'Función', secSubC3: 'Región', secSubC4: 'Instrumento',
+  secSubs: [
+    { a: 'Pendiente', b: 'Alojamiento de aplicación y base de datos', c: 'Por definir', d: 'DPA + SCC' },
+    { a: 'Pendiente', b: 'Almacenamiento de evidencia documental', c: 'Por definir', d: 'DPA + SCC' },
+    { a: 'Pendiente', b: 'Correo transaccional', c: 'Por definir', d: 'DPA' },
+    { a: 'Pendiente', b: 'Monitorización y registro de errores', c: 'Por definir', d: 'DPA' },
+    { a: 'Pendiente', b: 'Copia de seguridad cifrada', c: 'Por definir', d: 'DPA' }
+  ],
+
+  secCertK: 'Certificaciones',
+  secCertH: 'Postura de auditoría, sin adornos',
+  secCertP: 'Declaramos el estado real de cada certificación. Una insignia que aún no se ha auditado no es una garantía, y en un producto de cumplimiento sería una contradicción.',
+  secCertC1: 'Marco', secCertC2: 'Estado', secCertC3: 'Nota',
+  secCerts: [
+    { a: 'SOC 2 Tipo II', b: 'En preparación', c: 'Controles definidos; ventana de observación por iniciar', tag: 'tag-neutral' },
+    { a: 'ISO/IEC 27001', b: 'En preparación', c: 'SGSI documentado; auditoría de certificación por contratar', tag: 'tag-neutral' },
+    { a: 'ISO/IEC 42001', b: 'Evaluada', c: 'Disponible como marco dentro del producto', tag: 'tag-neutral' },
+    { a: 'OWASP ASVS', b: 'Aplicado', c: 'Verificación continua sobre la aplicación', tag: 'tag-accent' }
+  ],
+  secCertNote: 'Placeholder: las fechas de auditoría se publicarán aquí una vez constituida la sociedad en Panamá y contratado el auditor.',
+
+  secDiscloseK: 'Divulgación responsable',
+  secDiscloseH: '¿Encontró una vulnerabilidad?',
+  secDiscloseP: 'Aceptamos reportes de investigadores de seguridad y respondemos con acuse de recibo en 72 horas, una evaluación de severidad en cinco días hábiles y crédito público si lo desea. No emprendemos acciones legales contra quien investigue de buena fe dentro del alcance publicado.',
+  secDiscloseCta: 'Reportar una vulnerabilidad',
+
+  marH: 'Los marcos que el producto sabe auditar',
+  marP: 'Un marco activo aporta sus obligaciones al índice de preparación y sus brechas al plan de remediación. Desactivarlo retira sus brechas del cálculo, nunca del historial.',
+  marC1: 'Marco', marC2: 'Qué cubre', marC3: 'Aplica a', marC4: 'Estado',
+  marRows: [
+    { a: 'Ley 81 de 2019 · Panamá', b: 'Protección de datos personales: consentimiento, transparencia y derechos ARCO', c: 'Toda empresa que trate datos de residentes en Panamá', d: 'Activo', tag: 'tag-accent' },
+    { a: 'Decreto Ejecutivo 285 de 2021', b: 'Reglamento de la Ley 81: plazos, formularios y deberes ante la ANTAI', c: 'Complemento obligatorio de la Ley 81', d: 'Activo', tag: 'tag-accent' },
+    { a: 'GDPR · Reglamento (UE) 2016/679', b: 'Art. 28 encargados, registro de actividades y transferencias internacionales', c: 'Operaciones con datos de residentes en la UE', d: 'Activo', tag: 'tag-accent' },
+    { a: 'EU AI Act · Reglamento (UE) 2024/1689', b: 'Clasificación de riesgo por sistema, transparencia y registro de incidentes graves', c: 'Proveedores y usuarios de sistemas de IA con exposición a la UE', d: 'Activo', tag: 'tag-accent' },
+    { a: 'ISO/IEC 42001', b: 'Sistema de gestión de IA: política, roles, control de cambios y mejora continua', c: 'Organizaciones que buscan certificación de gestión de IA', d: 'Opcional', tag: 'tag-neutral' }
+  ],
+  marNote: 'El Proyecto de Ley 588 se sigue como referencia de transparencia algorítmica y se incorporará como marco propio cuando entre en vigor.',
+
+  docsH: 'Documentación',
+  docsP: 'La documentación se publicará junto con el acceso general. Este índice refleja las secciones previstas.',
+  docsLink: 'Próximamente →',
+  docsSections: [
+    { k: 'Inicio', h: 'Instalación y alta', p: 'Instalación de consultor o de empresa, registro del primer dispositivo y creación del expediente.' },
+    { k: 'Inventario', h: 'Registrar sistemas de IA', p: 'Campos del registro, clasificación de riesgo del AI Act y seguimiento de DPAs.' },
+    { k: 'Brechas', h: 'Ciclo de una brecha', p: 'Cómo se calcula la severidad, qué evidencia acepta el cierre y qué bloquea la atestación.' },
+    { k: 'Evidencia', h: 'Formatos y retención', p: 'Tipos de documento admitidos, límites, cifrado y política de conservación.' },
+    { k: 'Informes', h: 'Plantillas y exportación', p: 'Plantillas por fase, campos de la atestación y contenido del paquete ZIP.' },
+    { k: 'Administración', h: 'Equipo, roles y marcos', p: 'Invitaciones, matriz de permisos, activación de marcos y residencia de datos.' }
+  ],
+  docsNote: 'Placeholder: los enlaces se activarán al publicarse la documentación.',
+
+  aboutH: 'Una herramienta hecha desde la práctica del cumplimiento',
+  aboutP1: 'Ley81·Suite nace del trabajo de consultoría en privacidad y gobernanza de IA en Panamá: expedientes armados a mano, evidencia dispersa en carpetas y atestaciones que dependían de la memoria del consultor.',
+  aboutP2: 'El producto convierte ese trabajo en un expediente único, verificable y exportable, alineado con la Ley 81 de 2019, su reglamento y los marcos internacionales que ya exigen los clientes con exposición europea.',
+  aboutFacts: [
+    { k: 'Sociedad', h: 'Placeholder', p: 'La razón social y el RUC se publicarán al constituirse la sociedad en Panamá.' },
+    { k: 'Sede', h: 'Ciudad de Panamá', p: 'Operación local, con atención en español e inglés.' },
+    { k: 'Estado', h: 'Acceso anticipado', p: 'Instalaciones piloto con consultores y empresas seleccionadas.' }
+  ],
+
+  contH: 'Hablemos de su expediente',
+  contP: 'Cuéntenos si trabaja una cartera de clientes o una sola empresa, y qué marcos necesita acreditar. Respondemos en español o inglés.',
+  contName: 'Nombre', contNamePh: 'Nombre y apellido',
+  contEmail: 'Correo', contEmailPh: 'nombre@empresa.com',
+  contType: 'Tipo de consulta',
+  contType1: 'Acceso anticipado · consultor', contType2: 'Acceso anticipado · empresa', contType3: 'Informes de seguridad y cuestionario de proveedor',
+  contMsg: 'Mensaje', contMsgPh: 'Marcos a acreditar, número de sistemas de IA, plazo previsto.',
+  contSend: 'Enviar',
+  contBlocks: [
+    { k: 'Correo', v: 'Placeholder — pendiente de constitución' },
+    { k: 'Teléfono', v: 'Placeholder — pendiente de constitución' },
+    { k: 'Dirección', v: 'Placeholder — Ciudad de Panamá' }
+  ],
+  contNote: 'Los datos de contacto se publicarán una vez constituida la sociedad en Panamá.',
+
+  footLeft: 'Ley81·Suite — Gobernanza de IA y protección de datos',
+  footRight: 'Placeholder legal · Panamá'
+};
+
+const EN = {
+  dateline: 'Law 81 of 2019 · ANTAI · Panama',
+  navProducto: 'Product', navComo: 'How it works', navConsultores: 'For consultants',
+  navEmpresas: 'For companies', navSeguridad: 'Security', navMarcos: 'Frameworks',
+  navDocs: 'Docs', navNosotros: 'About', navContacto: 'Contact',
+  cta: 'Request access',
+  ctaSecondary: 'See how it works',
+
+  heroLead: 'Privacy, data and AI compliance you can prove, not just claim.',
+  heroBody: 'Ley81·Suite takes a Panamanian company through the full AI governance cycle — GOVERN, MAP, MEASURE, MANAGE — and closes with a signed attestation backed by traceable evidence rather than a statement of good intent.',
+  heroNote: 'Consultant or company install',
+  shotKicker: 'Compliance dashboard',
+  shotClient: 'Sample view · Distribuidora Istmo, S.A.',
+  readinessKicker: 'Readiness index',
+  readinessBody: 'Four of nine gaps remediated across the active frameworks. Attestation stays blocked until the rest are closed.',
+  phaseKicker: 'Progress by phase',
+  phases: [
+    { name: 'GOVERN', state: 'Complete', bar: CYAN },
+    { name: 'MAP', state: 'Complete', bar: CYAN },
+    { name: 'MEASURE', state: 'Complete', bar: CYAN },
+    { name: 'MANAGE', state: 'Signature pending', bar: MAG }
+  ],
+  sevKicker: 'Gaps by severity',
+  sevC1: 'Framework', sevC2: 'Open', sevC3: 'Critical', sevC4: 'Readiness',
+  sevRows: [
+    { a: 'Law 81 of 2019 · ANTAI', b: '0', c: '0', d: '100%' },
+    { a: 'Executive Decree 285', b: '0', c: '0', d: '100%' },
+    { a: 'GDPR', b: '2', c: '1', d: '78%' },
+    { a: 'EU AI Act', b: '3', c: '0', d: '64%' }
+  ],
+  pillars: [
+    { k: 'Inventory', h: 'Every AI system, named and owned', p: 'Services detected across your domain and billing become records carrying the data they process, their AI Act risk tier and DPA status.' },
+    { k: 'Remediation', h: 'Gaps with an owner, a date and evidence', p: 'Each finding carries a corrective action, an owner, a deadline and the documents that prove closure. No evidence, no closure.' },
+    { k: 'Attestation', h: 'A report that survives an audit', p: 'The executed remediation plan, the official statement and the signatures export as a PDF with its evidence package attached.' }
+  ],
+  audienceH: 'Who it is for',
+  audienceP: 'One tool, two ways to install it: a consultant’s client portfolio, or a company’s own operation.',
+  audiences: [
+    { h: 'Consultants', p: 'Client portfolio, reusable templates and a single sign-in carrying the admin, analyst and auditor roles.' },
+    { h: 'Companies and SMEs', p: 'Your own install, code-based invitations and roles split by sign-in: each person sees only their part.' },
+    { h: 'Legal counsel', p: 'Law 81, Decree 285 and GDPR articles mapped to concrete obligations and to the evidence that satisfies them.' },
+    { h: 'IT and security', p: 'Device-bound access, an immutable audit log and data residency declared per install.' }
+  ],
+  closeH: 'Complying is one thing; proving it is another.',
+  closeP: 'Ley81·Suite exists for the second: turning compliance work into a verifiable file you can hand to ANTAI, to a client or to an external auditor without rebuilding it.',
+
+  prodH: 'Six modules, one file',
+  prodP: 'The product is laid out like a compliance ledger: inventory at the front, gaps and evidence in the body, reports at the close. Everything recorded feeds the final attestation.',
+  modules: [
+    { n: '01', h: 'Dashboard', p: 'Readiness index computed over the active frameworks, progress by phase and gaps by severity. Two layouts: scoreboard or ledger.', d: 'The index drops when a critical gap opens and rises only on verified evidence.' },
+    { n: '02', h: 'AI systems', p: 'Inventory of vendors and in-house models with the personal data they process, the EU AI Act risk classification and DPA status.', d: 'Added by hand or from services detected across domain and billing.' },
+    { n: '03', h: 'Gaps', p: 'Each finding with its framework, phase, owner, target date and calculated severity. Severity is not typed in: it derives from data type, transfer and legal basis.', d: 'One open critical gap blocks attestation.' },
+    { n: '04', h: 'Evidence', p: 'Document vault tied to the gap each item proves: specifications, signed policies, DPAs, SCCs and test logs.', d: 'Every document records who uploaded it and when.' },
+    { n: '05', h: 'Reports', p: 'Templates per phase plus the closing attestation, with a document preview before export.', d: 'Signed PDF, editable DOCX or evidence package as ZIP.' },
+    { n: '06', h: 'Settings', p: 'Company details, active frameworks, team and permissions, interface and report language.', d: 'Turning a framework off removes its gaps from the index, not from the history.' }
+  ],
+
+  comoH: 'Four phases, in the order an auditor asks for them',
+  comoP: 'The cycle follows the AI governance structure ANTAI and the EU AI Act expect to see documented. Each phase produces an artifact; the last one is the attestation.',
+  steps: [
+    { n: '1', phase: 'GOVERN', h: 'Establish who answers', p: 'The company, the data protection officer, the applicable frameworks and the team with their roles are registered. No named owners, no next phase.', out: 'Artifact: governance policy and responsibility matrix.' },
+    { n: '2', phase: 'MAP', h: 'Map the AI systems', p: 'Inventory of services and models, the personal data they touch and their risk classification. Each system opens its own record and DPA.', out: 'Artifact: system map and record of processing activities.' },
+    { n: '3', phase: 'MEASURE', h: 'Measure against the frameworks', p: 'Real sampling — prompts, transcripts, model output — tested against the obligations of each active framework. This is where gaps come from.', out: 'Artifact: measurement report with sample and method.' },
+    { n: '4', phase: 'MANAGE', h: 'Close and attest', p: 'Each gap gets a corrective action, an owner and evidence. When all close, the attestation goes to the legal representative for signature.', out: 'Artifact: executed remediation plan and signed attestation.' }
+  ],
+
+  consH: 'A client portfolio in a single file',
+  consP: 'The consultant install assumes you are admin, analyst and auditor at once, and that you run several companies in parallel without mixing their evidence.',
+  consPoints: [
+    { h: 'Company setup in four steps', p: 'Company details, detected system inventory, applicable frameworks and owners. The file opens in the GOVERN phase.' },
+    { h: 'One sign-in, three roles', p: 'Administer the install, edit gaps and sign findings without switching sessions or requesting permissions.' },
+    { h: 'Templates that carry over', p: 'The usual Law 81 and AI Act gaps are written once and applied to each new client with its own evidence.' },
+    { h: 'Reports under your signature', p: 'The attestation carries two signatures: the client’s legal representative and the certifying consultant.' }
+  ],
+  consRolesK: 'Client separation',
+  consRolesP: 'Every company in the portfolio has its own file, its own audit log and its own data residency. Nothing is shared across clients, not even filled-in templates.',
+
+  empH: 'Internal compliance, with the roles kept apart',
+  empP: 'The company install splits the work across the people already doing it: legal writes, systems remediates, audit verifies and management signs.',
+  empPoints: [
+    { h: 'Invitation by code', p: 'The admin issues a single-use code that expires in 72 hours and sets the role of whoever redeems it.' },
+    { h: 'No passwords', p: 'Access is bound to the machine with Windows Hello or Touch ID. The key never leaves the device.' },
+    { h: 'Evidence where it belongs', p: 'Documents live attached to the gap they prove, not in a shared folder nobody opens again.' },
+    { h: 'Status legible to management', p: 'The readiness index and the open critical gaps read without a briefing.' }
+  ],
+  empRolesK: 'Roles and access',
+  empRoleC1: 'Role', empRoleC2: 'What they can do',
+  empRoles: [
+    { a: 'Admin', b: 'Manages the install, invitations and active frameworks.' },
+    { a: 'Analyst', b: 'Creates and edits gaps, uploads evidence, does not sign.' },
+    { a: 'Auditor', b: 'Read-only across the whole file; signs findings.' },
+    { a: 'Legal representative', b: 'Signs the closing attestation only.' },
+    { a: 'External consultant', b: 'Temporary access to one file, revocable and recorded in the log.' }
+  ],
+
+  secH: 'Security',
+  secLead: 'A compliance tool that cannot account for its own security is worth nothing.',
+  secSub: 'This page sets out how access is controlled, how the software is built, where data lives, and which security reports you can request before signing a contract.',
+
+  secAccessK: 'Access',
+  secAccessH: 'No passwords to steal',
+  secAccessP: 'Access is bound to the machine through the platform authenticator. There is no password database to compromise and no recovery email to impersonate.',
+  secAccess: [
+    { h: 'Windows Hello / Touch ID', p: 'Hardware-backed device authentication. The private key stays in the secure enclave and is never transmitted.' },
+    { h: 'Explicit device enrolment', p: 'Each new machine is enrolled by an admin or through a single-use code that expires in 72 hours.' },
+    { h: 'Roles split by sign-in', p: 'The role is fixed at device enrolment. An analyst cannot sign; an auditor cannot edit.' },
+    { h: 'Immediate revocation', p: 'Removing a device ends the session at once and leaves a record in the file’s audit log.' }
+  ],
+
+  secDevK: 'Development',
+  secDevH: 'How the software is built',
+  secDevP: 'The development cycle follows secure coding practices that can be verified per release, not a generic commitment on a marketing page.',
+  secDev: [
+    { h: 'Threat modelling', p: 'Every new module goes through a documented threat analysis before the first file is written. Findings enter as requirements, not recommendations.' },
+    { h: 'Mandatory code review', p: 'No change reaches production without a second reviewer. Changes touching authentication, encryption or the audit log also require security review.' },
+    { h: 'Static and dependency analysis', p: 'SAST and software composition analysis on every integration. A critical dependency vulnerability blocks the release until it is resolved.' },
+    { h: 'OWASP ASVS as the baseline', p: 'Application controls are verified against the Application Security Verification Standard; deviations are recorded with a rationale and a closing date.' },
+    { h: 'Secrets out of the code', p: 'Credentials and keys are held in a dedicated store with scheduled rotation. The repository is scanned for leaked secrets on every push.' },
+    { h: 'Regular penetration testing', p: 'An independent third party tests annually and after each major architectural change. The executive summary is shared under NDA.' }
+  ],
+
+  secReportsK: 'Security reports',
+  secReportsH: 'What you can request before signing',
+  secReportsP: 'Security documentation is provided to clients and their auditors under a confidentiality agreement. Request it from Contact, stating the framework you need to satisfy.',
+  secRepC1: 'Document', secRepC2: 'Contents', secRepC3: 'Frequency', secRepC4: 'Availability',
+  secReports: [
+    { a: 'Penetration test summary', b: 'Scope, findings by severity and remediation status', c: 'Annual', d: 'Under NDA', tag: 'tag-accent' },
+    { a: 'Static analysis report', b: 'SAST coverage and open findings by criticality', c: 'Per release', d: 'Under NDA', tag: 'tag-accent' },
+    { a: 'Dependency inventory (SBOM)', b: 'Third-party components, versions and licences', c: 'Per version', d: 'Under NDA', tag: 'tag-accent' },
+    { a: 'Secure development policy', b: 'Lifecycle, review and release-blocking criteria', c: 'Annual review', d: 'On request', tag: 'tag-accent' },
+    { a: 'Incident response plan', b: 'Classification, notification windows and contacts', c: 'Annual review', d: 'On request', tag: 'tag-accent' },
+    { a: 'Client security questionnaire', b: 'Response to your internal vendor form', c: 'On demand', d: 'On request', tag: 'tag-accent' }
+  ],
+  secReportsNote: 'Exact scope and timing are confirmed during onboarding. No report is published without prior review by the client concerned.',
+
+  secResidencyK: 'Data residency',
+  secResidencyH: 'Where client data lives',
+  secResidencyP: 'Residency is declared per install and written into the file, because it is a fact the attestation itself has to be able to cite.',
+  secResidency: [
+    { h: 'File data', p: 'Gaps, evidence and the audit log are stored in the region chosen at install and are not replicated outside it.' },
+    { h: 'Documentary evidence', p: 'Documents are encrypted at rest and in transit; access is logged per user and per document.' },
+    { h: 'No training on your data', p: 'File contents are never used to train or fine-tune models, our own or anyone else’s.' }
+  ],
+
+  secLogK: 'Traceability',
+  secLogH: 'Immutable log, seven years',
+  secLogP: 'The evidentiary value of the file depends on its history not being rewritable after the fact.',
+  secLog: [
+    { h: 'Append-only writes', p: 'Every status change, evidence upload and signature is appended with a timestamp and an author. There is no retroactive editing.' },
+    { h: 'Seven-year retention', p: 'The log is kept for seven years, in line with the retention periods Panamanian audit practice expects.' },
+    { h: 'Exportable as proof', p: 'The log travels with the attestation in the evidence package, with its own integrity digest.' }
+  ],
+
+  secSubK: 'Subprocessors',
+  secSubH: 'Third parties with data access, declared',
+  secSubP: 'The subprocessor list is kept current and changes are notified in advance. Each operates under a signed DPA and, where applicable, standard contractual clauses.',
+  secSubC1: 'Subprocessor', secSubC2: 'Function', secSubC3: 'Region', secSubC4: 'Instrument',
+  secSubs: [
+    { a: 'Pending', b: 'Application and database hosting', c: 'To be defined', d: 'DPA + SCC' },
+    { a: 'Pending', b: 'Documentary evidence storage', c: 'To be defined', d: 'DPA + SCC' },
+    { a: 'Pending', b: 'Transactional email', c: 'To be defined', d: 'DPA' },
+    { a: 'Pending', b: 'Monitoring and error logging', c: 'To be defined', d: 'DPA' },
+    { a: 'Pending', b: 'Encrypted backup', c: 'To be defined', d: 'DPA' }
+  ],
+
+  secCertK: 'Certifications',
+  secCertH: 'Audit posture, unembellished',
+  secCertP: 'We state the real status of each certification. A badge that has not been audited yet is not a guarantee, and in a compliance product it would be a contradiction.',
+  secCertC1: 'Framework', secCertC2: 'Status', secCertC3: 'Note',
+  secCerts: [
+    { a: 'SOC 2 Type II', b: 'In preparation', c: 'Controls defined; observation window not yet started', tag: 'tag-neutral' },
+    { a: 'ISO/IEC 27001', b: 'In preparation', c: 'ISMS documented; certification audit not yet engaged', tag: 'tag-neutral' },
+    { a: 'ISO/IEC 42001', b: 'Assessed', c: 'Available as a framework inside the product', tag: 'tag-neutral' },
+    { a: 'OWASP ASVS', b: 'Applied', c: 'Continuous verification against the application', tag: 'tag-accent' }
+  ],
+  secCertNote: 'Placeholder: audit dates will be published here once the company is incorporated in Panama and the auditor engaged.',
+
+  secDiscloseK: 'Responsible disclosure',
+  secDiscloseH: 'Found a vulnerability?',
+  secDiscloseP: 'We accept reports from security researchers and respond with acknowledgement within 72 hours, a severity assessment within five business days, and public credit if you want it. We take no legal action against good-faith research within the published scope.',
+  secDiscloseCta: 'Report a vulnerability',
+
+  marH: 'The frameworks the product knows how to audit',
+  marP: 'An active framework contributes its obligations to the readiness index and its gaps to the remediation plan. Turning it off removes its gaps from the calculation, never from the history.',
+  marC1: 'Framework', marC2: 'What it covers', marC3: 'Applies to', marC4: 'Status',
+  marRows: [
+    { a: 'Law 81 of 2019 · Panama', b: 'Personal data protection: consent, transparency and data subject rights', c: 'Any company processing data of Panamanian residents', d: 'Active', tag: 'tag-accent' },
+    { a: 'Executive Decree 285 of 2021', b: 'Law 81 regulation: deadlines, forms and duties before ANTAI', c: 'Mandatory complement to Law 81', d: 'Active', tag: 'tag-accent' },
+    { a: 'GDPR · Regulation (EU) 2016/679', b: 'Art. 28 processors, record of processing and international transfers', c: 'Operations involving EU residents’ data', d: 'Active', tag: 'tag-accent' },
+    { a: 'EU AI Act · Regulation (EU) 2024/1689', b: 'Per-system risk classification, transparency and serious incident reporting', c: 'Providers and deployers of AI systems with EU exposure', d: 'Active', tag: 'tag-accent' },
+    { a: 'ISO/IEC 42001', b: 'AI management system: policy, roles, change control and continuous improvement', c: 'Organisations pursuing AI management certification', d: 'Optional', tag: 'tag-neutral' }
+  ],
+  marNote: 'Bill 588 is tracked as an algorithmic transparency reference and will be added as its own framework once in force.',
+
+  docsH: 'Documentation',
+  docsP: 'Documentation will be published alongside general access. This index reflects the planned sections.',
+  docsLink: 'Coming soon →',
+  docsSections: [
+    { k: 'Start', h: 'Install and setup', p: 'Consultant or company install, first device enrolment and opening the file.' },
+    { k: 'Inventory', h: 'Registering AI systems', p: 'Record fields, AI Act risk classification and DPA tracking.' },
+    { k: 'Gaps', h: 'The life of a gap', p: 'How severity is calculated, what evidence closure accepts and what blocks attestation.' },
+    { k: 'Evidence', h: 'Formats and retention', p: 'Accepted document types, limits, encryption and retention policy.' },
+    { k: 'Reports', h: 'Templates and export', p: 'Phase templates, attestation fields and the contents of the ZIP package.' },
+    { k: 'Administration', h: 'Team, roles and frameworks', p: 'Invitations, permission matrix, framework activation and data residency.' }
+  ],
+  docsNote: 'Placeholder: links will go live when the documentation is published.',
+
+  aboutH: 'Built out of compliance practice',
+  aboutP1: 'Ley81·Suite comes out of privacy and AI governance consulting in Panama: files assembled by hand, evidence scattered across folders, and attestations that relied on the consultant’s memory.',
+  aboutP2: 'The product turns that work into a single verifiable, exportable file, aligned with Law 81 of 2019, its regulation and the international frameworks clients with European exposure already demand.',
+  aboutFacts: [
+    { k: 'Entity', h: 'Placeholder', p: 'Legal name and tax ID will be published once the company is incorporated in Panama.' },
+    { k: 'Base', h: 'Panama City', p: 'Local operation, supported in Spanish and English.' },
+    { k: 'Status', h: 'Early access', p: 'Pilot installs with selected consultants and companies.' }
+  ],
+
+  contH: 'Let’s talk about your file',
+  contP: 'Tell us whether you run a client portfolio or a single company, and which frameworks you need to satisfy. We answer in Spanish or English.',
+  contName: 'Name', contNamePh: 'First and last name',
+  contEmail: 'Email', contEmailPh: 'name@company.com',
+  contType: 'Enquiry type',
+  contType1: 'Early access · consultant', contType2: 'Early access · company', contType3: 'Security reports and vendor questionnaire',
+  contMsg: 'Message', contMsgPh: 'Frameworks to satisfy, number of AI systems, expected timeline.',
+  contSend: 'Send',
+  contBlocks: [
+    { k: 'Email', v: 'Placeholder — pending incorporation' },
+    { k: 'Phone', v: 'Placeholder — pending incorporation' },
+    { k: 'Address', v: 'Placeholder — Panama City' }
+  ],
+  contNote: 'Contact details will be published once the company is incorporated in Panama.',
+
+  footLeft: 'Ley81·Suite — AI governance and data protection',
+  footRight: 'Legal placeholder · Panama'
+};
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { page: props.startPage ?? 'home', lang: props.language ?? 'es' };
+  }
+
+  go(page) {
+    return (e) => { if (e) e.preventDefault(); this.setState({ page }); window.scrollTo(0, 0); };
+  }
+
+  renderVals() {
+    const p = this.state.page;
+    const lang = this.state.lang;
+    const t = lang === 'en' ? EN : ES;
+    const cur = (k) => (p === k ? 'page' : undefined);
+    return {
+      t,
+      noop: (e) => { if (e) e.preventDefault(); },
+      isHome: p === 'home',
+      isProducto: p === 'producto',
+      isComo: p === 'como',
+      isConsultores: p === 'consultores',
+      isEmpresas: p === 'empresas',
+      isSeguridad: p === 'seguridad',
+      isMarcos: p === 'marcos',
+      isDocs: p === 'docs',
+      isNosotros: p === 'nosotros',
+      isContacto: p === 'contacto',
+      curProducto: cur('producto'), curComo: cur('como'), curConsultores: cur('consultores'),
+      curEmpresas: cur('empresas'), curSeguridad: cur('seguridad'), curMarcos: cur('marcos'),
+      curDocs: cur('docs'), curNosotros: cur('nosotros'), curContacto: cur('contacto'),
+      goHome: this.go('home'), goProducto: this.go('producto'), goComo: this.go('como'),
+      goConsultores: this.go('consultores'), goEmpresas: this.go('empresas'),
+      goSeguridad: this.go('seguridad'), goMarcos: this.go('marcos'), goDocs: this.go('docs'),
+      goNosotros: this.go('nosotros'), goContacto: this.go('contacto'),
+      isEs: lang === 'es',
+      isEn: lang === 'en',
+      pickEs: () => this.setState({ lang: 'es' }),
+      pickEn: () => this.setState({ lang: 'en' })
+    };
+  }
+}
+</script>
+</body>
+</html>
