@@ -26,3 +26,13 @@ Deploy checklist (needs Marc's Cloudflare account): `wrangler login`; `wrangler 
 - Offline licences cannot be remotely revoked.
 - Expiry trusts the system clock, with one guard (Ley81-Suite only, added 2026-10-04): before generating a report the app compares the clock with the newest timestamp in the project's encrypted audit log and refuses if the clock is more than **24 hours** behind it. This stops "use the app past expiry, then set the clock back". It cannot stop freezing the clock before expiry and never advancing it. Side effect: if a computer's clock was once set more than 24 hours *forward* while the app was in use, reports stay locked in that project until real time catches up.
 - Which reports are gated: the PDF/DOCX report documents (status report, attestation PDF/DOCX/evidence package, certificate, compliance report DOCX). Raw data exports (project JSON, controls CSV, full audit package) stay available so customers always keep access to their own data.
+
+## Outstanding before deploy
+Needs Marc's input:
+- Create the Zero Trust organisation (if not already) and note the team name (`<team>.cloudflareaccess.com`).
+- Decide the admin email for the allowlist. The repo uses placeholders only; the real address is not committed.
+
+Then deploy:
+1. Create the D1 database.
+2. Create the Access application on `admin.ley81-suite.com`.
+3. Run `wrangler deploy`.
