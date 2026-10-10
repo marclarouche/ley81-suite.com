@@ -12,9 +12,14 @@ import {
 const toolDir = new URL('../../tools/', import.meta.url).pathname;
 const seed = join(toolDir, 'fixtures/test-seed.hex');
 const PUB = execFileSync('node', [join(toolDir, 'ley81-sign.mjs'), 'pubkey', '--key-file', seed]).toString().trim();
-const NOW = new Date('2026-10-04T12:00:00Z');
+// The signing tool stamps issued_at with the real clock, and the server rejects an issue date more than a day
+// ahead of `now`, so the test clock must be real. Expiry dates are relative to it so the suite never goes stale.
+const NOW = new Date();
+const ymdInYears = (n: number) => { const d = new Date(NOW); d.setUTCFullYear(d.getUTCFullYear() + n); return d.toISOString().slice(0, 10); };
+const IN_1Y = ymdInYears(1);
+const IN_2Y = ymdInYears(2);
 const FP = 'c'.repeat(64);
-const req = { customer: 'Acme Consulting', email: 'ops@acme.test', tier: 'consultant', fingerprint: FP, expires: '2027-10-03' };
+const req = { customer: 'Acme Consulting', email: 'ops@acme.test', tier: 'consultant', fingerprint: FP, expires: IN_1Y };
 
 function sign(request: object): string {
   const dir = mkdtempSync(join(tmpdir(), 'repo-'));
@@ -69,11 +74,11 @@ test('renewal: requested for an issued licence; issuing it supersedes the old on
   const db = makeTestDb();
   const first = await createLicenseRequest(db, req, 'm', NOW);
   assert.ok(first.ok); if (!first.ok) return;
-  assert.ok(!(await createRenewal(db, first.value.license_id, '2028-10-03', 'm', NOW)).ok, 'cannot renew a licence that is not issued yet');
+  assert.ok(!(await createRenewal(db, first.value.license_id, IN_2Y, 'm', NOW)).ok, 'cannot renew a licence that is not issued yet');
   assert.ok((await attachSignedLicense(db, first.value.license_id, sign(signingRequestFor(first.value)), PUB, 'm', NOW)).ok);
 
-  assert.ok(!(await createRenewal(db, first.value.license_id, '2027-10-03', 'm', NOW)).ok, 'must expire later');
-  const renewal = await createRenewal(db, first.value.license_id, '2028-10-03', 'm', NOW);
+  assert.ok(!(await createRenewal(db, first.value.license_id, IN_1Y, 'm', NOW)).ok, 'must expire later');
+  const renewal = await createRenewal(db, first.value.license_id, IN_2Y, 'm', NOW);
   assert.ok(renewal.ok); if (!renewal.ok) return;
   assert.equal(renewal.value.renews_license_id, first.value.license_id);
   assert.equal(renewal.value.fingerprint, FP);
