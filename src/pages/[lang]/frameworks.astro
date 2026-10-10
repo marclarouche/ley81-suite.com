@@ -4,8 +4,8 @@ import { getStaticPaths as gsp, type Lang } from '../../config';
 export const getStaticPaths = gsp;
 const lang = Astro.params.lang as Lang;
 const c = {
-  es: { title: 'Marcos normativos', desc: 'Diez marcos en Ley81·Suite: Ley 81 y Decreto 285 de Panamá, RGPD, NIST CSF 2.0, ISO/IEC 27001, Ley 478, Ley de IA de la UE, ISO/IEC 42001, COBIT 2019 y la Resolución AIG 07.',
-    h1: 'Diez marcos cubiertos', lede: 'Cada marco se activa o desactiva por cliente. El conjunto activo determina la preparación, los filtros y la redacción de los informes en toda la aplicación.',
+  es: { title: 'Marcos normativos', desc: 'Once marcos en Ley81·Suite: Ley 81 y Decreto 285 de Panamá, RGPD, NIST CSF 2.0, ISO/IEC 27001, Ley 478, Ley de IA de la UE, ISO/IEC 42001, controles de IA agéntica y Zero Trust, COBIT 2019 y la Resolución AIG 07.',
+    h1: 'Once marcos cubiertos', lede: 'Cada marco se activa o desactiva por cliente. El conjunto activo determina la preparación, los filtros y la redacción de los informes en toda la aplicación.',
     h: ['Marco', 'Qué cubre'],
     groups: [
       ['Privacidad y protección de datos', [
@@ -22,6 +22,7 @@ const c = {
       ['Inteligencia artificial', [
         ['Ley de IA de la UE', '37 artículos, actualizados con los cambios del "Digital Omnibus" de 2026. Catálogo contrastado con el AI Act Service Desk de la Comisión Europea.'],
         ['ISO/IEC 42001', 'Sistema de gestión de IA.'],
+        ['IA agéntica y Zero Trust', '19 controles para agentes de IA: inventario y responsable de cada agente, alcance documentado y mínimo privilegio, un punto de aplicación de políticas, filtrado de inyección de instrucciones, aprobación humana de las acciones de alto impacto, límites de frecuencia con interruptores de seguridad y verificación de la cadena de suministro. Redacción propia, informada por orientaciones públicas de la industria; no es un estándar oficial.'],
       ]],
       ['Gobierno y auditoría de TI', [
         ['COBIT 2019', '40 objetivos de gobierno y gestión, con ids y nombres de ISACA y redacción propia.'],
@@ -33,8 +34,8 @@ const c = {
     extra: 'Los controles relacionados entre marcos (por ejemplo, de Ley 81, Ley 478 y la Resolución AIG 07 hacia otros marcos) son sugerencias basadas en nuestro criterio, no una correspondencia oficial. Una evidencia puede vincularse a varios controles y revisarse en el control de destino, idealmente por una segunda persona.',
     note: 'Ley81·Suite apoya la documentación y la evaluación; no certifica ni garantiza el cumplimiento de ningún marco. Una persona calificada sigue siendo quien determina el cumplimiento. El texto en español y los catálogos de la Ley 478 y la Resolución AIG 07 están pendientes de revisión legal.',
   },
-  en: { title: 'Frameworks', desc: 'Ten frameworks in Ley81·Suite: Panama Law 81 and Decree 285, GDPR, NIST CSF 2.0, ISO/IEC 27001, Law 478, the EU AI Act, ISO/IEC 42001, COBIT 2019 and AIG Resolution 07.',
-    h1: 'Ten frameworks covered', lede: 'Each framework is switched on or off per client. The active set drives readiness scoring, filtering and report wording throughout the application.',
+  en: { title: 'Frameworks', desc: 'Eleven frameworks in Ley81·Suite: Panama Law 81 and Decree 285, GDPR, NIST CSF 2.0, ISO/IEC 27001, Law 478, the EU AI Act, ISO/IEC 42001, agentic AI and Zero Trust controls, COBIT 2019 and AIG Resolution 07.',
+    h1: 'Eleven frameworks covered', lede: 'Each framework is switched on or off per client. The active set drives readiness scoring, filtering and report wording throughout the application.',
     h: ['Framework', 'What it covers'],
     groups: [
       ['Privacy and data protection', [
@@ -51,6 +52,7 @@ const c = {
       ['Artificial intelligence', [
         ['EU AI Act', '37 articles, kept current with the 2026 Digital Omnibus changes. Catalog checked against the European Commission’s AI Act Service Desk.'],
         ['ISO/IEC 42001', 'AI management system standard.'],
+        ['Agentic AI and Zero Trust', '19 controls for AI agents: an inventory and named owner for every agent, documented scope and least privilege, a policy enforcement point, prompt-injection screening, human approval for high-impact actions, rate limits with circuit breakers and supply-chain verification. Our own wording, informed by public industry guidance; it is not an official standard.'],
       ]],
       ['IT governance and audit', [
         ['COBIT 2019', '40 governance and management objectives, using ISACA’s ids and names with our own wording.'],
