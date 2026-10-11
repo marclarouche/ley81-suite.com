@@ -150,3 +150,17 @@ test('full lifecycle: request → sign offline → upload → deliver → renew 
   }
   assert.ok(audit.includes('marc@example.test'), 'actor recorded');
 });
+
+test('CSRF: browser Sec-Fetch-Site decides when present (a same-origin post can carry Origin: null under no-referrer)', async () => {
+  const { env } = setup();
+  const deps: Deps = { verifyAccess: async () => ({ ok: true, email: 'marc@example.test' }), now: () => NOW };
+  const post = (headers: Record<string, string>) => {
+    const body = new FormData();
+    for (const [k, v] of Object.entries(newLic)) body.append(k, v);
+    return handle(new Request(ORIGIN + '/admin/licenses', { method: 'POST', headers, body }), env, deps);
+  };
+  assert.equal((await post({ Origin: 'null', 'Sec-Fetch-Site': 'same-origin' })).status, 303);
+  assert.equal((await post({ Origin: ORIGIN, 'Sec-Fetch-Site': 'cross-site' })).status, 403);
+  assert.equal((await post({ 'Sec-Fetch-Site': 'same-site' })).status, 403);
+  assert.equal((await post({ Origin: 'null' })).status, 403);
+});

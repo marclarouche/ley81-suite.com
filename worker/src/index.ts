@@ -54,11 +54,18 @@ function respond(body: BodyInit | null, status = 200, extra: Record<string, stri
 const html = (body: string, status = 200) => respond(body, status, { 'Content-Type': 'text/html; charset=utf-8' });
 const redirect = (to: string) => respond(null, 303, { Location: to });
 
-/** State-changing requests must come from this same origin (CSRF defence in depth). */
+/**
+ * State-changing requests must come from this same origin (CSRF defence in
+ * depth). Sec-Fetch-Site is set by the browser and cannot be forged by a page,
+ * so it decides when present. Origin is the fallback: with our no-referrer
+ * policy a genuine same-origin form post can carry `Origin: null`, which is
+ * why Origin alone is not enough.
+ */
 function sameOrigin(req: Request): boolean {
+  const site = req.headers.get('Sec-Fetch-Site');
+  if (site) return site === 'same-origin';
   const origin = req.headers.get('Origin');
-  if (origin) return origin === new URL(req.url).origin;
-  return req.headers.get('Sec-Fetch-Site') === 'same-origin';
+  return !!origin && origin === new URL(req.url).origin;
 }
 
 const LIC_ID = /^lic_[0-9a-f]{12}$/;
