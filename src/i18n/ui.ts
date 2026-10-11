@@ -11,6 +11,7 @@ export const ui = {
       frameworks: 'Marcos normativos',
       samples: 'Informes de muestra',
       security: 'Seguridad y privacidad',
+      maintenance: 'Licencia y mantenimiento',
       demo: 'Solicitar demo',
     },
     footer: {
@@ -37,6 +38,7 @@ export const ui = {
       frameworks: 'Frameworks',
       samples: 'Sample reports',
       security: 'Security & privacy',
+      maintenance: 'Licence and maintenance',
       demo: 'Request a demo',
     },
     footer: {

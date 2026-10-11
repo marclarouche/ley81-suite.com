@@ -1,0 +1,84 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getStaticPaths as gsp, type Lang, CONTACT_EMAIL } from '../../config';
+export const getStaticPaths = gsp;
+const lang = Astro.params.lang as Lang;
+const c = {
+  es: { title: 'Licencia y mantenimiento', desc: 'Cómo funciona la licencia de Ley81·Suite, qué incluye el mantenimiento anual y cómo comprar o renovar.',
+    h1: 'Licencia y mantenimiento',
+    lede: 'Cómo se licencia Ley81·Suite, qué cubre el mantenimiento anual y cómo comprar o renovar.',
+    notice: 'Borrador pendiente de revisión legal. Este texto es provisional y no debe considerarse definitivo hasta que lo revise un abogado calificado en Panamá. Ley81·Suite estará disponible a partir de enero de 2027. Los precios no están publicados: escríbenos para recibirlos.',
+    sections: [
+      { h: 'La licencia', items: [
+        'Una licencia vale para un equipo. Queda vinculada a la huella de esa máquina, que la aplicación muestra en la pantalla de activación.',
+        'La licencia es un archivo firmado. La aplicación lo verifica sin conexión: no necesita internet para comprobarla.',
+        'Si cambias de equipo o reinstalas el sistema operativo, la huella cambia y hará falta una nueva licencia. Escríbenos antes.',
+        'El precio de la licencia incluye el primer año de mantenimiento.'] },
+      { h: 'Qué incluye el mantenimiento', items: [
+        'La generación de informes: los informes en PDF y Word, la atestación, el certificado, la exportación de la declaración de aplicabilidad y el paquete de evidencias.',
+        'Las nuevas versiones de la aplicación y las actualizaciones de los marcos normativos que pongamos a disposición durante la vigencia.',
+        'Soporte por correo en ' + CONTACT_EMAIL + '.',
+        'Podemos incorporar nuevos marcos normativos durante el año. No garantizamos marcos concretos ni fechas.'] },
+      { h: 'Qué ocurre cuando vence', items: [
+        'La aplicación te avisa 30 días antes del vencimiento.',
+        'Después del vencimiento la aplicación sigue funcionando: puedes consultar y registrar datos, exportar tus datos y hacer copias de seguridad. Tus datos siguen siendo tuyos.',
+        'Solo se desactiva la generación de informes, hasta que importes una licencia renovada.',
+        'Los informes ya generados siguen siendo tuyos.'] },
+      { h: 'Cómo renovar', items: [
+        'Escríbenos a ' + CONTACT_EMAIL + '. Te enviaremos una factura.',
+        'Cuando recibamos el pago, te enviamos un archivo de licencia renovado. El administrador lo importa en Ajustes → Licencia.',
+        'La renovación dura un año desde la fecha de renovación.'] },
+      { h: 'Cómo comprar', items: [
+        'Escríbenos a ' + CONTACT_EMAIL + ' o solicita una demo. Te enviaremos una factura en dólares de los Estados Unidos.',
+        'El pago es por transferencia bancaria. Los datos bancarios aparecen solo en la factura.',
+        'Cuando recibamos el pago, nos envías la huella de tu máquina (se ve en la pantalla de activación) y te enviamos el archivo de licencia por correo.'] },
+    ],
+    btn: 'Escribir a soporte', demo: 'Solicitar una demo' },
+  en: { title: 'Licence and maintenance', desc: 'How a Ley81·Suite licence works, what annual maintenance includes, and how to buy or renew.',
+    h1: 'Licence and maintenance',
+    lede: 'How Ley81·Suite is licensed, what annual maintenance covers, and how to buy or renew.',
+    notice: 'Draft pending legal review. This text is provisional and must not be treated as final until reviewed by a qualified lawyer in Panama. Ley81·Suite will be available from January 2027. Prices are not published: write to us to receive them.',
+    sections: [
+      { h: 'The licence', items: [
+        'One licence covers one machine. It is locked to that machine’s fingerprint, which the app shows on its activation screen.',
+        'The licence is a signed file. The app verifies it offline: no internet connection is needed to check it.',
+        'If you change computers or reinstall the operating system, the fingerprint changes and a new licence is needed. Write to us first.',
+        'The licence price includes the first year of maintenance.'] },
+      { h: 'What maintenance includes', items: [
+        'Report generation: the PDF and Word reports, the attestation, the certificate, the statement-of-applicability export and the evidence package.',
+        'New versions of the application and framework updates that we make available during the term.',
+        'Email support at ' + CONTACT_EMAIL + '.',
+        'We may add new frameworks during the year. We do not guarantee specific frameworks or dates.'] },
+      { h: 'What happens at expiry', items: [
+        'The app warns you 30 days before expiry.',
+        'After expiry the app keeps working: you can view and enter data, export your data and make backups. Your data remains yours.',
+        'Only report generation is switched off, until you import a renewed licence.',
+        'Reports you have already generated remain yours.'] },
+      { h: 'How to renew', items: [
+        'Write to ' + CONTACT_EMAIL + '. We will send you an invoice.',
+        'When we receive payment we send you a renewed licence file. The administrator imports it in Settings → Licence (Ajustes → Licencia).',
+        'A renewal runs for one year from the renewal date.'] },
+      { h: 'How to buy', items: [
+        'Write to ' + CONTACT_EMAIL + ' or request a demo. We will send you an invoice in US dollars.',
+        'Payment is by bank transfer. Bank details appear only on the invoice.',
+        'When we receive payment you send us your machine fingerprint (shown on the activation screen) and we email you the licence file.'] },
+    ],
+    btn: 'Write to support', demo: 'Request a demo' },
+}[lang];
+---
+<Base lang={lang} slug="maintenance" title={c.title} description={c.desc} noindex>
+  <div class="page-head"><div class="wrap"><p class="eyebrow">{c.title}</p><h1>{c.h1}</h1><p class="lede">{c.lede}</p></div></div>
+  <section class="block"><div class="wrap prose">
+    <p class="notice">{c.notice}</p>
+    {c.sections.map((s) => (
+      <>
+        <h2>{s.h}</h2>
+        <ul>{s.items.map((x) => <li>{x}</li>)}</ul>
+      </>
+    ))}
+    <p>
+      <a class="btn" href={`mailto:${CONTACT_EMAIL}`}>{c.btn}</a>
+      {' '}<a href={`/${lang}/demo/`}>{c.demo}</a>
+    </p>
+  </div></section>
+</Base>
