@@ -24,7 +24,7 @@
   ],
 
   "vars": {
-    "LICENSE_PUBLIC_KEY": "dd0e2d2aedec9276a70f94fb0187975c25890d9ecb554d51dfb836f40b6f2d1f",
+    "LICENSE_PUBLIC_KEY": "9958eca6c374c52347e6ff935f81d2a0a04afb4805af135b5a0c5433cd57fceb",
     "ACCESS_TEAM_DOMAIN": "cyberlifecoach.cloudflareaccess.com",
     "ACCESS_AUD": "3ee5d696770d5f339e7515f6c8bf11e9f68ba94820f224e09c05b86daad8c1fa"
     // ADMIN_EMAILS is deliberately not here: it is a Worker secret, set with

@@ -15,7 +15,9 @@
 
 import { generateKeyPairSync, createPrivateKey, createPublicKey, sign, verify, randomBytes } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs';
+import { homedir } from 'node:os';
+import { join } from 'node:path';
 
 const PRODUCT = 'ley81-suite';
 const b64u = (buf) => Buffer.from(buf).toString('base64url');
@@ -80,6 +82,41 @@ function verifyLicense(pubHex, text) {
   return { ok, payload: ok ? JSON.parse(fromB64u(payload).toString()) : null };
 }
 
+// Reads and validates a request.json exported by the admin console's Licenses page.
+function readRequest(file) {
+  let r;
+  try { r = JSON.parse(readFileSync(file, 'utf8')); } catch { die('could not read that request file as JSON'); }
+  if (r.version !== 1) die('unsupported request version');
+  for (const k of ['license_id', 'customer', 'product', 'fingerprint', 'expires_at']) if (typeof r[k] !== 'string' || !r[k]) die(`request is missing "${k}"`);
+  if (!/^lic_[0-9a-f]{12}$/.test(r.license_id)) die('request has a malformed license_id');
+  if (!/^[0-9a-f]{64}$/.test(r.fingerprint)) die('request has a malformed fingerprint');
+  if (Number.isNaN(Date.parse(r.expires_at))) die('request has a malformed expires_at');
+  if (r.product !== PRODUCT && !opts.product) die(`request is for product "${r.product}", not ${PRODUCT}`);
+  return r;
+}
+
+// Everything in the licence comes from the request, so what gets signed is
+// exactly what was entered in the console; only issued_at is added here.
+function signRequestFile(file, outPath, o) {
+  const r = readRequest(file);
+  const payload = { license_id: r.license_id, customer: r.customer, product: r.product, fingerprint: r.fingerprint, issued_at: new Date().toISOString(), expires_at: r.expires_at };
+  const lic = signLicense(loadPrivateKey(o), payload);
+  const out = outPath || `${payload.license_id}.lic`;
+  writeFileSync(out, lic + '\n');
+  console.log(`Wrote ${out}`);
+  console.log(JSON.stringify(payload, null, 2));
+}
+
+// A PKCS8 Ed25519 private key as base64 text (the form stored in the Keychain).
+function parseKeyText(text) {
+  const der = Buffer.from(text.trim(), 'base64');
+  if (der.length !== 48) die(`that is not an Ed25519 signing key (expected 48 bytes, got ${der.length}); check nothing was trimmed, such as a trailing "+"`);
+  let key;
+  try { key = createPrivateKey({ key: der, format: 'der', type: 'pkcs8' }); } catch { die('that text does not decode to a private key'); }
+  if (key.asymmetricKeyType !== 'ed25519') die('that key is not Ed25519');
+  return { text: der.toString('base64'), key };
+}
+
 const [cmd] = process.argv.slice(2);
 const opts = args();
 
@@ -91,6 +128,28 @@ switch (cmd) {
     keychainStore(name, privateKey.export({ format: 'der', type: 'pkcs8' }).toString('base64'));
     console.log(`Stored the "${name}" private key in the macOS login Keychain (${service(name)}).`);
     console.log(`PUBLIC KEY (hex, embed in the app): ${publicHex(privateKey)}`);
+    break;
+  }
+  case 'export-key': {
+    // For backup only. The key goes to stdout, never to a terminal: pipe it, e.g. `export-key | pbcopy`.
+    if (process.stdout.isTTY) die('refusing to print the private key to the screen; pipe it instead, e.g. `node tools/ley81-sign.mjs export-key | pbcopy`, then paste it into your password manager and clear the clipboard (`pbcopy < /dev/null`)');
+    if (!process.stdin.isTTY) die('export-key must be run by a person at an interactive terminal (stdin is not one), so scripts and automation cannot read the private key');
+    const { text, key } = parseKeyText(keychainRead(opts.name || 'license'));
+    process.stdout.write(text + '\n');
+    console.error(`Exported the "${opts.name || 'license'}" key. Its public key is ${publicHex(key)}; check it against the app.`);
+    break;
+  }
+  case 'import-key': {
+    // Restore a backup into the Keychain. The key is read from stdin so it never lands in shell history, e.g. `pbpaste | node tools/ley81-sign.mjs import-key --expect <public hex>`.
+    if (process.stdin.isTTY) die('pipe the key in, e.g. `pbpaste | node tools/ley81-sign.mjs import-key --expect <public hex>`');
+    const name = opts.name || 'license';
+    const { text, key } = parseKeyText(readFileSync(0, 'utf8'));
+    const pub = publicHex(key);
+    if (typeof opts.expect === 'string' && opts.expect.toLowerCase() !== pub) die(`public key mismatch: this key's public half is ${pub}, not the expected ${opts.expect}. Nothing was stored.`);
+    if (opts['dry-run']) { console.log(`Key is valid. Public key: ${pub} (dry run, nothing stored)`); break; }
+    if (keychainExists(name) && !opts.force) die(`a "${name}" key already exists in the Keychain; use --force only if you mean to replace it`);
+    keychainStore(name, text);
+    console.log(`Stored the "${name}" private key in the macOS login Keychain (${service(name)}). Public key: ${pub}`);
     break;
   }
   case 'pubkey': {
@@ -118,24 +177,29 @@ switch (cmd) {
     break;
   }
   case 'sign-request': {
-    // Signs a request.json exported by the admin console's Licenses page.
-    // Everything in the licence comes from the request, so what gets signed is
-    // exactly what was entered in the console; only issued_at is added here.
     const file = opts._[1] || die('usage: sign-request <request.json> [--out file.lic]');
-    let r;
-    try { r = JSON.parse(readFileSync(file, 'utf8')); } catch { die('could not read that request file as JSON'); }
-    if (r.version !== 1) die('unsupported request version');
-    for (const k of ['license_id', 'customer', 'product', 'fingerprint', 'expires_at']) if (typeof r[k] !== 'string' || !r[k]) die(`request is missing "${k}"`);
-    if (!/^lic_[0-9a-f]{12}$/.test(r.license_id)) die('request has a malformed license_id');
-    if (!/^[0-9a-f]{64}$/.test(r.fingerprint)) die('request has a malformed fingerprint');
-    if (Number.isNaN(Date.parse(r.expires_at))) die('request has a malformed expires_at');
-    if (r.product !== PRODUCT && !opts.product) die(`request is for product "${r.product}", not ${PRODUCT}`);
-    const payload = { license_id: r.license_id, customer: r.customer, product: r.product, fingerprint: r.fingerprint, issued_at: new Date().toISOString(), expires_at: r.expires_at };
-    const lic = signLicense(loadPrivateKey(opts), payload);
-    const out = opts.out || `${payload.license_id}.lic`;
-    writeFileSync(out, lic + '\n');
-    console.log(`Wrote ${out}`);
-    console.log(JSON.stringify(payload, null, 2));
+    signRequestFile(file, opts.out, opts);
+    break;
+  }
+  case 'sign-latest': {
+    // Convenience: sign the newest lic_*.request.json in a folder (default ~/Downloads).
+    // It shows what it is about to sign and asks first, so "newest" can never sign the wrong thing silently.
+    const dir = typeof opts.dir === 'string' ? opts.dir : join(homedir(), 'Downloads');
+    let found;
+    try {
+      found = readdirSync(dir).filter((f) => /^lic_[0-9a-f]{12}\.request\.json$/.test(f)).map((f) => ({ f, t: statSync(join(dir, f)).mtimeMs })).sort((x, y) => y.t - x.t);
+    } catch { die(`cannot read the folder ${dir}`); }
+    if (!found.length) die(`no lic_*.request.json files in ${dir}; download one from the admin console first`);
+    const file = join(dir, found[0].f);
+    const r = readRequest(file);
+    console.log(`Newest request: ${file}\n  customer:    ${r.customer}\n  machine:     ${r.fingerprint}\n  valid until: ${r.expires_at}`);
+    if (!opts.yes) {
+      if (!process.stdin.isTTY) die('run this at an interactive terminal, or pass --yes to skip the confirmation');
+      process.stdout.write('Sign this request? [y/N] ');
+      const answer = readFileSync(0, 'utf8').trim().toLowerCase();
+      if (answer !== 'y' && answer !== 'yes') die('not signed');
+    }
+    signRequestFile(file, join(dir, `${r.license_id}.lic`), opts);
     break;
   }
   case 'verify': {
@@ -151,8 +215,12 @@ switch (cmd) {
 
   keygen [--name license]                       create a keypair; private key goes to the macOS Keychain
   pubkey [--key license]                        print the public key (hex)
+  export-key [--name license] | pbcopy          back up the private key (stdout only; refuses a terminal)
+  pbpaste | import-key [--expect <pubhex>] [--name license] [--dry-run] [--force]
+                                                restore a backup into the Keychain; --expect refuses a wrong key
   sign --customer "Acme" --fingerprint <64hex> --expires 2027-10-04 [--license-id lic_x] [--out f.lic]
   sign-request <request.json> [--out f.lic]     sign a request exported from the admin console
+  sign-latest [--dir ~/Downloads] [--yes]       sign the newest lic_*.request.json there, after showing it and asking
   verify <file.lic> [--pubkey <hex>]            check a licence's signature
 
 Test fixtures only: add --key-file <path-to-hex-seed> to use a throwaway key instead of the Keychain.`);
