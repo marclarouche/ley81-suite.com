@@ -62,6 +62,17 @@ export function defaultExpiryYmd(from: Date): string {
   return d.toISOString().slice(0, 10);
 }
 
+export const EXPIRY_WINDOW_DAYS = 60;
+
+/** Issued licences that expire within the window and have no newer licence in the list renewing them; soonest first. */
+export function expiringSoon<T extends { license_id: string; status: string; expires_at: string; renews_license_id: string | null }>(rows: T[], now: Date): T[] {
+  const limit = now.getTime() + EXPIRY_WINDOW_DAYS * 86_400_000;
+  const renewed = new Set(rows.filter((r) => r.status !== 'revoked' && r.renews_license_id).map((r) => r.renews_license_id));
+  return rows
+    .filter((r) => r.status === 'issued' && !renewed.has(r.license_id) && new Date(r.expires_at).getTime() <= limit)
+    .sort((a, b) => a.expires_at.localeCompare(b.expires_at));
+}
+
 export function validateRequest(
   input: LicenseRequestInput,
   now: Date = new Date(),

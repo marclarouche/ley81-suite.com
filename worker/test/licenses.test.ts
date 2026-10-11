@@ -5,7 +5,7 @@ import { mkdtempSync, writeFileSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
-  validateRequest, endOfDayIso, defaultExpiryYmd, toSigningRequest, verifySignedLicense, newLicenseId, PRODUCT,
+  validateRequest, endOfDayIso, defaultExpiryYmd, expiringSoon, toSigningRequest, verifySignedLicense, newLicenseId, PRODUCT,
 } from '../src/licenses.ts';
 
 const FP = 'a'.repeat(64);
@@ -89,4 +89,18 @@ test('wrong key, tampering and garbage are all refused', async () => {
   for (const bad of ['', 'abc', 'a.b.c', '!!!.???', `${p}.${Buffer.alloc(10).toString('base64url')}`]) {
     assert.ok(!(await verifySignedLicense(bad, TEST_PUB, request)).ok, bad);
   }
+});
+
+test('expiringSoon: issued licences ending within 60 days, not already renewed, soonest first', () => {
+  const now = new Date('2027-01-01T00:00:00Z');
+  const row = (id: string, status: string, expires_at: string, renews: string | null = null) => ({ license_id: id, status, expires_at, renews_license_id: renews });
+  const rows = [
+    row('far', 'issued', '2027-06-01T23:59:59.000Z'),
+    row('soon', 'issued', '2027-02-10T23:59:59.000Z'),
+    row('lapsed', 'issued', '2026-12-01T23:59:59.000Z'),
+    row('renewed', 'issued', '2027-02-01T23:59:59.000Z'),
+    row('renewal', 'requested', '2028-01-01T23:59:59.000Z', 'renewed'),
+    row('revoked', 'revoked', '2027-02-01T23:59:59.000Z'),
+  ];
+  assert.deepEqual(expiringSoon(rows, now).map((r) => r.license_id), ['lapsed', 'soon']);
 });

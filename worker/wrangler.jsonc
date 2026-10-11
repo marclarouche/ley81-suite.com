@@ -20,13 +20,14 @@
   ],
 
   "d1_databases": [
-    { "binding": "DB", "database_name": "ley81", "database_id": "REPLACE_WITH_D1_DATABASE_ID", "migrations_dir": "migrations" }
+    { "binding": "DB", "database_name": "ley81", "database_id": "d536f839-c05a-41bf-9f2d-c757e8bd47c7", "migrations_dir": "migrations" }
   ],
 
   "vars": {
     "LICENSE_PUBLIC_KEY": "dd0e2d2aedec9276a70f94fb0187975c25890d9ecb554d51dfb836f40b6f2d1f",
-    "ACCESS_TEAM_DOMAIN": "REPLACE.cloudflareaccess.com",
-    "ACCESS_AUD": "REPLACE_WITH_ACCESS_APPLICATION_AUD_TAG",
-    "ADMIN_EMAILS": "REPLACE_WITH_ADMIN_EMAIL"
+    "ACCESS_TEAM_DOMAIN": "cyberlifecoach.cloudflareaccess.com",
+    "ACCESS_AUD": "3ee5d696770d5f339e7515f6c8bf11e9f68ba94820f224e09c05b86daad8c1fa"
+    // ADMIN_EMAILS is deliberately not here: it is a Worker secret, set with
+    // `npx wrangler secret put ADMIN_EMAILS`, so no address is committed.
   }
 }

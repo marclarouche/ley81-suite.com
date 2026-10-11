@@ -2,7 +2,7 @@
 // strict CSP can forbid both. Every dynamic value goes through esc().
 
 import type { LicenseRow, AuditRow } from './repo.ts';
-import { defaultExpiryYmd } from './licenses.ts';
+import { defaultExpiryYmd, expiringSoon, EXPIRY_WINDOW_DAYS } from './licenses.ts';
 
 export function esc(v: unknown): string {
   return String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
@@ -64,10 +64,16 @@ export function licensesPage(rows: LicenseRow[], who: string, opts: { errors?: s
         )
         .join('')}</tbody></table>`
     : '<p class="muted">No licences yet.</p>';
+  const soon = expiringSoon(rows, opts.now);
+  const expiring = soon.length
+    ? `<div class="card"><h2 class="flush">Expiring within ${EXPIRY_WINDOW_DAYS} days</h2><ul>${soon
+        .map((r) => `<li><a href="/admin/licenses/${esc(r.license_id)}">${esc(r.customer_name)}</a> until ${esc(day(r.expires_at))}</li>`)
+        .join('')}</ul></div>`
+    : '';
   return layout(
     'Licences',
     `<h1>Licences</h1>${flash}${errs}
-<div class="card"><h2 class="flush">New licence request</h2>
+${expiring}<div class="card"><h2 class="flush">New licence request</h2>
 <p class="muted">One licence per machine. The customer reads their machine fingerprint from the app’s Activate screen. Nothing is signed here: you sign the request file offline on your Mac.</p>
 <form method="post" action="/admin/licenses">
 <div class="row"><div><label for="customer">Customer / firm</label><input id="customer" name="customer" required maxlength="200" value="${esc(v.customer)}"></div>
@@ -86,8 +92,6 @@ export function detailPage(r: LicenseRow, who: string, opts: { errors?: string[]
   const errs = opts.errors?.length ? `<div class="err"><ul>${opts.errors.map((e) => `<li>${esc(e)}</li>`).join('')}</ul></div>` : '';
   const flash = opts.flash && FLASH[opts.flash] ? `<div class="ok">${esc(FLASH[opts.flash])}</div>` : '';
   const id = esc(r.license_id);
-  const nextYear = new Date(r.expires_at);
-  nextYear.setUTCFullYear(nextYear.getUTCFullYear() + 1);
 
   let actions = '';
   if (r.status === 'requested') {
@@ -107,8 +111,8 @@ export function detailPage(r: LicenseRow, who: string, opts: { errors?: string[]
 <p class="muted">Email the file. They import it from the Activate screen, or from Settings → Licence for a renewal.</p>
 ${r.delivered_at ? `<p>Marked delivered on ${esc(day(r.delivered_at))}.</p>` : `<form method="post" action="/admin/licenses/${id}/delivered"><button class="ghost" type="submit">Mark as delivered</button></form>`}</div>
 <div class="card"><h2 class="flush">Renew maintenance</h2>
-<form method="post" action="/admin/licenses/${id}/renew"><label for="rexp">New expiry (UTC, end of day)</label>
-<input id="rexp" name="expires" type="date" required value="${esc(nextYear.toISOString().slice(0, 10))}"><button type="submit">Create renewal request</button></form></div>`;
+<form method="post" action="/admin/licenses/${id}/renew"><label for="rexp">New expiry (UTC, end of day): one year from today, not from the old expiry</label>
+<input id="rexp" name="expires" type="date" required value="${esc(defaultExpiryYmd(opts.now))}"><button type="submit">Create renewal request</button></form></div>`;
   }
   if (r.status === 'requested' || r.status === 'issued') {
     actions += `<div class="card"><h2 class="flush">Revoke (record only)</h2>
