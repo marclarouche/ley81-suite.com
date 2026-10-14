@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
@@ -52,7 +53,7 @@ test('license ids look right and differ', () => {
 });
 
 // --- cross-check against the REAL signing tool and a throwaway key ----------
-const toolDir = new URL('../../tools/', import.meta.url).pathname;
+const toolDir = fileURLToPath(new URL('../../tools/', import.meta.url));
 const seed = join(toolDir, 'fixtures/test-seed.hex');
 const TEST_PUB = execFileSync('node', [join(toolDir, 'ley81-sign.mjs'), 'pubkey', '--key-file', seed]).toString().trim();
 

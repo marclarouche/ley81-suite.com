@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
@@ -9,7 +10,7 @@ import {
   createLicenseRequest, createRenewal, attachSignedLicense, markDelivered, revokeLicense, listLicenses, listAudit, getLicense, signingRequestFor,
 } from '../src/repo.ts';
 
-const toolDir = new URL('../../tools/', import.meta.url).pathname;
+const toolDir = fileURLToPath(new URL('../../tools/', import.meta.url));
 const seed = join(toolDir, 'fixtures/test-seed.hex');
 const PUB = execFileSync('node', [join(toolDir, 'ley81-sign.mjs'), 'pubkey', '--key-file', seed]).toString().trim();
 // The signing tool stamps issued_at with the real clock, and the server rejects an issue date more than a day

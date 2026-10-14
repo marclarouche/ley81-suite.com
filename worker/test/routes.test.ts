@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
@@ -7,7 +8,7 @@ import { join } from 'node:path';
 import { makeTestDb } from './helpers.ts';
 import { handle, type Env, type Deps } from '../src/index.ts';
 
-const toolDir = new URL('../../tools/', import.meta.url).pathname;
+const toolDir = fileURLToPath(new URL('../../tools/', import.meta.url));
 const seed = join(toolDir, 'fixtures/test-seed.hex');
 const PUB = execFileSync('node', [join(toolDir, 'ley81-sign.mjs'), 'pubkey', '--key-file', seed]).toString().trim();
 const ORIGIN = 'https://admin.ley81-suite.com';
@@ -55,8 +56,11 @@ test('fails closed when Access is not configured, even if a token header is sent
 test('public/unknown paths: API not published yet, everything else 404', async () => {
   const { call } = setup(false);
   assert.equal((await call('/api/v1/updates/manifest')).status, 404);
-  assert.equal((await call('/')).status, 404);
   assert.equal((await call('/anything')).status, 404);
+  const root = await call('/');
+  assert.equal(root.status, 303);
+  assert.equal(root.headers.get('Location'), '/admin/licenses');
+  assert.equal((await call('/', { method: 'POST' })).status, 404);
 });
 
 test('admin responses carry strict security headers', async () => {

@@ -81,6 +81,8 @@ export async function handle(req: Request, env: Env, deps: Deps = {}): Promise<R
     // published there is nothing to serve.
     return respond(JSON.stringify({ error: 'not available' }), 404, { 'Content-Type': 'application/json' });
   }
+  // Static redirect only: it exposes nothing, and /admin/licenses does the auth check.
+  if (path === '/' && (req.method === 'GET' || req.method === 'HEAD')) return redirect('/admin/licenses');
   if (path !== '/admin' && !path.startsWith('/admin/')) return respond('Not found', 404, { 'Content-Type': 'text/plain' });
 
   // --- everything under /admin requires a verified Access identity ---
