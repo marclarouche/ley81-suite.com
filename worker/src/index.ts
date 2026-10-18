@@ -42,6 +42,7 @@ async function defaultVerifyAccess(req: Request, env: Env): Promise<AccessResult
 const SECURITY_HEADERS: Record<string, string> = {
   'Content-Security-Policy': "default-src 'none'; style-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'",
   'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+  'X-Frame-Options': 'DENY',
   'X-Content-Type-Options': 'nosniff',
   'Referrer-Policy': 'no-referrer',
   'Cache-Control': 'no-store',
