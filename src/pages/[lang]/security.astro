@@ -11,7 +11,7 @@ const c = {
     does: [
       'Local primero: los datos del cliente viven en tu equipo, en una base SQLCipher cifrada; la bitácora de auditoría es una base cifrada aparte.',
       'Evidencia cifrada en reposo.',
-      'Inicio de sesión con el autenticador de la plataforma (Touch ID en macOS; Windows Hello en Windows).',
+      'Inicio de sesión con el autenticador de la plataforma (Touch ID en macOS, actualmente en pruebas; Windows Hello en Windows).',
       'Roles (Administrador, Analista, Auditor, Visor) con segregación de funciones.',
       'Códigos de recuperación de un solo uso; bloqueo de cuenta tras intentos fallidos; reautenticación en acciones sensibles.',
       'Retención de la bitácora por 7 años, con depuración controlada por el Auditor; borrado criptográfico al eliminar un proyecto.',
@@ -29,7 +29,7 @@ const c = {
     stolen: [
       'La clave que abre la base de datos no está en los archivos. Se guarda en el almacén protegido del sistema operativo (Windows DPAPI, ligado a la cuenta de Windows; o el llavero de inicio de sesión de macOS), y el archivo de claves del proyecto solo contiene una referencia.',
       'Si alguien copia la base de datos, la evidencia y el archivo de claves a otro equipo, la clave no está allí: el proyecto no se puede abrir y el acceso a la base de datos es denegado.',
-      'Incluso en el equipo original, abrir un proyecto exige Touch ID (macOS) o Windows Hello (Windows).',
+      'Incluso en el equipo original, abrir un proyecto exige Touch ID (macOS, en pruebas) o Windows Hello (Windows).',
     ],
     stolenCaveatH: 'Lo que debe saber',
     stolenCaveats: [
@@ -57,7 +57,7 @@ const c = {
     does: [
       'Local-first: client data lives on your machine in an encrypted SQLCipher database; the audit trail is a separate encrypted database.',
       'Evidence files encrypted at rest.',
-      'Sign-in with the platform authenticator (Touch ID on macOS; Windows Hello on Windows).',
+      'Sign-in with the platform authenticator (Touch ID on macOS, currently in testing; Windows Hello on Windows).',
       'Roles (Admin, Analyst, Auditor, Viewer) with segregation of duties.',
       'Single-use recovery codes; account lockout after failed attempts; re-authentication for sensitive actions.',
       '7-year audit-log retention with Auditor-gated purge; cryptographic erasure when a project is deleted.',
@@ -75,7 +75,7 @@ const c = {
     stolen: [
       'The key that opens the database is not in the files. It is held in the operating system’s protected store (Windows DPAPI, bound to the Windows account; or the macOS login Keychain), and the project’s keyfile holds only a reference to it.',
       'If someone copies the database, the evidence and the keyfile to another machine, the key is not there: the project cannot be opened and access to the database is denied.',
-      'Even on the original machine, opening a project requires Touch ID (macOS) or Windows Hello (Windows).',
+      'Even on the original machine, opening a project requires Touch ID (macOS, in testing) or Windows Hello (Windows).',
     ],
     stolenCaveatH: 'What you should know',
     stolenCaveats: [
