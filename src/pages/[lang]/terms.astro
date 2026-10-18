@@ -1,28 +1,184 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getStaticPaths as gsp, type Lang } from '../../config';
+import { getStaticPaths as gsp, type Lang, CONTACT_EMAIL } from '../../config';
 export const getStaticPaths = gsp;
 const lang = Astro.params.lang as Lang;
-const isPrivacy = 'terms' === 'privacy';
-const c = {
-  es: { title: isPrivacy ? 'Política de privacidad' : 'Términos de uso',
-    h1: isPrivacy ? 'Política de privacidad' : 'Términos de uso',
-    notice: 'Borrador pendiente de revisión legal. Este texto es provisional y no debe considerarse definitivo hasta que lo revise un abogado calificado en Panamá.',
-    body: isPrivacy
-      ? ['Este sitio web no utiliza cookies de seguimiento ni scripts de terceros.', 'La aplicación Ley81·Suite funciona de forma local: los datos de tus clientes permanecen en tu equipo.', 'Si nos escribes por correo para solicitar una demo, usaremos tus datos solo para responderte. [Pendiente: responsable, base legal, plazos de conservación y derechos de los titulares conforme a la Ley 81 de 2019.]']
-      : ['[Pendiente: licencia de uso, alcance, mantenimiento y actualizaciones, limitación de responsabilidad, ley aplicable.]', 'Ley81·Suite apoya la documentación y la evaluación del cumplimiento. No sustituye el criterio de un profesional calificado ni garantiza el cumplimiento legal.'] },
-  en: { title: isPrivacy ? 'Privacy policy' : 'Terms of use',
-    h1: isPrivacy ? 'Privacy policy' : 'Terms of use',
-    notice: 'Draft pending legal review. This text is provisional and must not be treated as final until reviewed by a qualified lawyer in Panama.',
-    body: isPrivacy
-      ? ['This website uses no tracking cookies and no third-party scripts.', 'The Ley81·Suite application runs locally: your clients’ data stays on your machine.', 'If you email us to request a demo, we will use your details only to reply. [Pending: controller, legal basis, retention periods and data-subject rights under Law 81 of 2019.]']
-      : ['[Pending: licence grant, scope, maintenance and updates, limitation of liability, governing law.]', 'Ley81·Suite supports compliance documentation and assessment. It does not replace the judgment of a qualified professional or guarantee legal compliance.'] },
+type S = { h: string; p?: string[]; ul?: string[]; link?: [string, string] };
+const c: { title: string; desc: string; h1: string; lede: string; notice: string; sections: S[]; contact: string; updated: string } = {
+  es: { title: 'Términos de uso', desc: 'Términos para usar el sitio web de Ley81·Suite y para comprar y usar una licencia: alcance de la licencia, pagos, mantenimiento, reembolsos, responsabilidad y ley aplicable.',
+    h1: 'Términos de uso',
+    lede: 'Los términos para usar este sitio web y para comprar y usar una licencia de Ley81·Suite.',
+    notice: 'Borrador pendiente de revisión legal. Este texto es provisional y no debe considerarse definitivo hasta que lo revise un abogado calificado en Panamá. Los campos entre corchetes deben completarse antes del lanzamiento.',
+    sections: [
+      { h: 'Sobre estos términos', p: [
+        'Estos términos se aplican al uso de ley81-suite.com y a la compra y el uso de una licencia de Ley81·Suite (el «Software»). Se celebran entre tú (la persona, firma u organización que compra o usa el Software) y [Pendiente: razón social de la entidad que opera Ley81·Suite] («nosotros»). Al usar el sitio, comprar una licencia o activar el Software, los aceptas.',
+        'Si los aceptas en nombre de una organización, confirmas que tienes autoridad para obligarla. Ley81·Suite es para uso profesional y empresarial, y debes ser mayor de edad.'] },
+      { h: 'Estado de lanzamiento', p: [
+        'El Software todavía no se ha lanzado. Prevemos que esté disponible en el primer trimestre de 2027. Es una estimación, no un compromiso, y la fecha puede cambiar.',
+        'Hasta el lanzamiento, lo que describe este sitio es el producto previsto y puede cambiar antes de su salida. No aceptamos pagos ni vendemos licencias antes del lanzamiento. Las condiciones de licencia, mantenimiento y reembolso de estos términos se aplican cuando el Software se haya lanzado y compres una licencia.'] },
+      { h: 'Qué es Ley81·Suite y qué no es', ul: [
+        'Es un software que ayuda a consultores y empresas a documentar, evaluar y atestar el cumplimiento en gobernanza de IA y protección de datos (Ley 81 de 2019, Decreto Ejecutivo 285, RGPD, Reglamento de IA de la UE y otros marcos).',
+        'Apoya tu trabajo. No es asesoría legal, no sustituye el criterio de un profesional calificado y no garantiza que tú o tus clientes cumplan ninguna ley ni norma.',
+        'Los informes, atestaciones y certificados que genera se elaboran con la información que tú introduces. No los emitimos, auditamos, avalamos ni certificamos nosotros, ni los emite ningún regulador u organismo de normalización. Que un informe diga «consistente con» un marco no significa que esté certificado ni que cumpla.',
+        'El contenido de los marcos es un resumen preparado por nosotros y las normas cambian. Eres responsable de contrastarlo con los textos oficiales y de buscar asesoría profesional cuando haga falta.'] },
+      { h: 'Tu licencia', ul: [
+        'Te concedemos una licencia no exclusiva, intransferible y no sublicenciable para instalar y usar el Software en la única máquina indicada en tu archivo de licencia, según el tipo de licencia que compraste.',
+        'Consultor: uso en tu propia práctica de consultoría, para los encargos de tus clientes, con derecho a entregarles los informes generados. Empresa: uso interno dentro de la única organización indicada en la licencia, por los miembros de su equipo.',
+        'La licencia es un archivo firmado, vinculado a la huella de tu equipo. Si cambias de equipo o reinstalas el sistema operativo hará falta una nueva licencia: escríbenos antes.',
+        'El derecho de uso del Software no tiene fecha de fin. La fecha dentro del archivo marca el final del periodo de mantenimiento.',
+        'Recibes una licencia, no la propiedad. El Software, sus plantillas y el contenido que preparamos son nuestros o de nuestros licenciantes. Los componentes de terceros y de código abierto se rigen por sus propias licencias.'] },
+      { h: 'Lo que no puedes hacer', ul: [
+        'Copiar, compartir, revender, alquilar, prestar ni ofrecer el Software como servicio, ni entregar tu archivo de licencia a otras personas ni usarlo en más equipos de los licenciados.',
+        'Eludir, alterar o eliminar la verificación de licencia, el bloqueo por equipo, el cifrado o las funciones de auditoría.',
+        'Descompilar o aplicar ingeniería inversa al Software, salvo cuando la ley no permita esta restricción.',
+        'Quitar avisos de propiedad.',
+        'Usar el Software o el sitio para infringir la ley, atacar o sobrecargar el sitio, extraer su contenido de forma abusiva o sondear su seguridad fuera de una divulgación responsable.'] },
+      { h: 'Precio y pago', ul: [
+        'Los precios no están publicados: los cotizamos a petición. Emitimos una factura en dólares de los Estados Unidos, que se paga por transferencia bancaria. Los datos bancarios aparecen solo en la factura.',
+        'La factura indica si se aplican impuestos y cuáles. Las comisiones bancarias corren por tu cuenta.',
+        'Te enviamos el archivo de licencia por correo cuando recibimos el pago completo y la huella de tu equipo.'] },
+      { h: 'Mantenimiento y actualizaciones', p: [
+        'El precio de la licencia incluye el primer año de mantenimiento. Cada renovación dura un año desde la fecha de renovación. La página de licencia y mantenimiento describe qué cubre el mantenimiento y qué ocurre al vencer, y forma parte de estos términos.'],
+        ul: [
+          'Podemos añadir o cambiar marcos normativos. No garantizamos marcos concretos, contenido ni fechas.',
+          'El soporte es por correo, con esfuerzos razonables y sin tiempo de respuesta garantizado.',
+          'Las actualizaciones se verifican por firma y un administrador decide cuándo instalarlas.'],
+        link: ['Licencia y mantenimiento', '/maintenance/'] },
+      { h: 'Reembolsos', ul: [
+        'Si lo pides dentro de los 14 días siguientes a que recibamos tu pago y todavía no has activado la licencia en el Software, te reembolsamos el importe completo por transferencia bancaria.',
+        'Después de la activación, o pasados los 14 días, las cuotas no son reembolsables: el archivo de licencia se entrega y se usa sin conexión y no podemos retirarlo. La misma regla se aplica a las renovaciones, antes de importar el nuevo archivo.',
+        'Nada de esto limita los derechos irrenunciables que te otorgue la ley.'] },
+      { h: 'Tus datos', ul: [
+        'Tus datos permanecen en tu equipo. No los recibimos ni tenemos acceso a ellos. Tus datos y tus informes son tuyos.',
+        'Eres responsable de contar con una base legal para tratar los datos que introduces, de informar a tus clientes, de hacer copias de seguridad, y de proteger tu equipo, tus credenciales y tus códigos de recuperación.',
+        'Como nunca tenemos tus datos ni tus claves, no podemos recuperarlos por ti.',
+        'Los datos personales sobre ti que sí conservamos se describen en la política de privacidad.'],
+        link: ['Política de privacidad', '/privacy/'] },
+      { h: 'Garantías', p: [
+        'En la medida en que la ley lo permita, el sitio y el Software se ofrecen «tal cual» y «según disponibilidad», sin garantías de ningún tipo, expresas o implícitas, incluidas la idoneidad para un fin determinado, el funcionamiento ininterrumpido o sin errores, o que los resultados sean completos o exactos. Durante el mantenimiento haremos esfuerzos razonables por corregir los defectos que nos comuniques.'] },
+      { h: 'Responsabilidad', ul: [
+        'No respondemos por daños indirectos o consecuenciales, lucro cesante, pérdida de negocio o de reputación, pérdida o corrupción de datos, multas de reguladores ni reclamaciones de tus clientes derivadas de decisiones que tomes a partir de los resultados del Software.',
+        'Nuestra responsabilidad total derivada de estos términos o del Software se limita a las cuotas que pagaste en los 12 meses anteriores al hecho.',
+        'Nada de esto excluye ni limita la responsabilidad que la ley no permita excluir o limitar, como el dolo o el fraude.',
+        'Eres responsable de tu uso del Software y de tu asesoría profesional, y nos mantendrás indemnes frente a reclamaciones de terceros derivadas de tu incumplimiento de estos términos o de un uso ilícito.'] },
+      { h: 'Duración y terminación', ul: [
+        'Puedes dejar de usar el Software cuando quieras. Los reembolsos se rigen por la sección de reembolsos.',
+        'Podemos terminar tu licencia y rechazar renovaciones si incumples gravemente estos términos (por ejemplo, compartes la licencia o eludes sus controles) o no pagas. Te avisaremos por correo y, cuando sea posible subsanar el incumplimiento, te daremos un plazo razonable.',
+        'Como las licencias se verifican sin conexión, no podemos desactivar el Software a distancia. Al terminar, debes dejar de usarlo y eliminar las copias. Tus datos siguen siendo tuyos y puedes exportarlos antes.',
+        'Siguen vigentes las cláusulas que por su naturaleza deban sobrevivir, como propiedad intelectual, garantías, responsabilidad y ley aplicable.'] },
+      { h: 'El sitio web', ul: [
+        'El contenido del sitio es informativo. Las descripciones y los informes de muestra son ilustrativos y pueden diferir de la versión actual del Software. Las imágenes del producto son vistas previas de diseño.',
+        'Procuramos mantener el sitio exacto y disponible, pero no garantizamos que lo esté en todo momento y nada en él es una oferta vinculante.',
+        'Si encuentras un problema de seguridad, escríbenos a ' + CONTACT_EMAIL + '. Te pedimos un plazo razonable para corregirlo antes de divulgarlo y que no accedas a datos de terceros.'] },
+      { h: 'Cambios en estos términos', p: [
+        'Podemos actualizar estos términos y fechamos cada versión. Los cambios se aplican a las compras y renovaciones posteriores a su publicación. Para una licencia existente, los cambios que reduzcan tus derechos solo se aplican en la siguiente renovación, salvo que la ley o la seguridad exijan otra cosa.'] },
+      { h: 'Disposiciones generales', ul: [
+        'Acuerdo completo: estos términos, la página de licencia y mantenimiento y tu factura. En lo comercial (precio, plazos), prevalece la factura.',
+        'Si una disposición no es aplicable, el resto sigue vigente. No ejercer un derecho no es renunciar a él.',
+        'No puedes ceder estos términos sin nuestro consentimiento escrito. Nosotros podemos cederlos en una venta del negocio, con aviso.',
+        'Las notificaciones se hacen por correo electrónico.',
+        'Estos términos se publican en español e inglés. Si hay diferencias, prevalece la versión en español.'] },
+      { h: 'Ley aplicable y jurisdicción', p: [
+        'Estos términos se rigen por las leyes de la República de Panamá. Antes de acudir a los tribunales, intentaremos resolver cualquier controversia por correo electrónico durante 30 días. Los tribunales de la ciudad de Panamá tienen jurisdicción exclusiva, sin perjuicio de los derechos irrenunciables que te otorgue la ley de tu país.'] },
+    ],
+    contact: 'Preguntas sobre estos términos:',
+    updated: 'Última actualización: 18 de octubre de 2026.',
+  },
+  en: { title: 'Terms of use', desc: 'Terms for using the Ley81·Suite website and for buying and using a licence: licence scope, payment, maintenance, refunds, liability and governing law.',
+    h1: 'Terms of use',
+    lede: 'The terms for using this website and for buying and using a Ley81·Suite licence.',
+    notice: 'Draft pending legal review. This text is provisional and must not be treated as final until reviewed by a qualified lawyer in Panama. Bracketed fields must be completed before launch.',
+    sections: [
+      { h: 'About these terms', p: [
+        'These terms apply to your use of ley81-suite.com and to the purchase and use of a Ley81·Suite licence (the “Software”). They are between you (the person, firm or organisation that buys or uses the Software) and [Pending: legal name of the entity that operates Ley81·Suite] (“we”). By using the site, buying a licence or activating the Software, you accept them.',
+        'If you accept on behalf of an organisation, you confirm you have authority to bind it. Ley81·Suite is for professional and business use, and you must be of legal age.'] },
+      { h: 'Release status', p: [
+        'The Software has not launched yet. We expect it to be available in the first quarter of 2027. That is an estimate, not a commitment, and the date may change.',
+        'Until launch, what this site describes is the planned product and may change before release. We do not take payment or sell licences before launch. The licence, maintenance and refund terms below apply once the Software has been released and you buy a licence.'] },
+      { h: 'What Ley81·Suite is, and is not', ul: [
+        'It is software that helps consultants and companies document, assess and attest AI-governance and data-protection compliance (Law 81 of 2019, Executive Decree 285, GDPR, the EU AI Act and other frameworks).',
+        'It supports your work. It is not legal advice, does not replace the judgment of a qualified professional, and does not guarantee that you or your clients comply with any law or standard.',
+        'The reports, attestations and certificates it generates are produced from the information you enter. They are not issued, audited, endorsed or certified by us, or by any regulator or standards body. A report saying “consistent with” a framework does not mean it is certified or compliant.',
+        'Framework content is a summary we prepare, and rules change. You are responsible for checking it against the official texts and for getting professional advice where needed.'] },
+      { h: 'Your licence', ul: [
+        'We grant you a non-exclusive, non-transferable, non-sublicensable licence to install and use the Software on the one machine named in your licence file, for the licence type you bought.',
+        'Consultant: use in your own consulting practice, for your clients’ engagements, with the right to deliver the generated reports to them. Company: internal use within the one organisation named on the licence, by its team members.',
+        'The licence is a signed file locked to your machine’s fingerprint. If you change computers or reinstall the operating system, a new licence is needed: write to us first.',
+        'The right to use the Software has no end date. The date inside the file marks the end of the maintenance term.',
+        'You receive a licence, not ownership. The Software, its templates and the content we prepare belong to us or our licensors. Third-party and open-source components are governed by their own licences.'] },
+      { h: 'What you may not do', ul: [
+        'Copy, share, resell, rent, lend or offer the Software as a service, give your licence file to others, or use it on more machines than licensed.',
+        'Circumvent, tamper with or remove the licence check, the machine lock, the encryption or the audit features.',
+        'Decompile or reverse engineer the Software, except where the law does not allow this restriction.',
+        'Remove proprietary notices.',
+        'Use the Software or the site to break the law, attack or overload the site, scrape its content abusively or probe its security outside responsible disclosure.'] },
+      { h: 'Price and payment', ul: [
+        'Prices are not published; we quote on request. We issue an invoice in US dollars, payable by bank transfer. Bank details appear only on the invoice.',
+        'The invoice states whether and which taxes apply. Bank charges are yours.',
+        'We email you the licence file once we have received full payment and your machine fingerprint.'] },
+      { h: 'Maintenance and updates', p: [
+        'The licence price includes the first year of maintenance. Each renewal runs for one year from the renewal date. The Licence and maintenance page describes what maintenance covers and what happens at expiry, and forms part of these terms.'],
+        ul: [
+          'We may add or change frameworks. We do not guarantee specific frameworks, content or dates.',
+          'Support is by email, on a reasonable-efforts basis, with no guaranteed response time.',
+          'Updates are verified by signature and an administrator decides when to install them.'],
+        link: ['Licence and maintenance', '/maintenance/'] },
+      { h: 'Refunds', ul: [
+        'If you ask within 14 days after we receive your payment and you have not yet activated the licence in the Software, we refund the full amount by bank transfer.',
+        'After activation, or after 14 days, fees are non-refundable: the licence file is delivered and used offline and we cannot take it back. The same rule applies to renewals, before the new file is imported.',
+        'Nothing here limits any rights the law gives you that cannot be waived.'] },
+      { h: 'Your data', ul: [
+        'Your data stays on your machine. We do not receive it or have access to it. Your data and your reports are yours.',
+        'You are responsible for having a legal basis to process the data you enter, for informing your clients, for making backups, and for protecting your computer, your credentials and your recovery codes.',
+        'Because we never hold your data or your keys, we cannot recover them for you.',
+        'The personal data we do hold about you is described in the privacy policy.'],
+        link: ['Privacy policy', '/privacy/'] },
+      { h: 'Warranties', p: [
+        'To the extent the law allows, the site and the Software are provided “as is” and “as available”, without warranties of any kind, express or implied, including fitness for a particular purpose, uninterrupted or error-free operation, or that results are complete or accurate. During maintenance we will use reasonable efforts to correct defects you report to us.'] },
+      { h: 'Liability', ul: [
+        'We are not liable for indirect or consequential loss, lost profits, loss of business or reputation, loss or corruption of data, regulatory fines, or claims by your clients arising from decisions you make based on the Software’s output.',
+        'Our total liability arising from these terms or the Software is limited to the fees you paid in the 12 months before the event.',
+        'Nothing here excludes or limits liability that the law does not allow to be excluded or limited, such as wilful misconduct or fraud.',
+        'You are responsible for your use of the Software and for your professional advice, and you will hold us harmless against third-party claims arising from your breach of these terms or unlawful use.'] },
+      { h: 'Term and termination', ul: [
+        'You may stop using the Software at any time. Refunds are governed by the refunds section.',
+        'We may end your licence and refuse renewals if you materially breach these terms (for example by sharing the licence or circumventing its controls) or do not pay. We will notify you by email and, where the breach can be fixed, give you a reasonable time to fix it.',
+        'Because licences are verified offline, we cannot switch the Software off remotely. On termination you must stop using it and delete copies. Your data remains yours and you may export it first.',
+        'Provisions that by their nature should survive do so, such as intellectual property, warranties, liability and governing law.'] },
+      { h: 'The website', ul: [
+        'The site’s content is informational. Descriptions and sample reports are illustrative and may differ from the current version of the Software. Product images are design previews.',
+        'We try to keep the site accurate and available, but we do not guarantee that it is at all times, and nothing on it is a binding offer.',
+        'If you find a security problem, write to ' + CONTACT_EMAIL + '. We ask for reasonable time to fix it before you disclose it, and that you do not access other people’s data.'] },
+      { h: 'Changes to these terms', p: [
+        'We may update these terms and we date each version. Changes apply to purchases and renewals made after they are published. For an existing licence, changes that reduce your rights apply only from the next renewal, unless the law or security requires otherwise.'] },
+      { h: 'General', ul: [
+        'Entire agreement: these terms, the Licence and maintenance page and your invoice. On commercial points (price, timing) the invoice prevails.',
+        'If a provision is unenforceable, the rest stays in force. Not exercising a right is not waiving it.',
+        'You may not assign these terms without our written consent. We may assign them in a sale of the business, with notice.',
+        'Notices are given by email.',
+        'These terms are published in Spanish and English. If they differ, the Spanish version prevails.'] },
+      { h: 'Governing law and jurisdiction', p: [
+        'These terms are governed by the laws of the Republic of Panama. Before going to court, we will try to resolve any dispute by email for 30 days. The courts of Panama City have exclusive jurisdiction, without prejudice to any rights the law of your country gives you that cannot be waived.'] },
+    ],
+    contact: 'Questions about these terms:',
+    updated: 'Last updated: 18 October 2026.',
+  },
 }[lang];
 ---
-<Base lang={lang} slug="terms" title={c.title} description={c.title} noindex>
-  <div class="page-head"><div class="wrap"><h1>{c.h1}</h1></div></div>
+<Base lang={lang} slug="terms" title={c.title} description={c.desc} noindex>
+  <div class="page-head"><div class="wrap"><h1>{c.h1}</h1><p class="lede">{c.lede}</p></div></div>
   <section class="block"><div class="wrap prose">
     <p class="notice">{c.notice}</p>
-    {c.body.map((x) => <p>{x}</p>)}
+    {c.sections.map((s) => (
+      <>
+        <h2>{s.h}</h2>
+        {s.p && !s.ul && s.p.map((x) => <p>{x}</p>)}
+        {s.p && s.ul && s.p.map((x) => <p>{x}</p>)}
+        {s.ul && <ul class="list">{s.ul.map((x) => <li>{x}</li>)}</ul>}
+        {s.link && <p><a href={`/${lang}${s.link[1]}`}>{s.link[0]}</a></p>}
+      </>
+    ))}
+    <p>{c.contact} <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
+    <p class="muted">{c.updated}</p>
   </div></section>
 </Base>

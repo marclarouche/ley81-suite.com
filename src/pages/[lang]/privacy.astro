@@ -1,28 +1,172 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getStaticPaths as gsp, type Lang } from '../../config';
+import { getStaticPaths as gsp, type Lang, CONTACT_EMAIL } from '../../config';
 export const getStaticPaths = gsp;
 const lang = Astro.params.lang as Lang;
-const isPrivacy = 'privacy' === 'privacy';
-const c = {
-  es: { title: isPrivacy ? 'Política de privacidad' : 'Términos de uso',
-    h1: isPrivacy ? 'Política de privacidad' : 'Términos de uso',
-    notice: 'Borrador pendiente de revisión legal. Este texto es provisional y no debe considerarse definitivo hasta que lo revise un abogado calificado en Panamá.',
-    body: isPrivacy
-      ? ['Este sitio web no utiliza cookies de seguimiento ni scripts de terceros.', 'La aplicación Ley81·Suite funciona de forma local: los datos de tus clientes permanecen en tu equipo.', 'Si nos escribes por correo para solicitar una demo, usaremos tus datos solo para responderte. [Pendiente: responsable, base legal, plazos de conservación y derechos de los titulares conforme a la Ley 81 de 2019.]']
-      : ['[Pendiente: licencia de uso, alcance, mantenimiento y actualizaciones, limitación de responsabilidad, ley aplicable.]', 'Ley81·Suite apoya la documentación y la evaluación del cumplimiento. No sustituye el criterio de un profesional calificado ni garantiza el cumplimiento legal.'] },
-  en: { title: isPrivacy ? 'Privacy policy' : 'Terms of use',
-    h1: isPrivacy ? 'Privacy policy' : 'Terms of use',
-    notice: 'Draft pending legal review. This text is provisional and must not be treated as final until reviewed by a qualified lawyer in Panama.',
-    body: isPrivacy
-      ? ['This website uses no tracking cookies and no third-party scripts.', 'The Ley81·Suite application runs locally: your clients’ data stays on your machine.', 'If you email us to request a demo, we will use your details only to reply. [Pending: controller, legal basis, retention periods and data-subject rights under Law 81 of 2019.]']
-      : ['[Pending: licence grant, scope, maintenance and updates, limitation of liability, governing law.]', 'Ley81·Suite supports compliance documentation and assessment. It does not replace the judgment of a qualified professional or guarantee legal compliance.'] },
+type S = { h: string; p?: string[]; ul?: string[]; link?: [string, string] };
+const c: { title: string; desc: string; h1: string; lede: string; notice: string; sections: S[]; contact: string; updated: string } = {
+  es: { title: 'Política de privacidad', desc: 'Qué datos personales tratamos en el sitio de Ley81·Suite y en el proceso de licencia, para qué, con quién los compartimos, cuánto tiempo los conservamos y cómo ejercer tus derechos.',
+    h1: 'Política de privacidad',
+    lede: 'Qué datos personales tratamos, para qué, quién los ve, cuánto tiempo los conservamos y qué puedes hacer al respecto. En breve: el sitio no te rastrea y la aplicación no nos envía los datos de tus clientes.',
+    notice: 'Borrador pendiente de revisión legal. Este texto es provisional y no debe considerarse definitivo hasta que lo revise un abogado calificado en Panamá. Los campos entre corchetes deben completarse antes del lanzamiento.',
+    sections: [
+      { h: 'En resumen', ul: [
+        'El sitio web no establece cookies propias y no carga analítica, publicidad ni scripts de terceros.',
+        'La aplicación Ley81·Suite funciona en tu equipo. No recibimos los datos de tus clientes, tus proyectos, tu evidencia ni tus informes.',
+        'La aplicación no envía telemetría. Su única petición de red es la comprobación de actualizaciones que inicia un administrador, y esa petición no lleva ningún dato tuyo.',
+        'Conservamos los datos personales necesarios para responderte, emitir y dar soporte a tu licencia y cumplir nuestras obligaciones contables. No los vendemos ni los usamos para publicidad.'] },
+      { h: 'Quién es el responsable', p: [
+        'El responsable del tratamiento de los datos personales descritos aquí es [Pendiente: razón social, domicilio y número de RUC de la entidad que opera Ley81·Suite]. Para cualquier asunto de privacidad escribe a ' + CONTACT_EMAIL + '.',
+        'Esta política cubre el sitio ley81-suite.com, los correos que nos envías, el proceso de compra y licencia, y lo que la aplicación comunica a nuestro sitio. No cubre sitios de terceros a los que puedas llegar desde aquí.'] },
+      { h: 'Cuando visitas el sitio web', ul: [
+        'Como cualquier servidor web, nuestro proveedor de alojamiento y red, Cloudflare, procesa datos técnicos de la solicitud (dirección IP, tipo de navegador, página solicitada, fecha y hora) para entregar el sitio y protegerlo de abusos. No construimos perfiles de visitantes con esos datos.',
+        'El sitio no tiene cuentas, ni formularios que guarden datos, ni analítica, ni publicidad. El idioma se elige por la dirección (/es/ o /en/), no por una cookie.',
+        'La consola de administración, que solo usamos nosotros, está en una dirección aparte detrás de un inicio de sesión y usa las cookies estrictamente necesarias para autenticarnos.'] },
+      { h: 'Cuando nos escribes', ul: [
+        'Tratamos tu nombre, tu dirección de correo, tu organización si la indicas, el contenido de tu mensaje y los archivos que adjuntes.',
+        'Los usamos para responderte, coordinar una demo y dar soporte.',
+        'Por favor, no nos envíes datos personales de tus clientes, evidencia ni archivos de proyecto. Si algún mensaje los contiene, avísanos y los eliminaremos.'] },
+      { h: 'Cuando compras y usas una licencia', ul: [
+        'Tratamos el nombre del cliente, el correo de contacto y facturación, el tipo de licencia (consultor o empresa), la huella de tu equipo (un código derivado de tu equipo que la aplicación muestra en la pantalla de activación), el identificador y las fechas de la licencia, y los registros de facturación y de la transferencia bancaria (nombre del ordenante y referencia).',
+        'El archivo de licencia que recibes contiene el nombre del cliente, la huella y las fechas de la licencia. Tratamos la huella como un dato personal.',
+        'Estos registros se guardan en nuestro sistema de administración, alojado en Cloudflare. Registramos las acciones de administración en una bitácora. Solo accedemos nosotros, con inicio de sesión de dos factores.',
+        'No procesamos tarjetas de pago: la compra es por factura y transferencia bancaria.'] },
+      { h: 'La aplicación Ley81·Suite', ul: [
+        'La aplicación todavía no se ha lanzado (prevista para el primer trimestre de 2027). Lo que sigue describe cómo está diseñada para funcionar y se aplicará desde su lanzamiento.',
+        'La aplicación funciona de forma local. Los datos de tus clientes viven en proyectos cifrados en tu equipo y la clave no está en nuestro poder. No los recibimos y no podemos leerlos.',
+        'Tú, o tu organización, eres el responsable de los datos personales que introduces en la aplicación. Como no los tratamos, no actuamos como tu encargado del tratamiento.',
+        'Comprobación de actualizaciones: cuando un administrador pulsa comprobar actualizaciones, la aplicación solicita por HTTPS un manifiesto público a ley81-suite.com. La petición no incluye licencia, proyecto ni datos de clientes. Como toda petición web, revela tu dirección IP a nuestro proveedor de alojamiento, como se explica arriba. Las descargas se verifican con una firma en tu equipo.',
+        'Diagnóstico: los registros de errores y fallos se escriben en tu equipo. No se envía nada automáticamente. Si decides enviarnos uno para soporte, lo usamos solo para diagnosticar el problema.'] },
+      { h: 'Para qué los usamos y con qué base', ul: [
+        'Responder consultas, coordinar demos y dar soporte: medidas precontractuales a petición tuya y nuestro interés legítimo en atender solicitudes.',
+        'Cotizar, facturar, emitir y renovar licencias y prestar el mantenimiento: ejecución de un contrato.',
+        'Conservar registros contables y fiscales: cumplimiento de una obligación legal.',
+        'Mantener seguros el sitio y los sistemas de administración y prevenir abusos: interés legítimo.',
+        'Si alguna vez nos basamos en tu consentimiento, te lo indicaremos en ese momento y podrás retirarlo.'],
+        link: ['Más detalle sobre las bases jurídicas y los derechos bajo el RGPD', '/gdpr/'] },
+      { h: 'Con quién los compartimos', ul: [
+        'Cloudflare: alojamiento, DNS, protección de red, el inicio de sesión de la consola de administración (Cloudflare Access) y el almacenamiento de los registros de licencias.',
+        'Nuestro proveedor de correo: [Pendiente: nombre del proveedor].',
+        'Nuestro banco, para los pagos.',
+        'Asesores profesionales (contables, abogados), bajo deber de confidencialidad, cuando es necesario.',
+        'Autoridades, cuando la ley lo exija.'],
+        p: ['No vendemos ni alquilamos datos personales ni los compartimos con fines publicitarios.'] },
+      { h: 'Transferencias internacionales', p: [
+        'Cloudflare opera una red global, por lo que los datos pueden tratarse fuera de Panamá y del Espacio Económico Europeo. Nos apoyamos en las garantías contractuales de nuestros proveedores. [Pendiente: confirmar el mecanismo de transferencia aplicable, por ejemplo cláusulas contractuales tipo.]'] },
+      { h: 'Cuánto tiempo los conservamos', ul: [
+        'Correos de consulta y soporte: hasta 24 meses después del último mensaje, salvo que te conviertas en cliente.',
+        'Registros de cliente y de licencia: mientras la licencia esté vigente y 7 años después.',
+        'Facturas y registros de pago: 7 años.',
+        'Bitácora de administración: hasta 7 años.',
+        'Archivos de diagnóstico que nos envíes: hasta 90 días después de cerrar el caso.',
+        'Datos técnicos del servidor web: los conserva Cloudflare según su propia política. Nosotros no guardamos registros de acceso propios ni analizamos el tráfico de visitantes.'] },
+      { h: 'Cómo los protegemos', ul: [
+        'El sitio se sirve por HTTPS con HSTS y una política de seguridad de contenido estricta que bloquea contenido de terceros.',
+        'Los registros de licencias solo son accesibles para nosotros tras un inicio de sesión de dos factores con Cloudflare Access, que además el propio sistema verifica de forma independiente.',
+        'Las licencias se firman sin conexión y la clave de firma nunca se guarda en el servidor web.',
+        'Ningún sistema es perfectamente seguro. Si una brecha afecta a datos personales que conservamos, informaremos a las personas afectadas y a la autoridad cuando la ley lo exija.'] },
+      { h: 'Tus derechos', p: [
+        'Según la Ley 81 de 2019 de Panamá, su Decreto Ejecutivo 285 de 2021 y, cuando corresponda, el RGPD, puedes pedirnos acceso, rectificación, supresión o cancelación, oposición, limitación del tratamiento y portabilidad de tus datos, y retirar tu consentimiento cuando nos basemos en él.',
+        'Para ejercerlos escribe a ' + CONTACT_EMAIL + '. Podemos pedirte que verifiques tu identidad. Responderemos sin demora indebida y dentro del plazo que fije la ley.',
+        'Si tus datos están dentro de la aplicación de un consultor o de una empresa, esa persona u organización es la responsable: contáctala a ella, porque nosotros no tenemos esos datos.',
+        'También puedes presentar una reclamación ante la Autoridad Nacional de Transparencia y Acceso a la Información (ANTAI) de Panamá o ante la autoridad de protección de datos de tu país de residencia.'] },
+      { h: 'Menores de edad', p: [
+        'Ley81·Suite es una herramienta profesional para empresas y consultores. No está dirigida a menores de 18 años y no recopilamos sus datos de forma consciente.'] },
+      { h: 'Cambios en esta política', p: [
+        'Si cambiamos esta política, actualizaremos la fecha de abajo y destacaremos en esta página los cambios importantes. Puedes pedirnos versiones anteriores.'] },
+    ],
+    contact: 'Contacto para asuntos de privacidad:',
+    updated: 'Última actualización: 18 de octubre de 2026.',
+  },
+  en: { title: 'Privacy policy', desc: 'What personal data we handle on the Ley81·Suite website and in the licensing process, why, who we share it with, how long we keep it, and how to exercise your rights.',
+    h1: 'Privacy policy',
+    lede: 'What personal data we handle, why, who sees it, how long we keep it, and what you can do about it. In short: the website does not track you, and the application does not send us your clients’ data.',
+    notice: 'Draft pending legal review. This text is provisional and must not be treated as final until reviewed by a qualified lawyer in Panama. Bracketed fields must be completed before launch.',
+    sections: [
+      { h: 'At a glance', ul: [
+        'The website sets no cookies of its own and loads no analytics, advertising or third-party scripts.',
+        'The Ley81·Suite application runs on your computer. We do not receive your clients’ data, your projects, your evidence or your reports.',
+        'The application sends no telemetry. Its only network request is the update check an administrator starts, and that request carries none of your data.',
+        'We keep the personal data needed to answer you, issue and support your licence, and meet our accounting duties. We do not sell it or use it for advertising.'] },
+      { h: 'Who is responsible', p: [
+        'The controller of the personal data described here is [Pending: legal name, registered address and tax ID (RUC) of the entity that operates Ley81·Suite]. For any privacy matter write to ' + CONTACT_EMAIL + '.',
+        'This policy covers the ley81-suite.com website, the emails you send us, the purchase and licensing process, and what the application communicates to our site. It does not cover third-party sites you may reach from here.'] },
+      { h: 'When you visit the website', ul: [
+        'Like any web server, our hosting and network provider, Cloudflare, processes technical request data (IP address, browser type, requested page, date and time) to deliver the site and protect it from abuse. We do not build visitor profiles from it.',
+        'The site has no accounts, no forms that store data, no analytics and no advertising. Your language is chosen by the address (/es/ or /en/), not by a cookie.',
+        'The administrator console, which only we use, sits on a separate address behind a sign-in and uses the cookies strictly necessary to authenticate us.'] },
+      { h: 'When you write to us', ul: [
+        'We process your name, email address, your organisation if you give it, the content of your message and any files you attach.',
+        'We use them to reply to you, arrange a demo and provide support.',
+        'Please do not send us your clients’ personal data, evidence or project files. If a message contains them, tell us and we will delete them.'] },
+      { h: 'When you buy and use a licence', ul: [
+        'We process the customer name, the contact and billing email, the licence type (consultant or company), your machine fingerprint (a code derived from your computer, shown on the app’s activation screen), the licence ID and dates, and the invoice and bank-transfer records (payer name and reference).',
+        'The licence file you receive contains the customer name, the fingerprint and the licence dates. We treat the fingerprint as personal data.',
+        'These records are kept in our administration system, hosted on Cloudflare. We log administrator actions in an audit log. Only we have access, through two-factor sign-in.',
+        'We do not process payment cards: purchases are by invoice and bank transfer.'] },
+      { h: 'The Ley81·Suite application', ul: [
+        'The application has not launched yet (expected in the first quarter of 2027). What follows describes how it is designed to work and will apply from its launch.',
+        'The application runs locally. Your clients’ data lives in encrypted projects on your machine and the key is not in our hands. We do not receive it and cannot read it.',
+        'You, or your organisation, are the controller of the personal data you enter into the application. Because we do not process it, we do not act as your processor.',
+        'Update check: when an administrator chooses to check for updates, the app requests a public manifest from ley81-suite.com over HTTPS. The request includes no licence, project or client data. Like any web request, it reveals your IP address to our hosting provider, as described above. Downloads are verified by signature on your machine.',
+        'Diagnostics: error and crash logs are written on your computer. Nothing is sent automatically. If you choose to send one to support, we use it only to diagnose the problem.'] },
+      { h: 'Why we use it, and on what basis', ul: [
+        'Replying to enquiries, arranging demos and giving support: steps at your request before a contract, and our legitimate interest in handling requests.',
+        'Quoting, invoicing, issuing and renewing licences and providing maintenance: performance of a contract.',
+        'Keeping accounting and tax records: compliance with a legal obligation.',
+        'Keeping the site and administration systems secure and preventing abuse: legitimate interest.',
+        'If we ever rely on your consent, we will say so at the time and you can withdraw it.'],
+        link: ['More detail on legal bases and rights under the GDPR', '/gdpr/'] },
+      { h: 'Who we share it with', ul: [
+        'Cloudflare: hosting, DNS, network protection, sign-in to the administration console (Cloudflare Access) and storage of licence records.',
+        'Our email provider: [Pending: provider name].',
+        'Our bank, for payments.',
+        'Professional advisers (accountants, lawyers), under a duty of confidentiality, when needed.',
+        'Authorities, where the law requires.'],
+        p: ['We do not sell or rent personal data and we do not share it for advertising.'] },
+      { h: 'International transfers', p: [
+        'Cloudflare runs a global network, so data may be processed outside Panama and the European Economic Area. We rely on our providers’ contractual safeguards. [Pending: confirm the transfer mechanism that applies, for example standard contractual clauses.]'] },
+      { h: 'How long we keep it', ul: [
+        'Enquiry and support emails: up to 24 months after the last message, unless you become a customer.',
+        'Customer and licence records: while the licence is active and for 7 years afterwards.',
+        'Invoices and payment records: 7 years.',
+        'Administration audit log: up to 7 years.',
+        'Diagnostic files you send us: up to 90 days after the case is closed.',
+        'Web server technical data: held by Cloudflare under its own policy. We keep no web-access logs of our own and do not analyse visitor traffic.'] },
+      { h: 'How we protect it', ul: [
+        'The site is served over HTTPS with HSTS and a strict content security policy that blocks third-party content.',
+        'Licence records are reachable only by us after a two-factor sign-in through Cloudflare Access, which the system also verifies independently.',
+        'Licences are signed offline, and the signing key is never stored on the web server.',
+        'No system is perfectly secure. If a breach affects personal data we hold, we will tell the people affected and the authority where the law requires.'] },
+      { h: 'Your rights', p: [
+        'Under Panama’s Law 81 of 2019, its Executive Decree 285 of 2021 and, where it applies, the GDPR, you can ask us for access, rectification, erasure or cancellation, objection, restriction of processing and portability of your data, and withdraw consent where we rely on it.',
+        'To exercise them write to ' + CONTACT_EMAIL + '. We may ask you to verify your identity. We will reply without undue delay and within the period set by law.',
+        'If your data is inside a consultant’s or a company’s copy of the application, that person or organisation is the controller: contact them, because we do not hold that data.',
+        'You may also lodge a complaint with Panama’s National Authority for Transparency and Access to Information (ANTAI) or with the data-protection authority in your country of residence.'] },
+      { h: 'Children', p: [
+        'Ley81·Suite is a professional tool for businesses and consultants. It is not directed at anyone under 18 and we do not knowingly collect their data.'] },
+      { h: 'Changes to this policy', p: [
+        'If we change this policy we will update the date below and highlight material changes on this page. You can ask us for earlier versions.'] },
+    ],
+    contact: 'Contact for privacy matters:',
+    updated: 'Last updated: 18 October 2026.',
+  },
 }[lang];
 ---
-<Base lang={lang} slug="privacy" title={c.title} description={c.title} noindex>
-  <div class="page-head"><div class="wrap"><h1>{c.h1}</h1></div></div>
+<Base lang={lang} slug="privacy" title={c.title} description={c.desc} noindex>
+  <div class="page-head"><div class="wrap"><h1>{c.h1}</h1><p class="lede">{c.lede}</p></div></div>
   <section class="block"><div class="wrap prose">
     <p class="notice">{c.notice}</p>
-    {c.body.map((x) => <p>{x}</p>)}
+    {c.sections.map((s) => (
+      <>
+        <h2>{s.h}</h2>
+        {s.p && !s.ul && s.p.map((x) => <p>{x}</p>)}
+        {s.ul && <ul class="list">{s.ul.map((x) => <li>{x}</li>)}</ul>}
+        {s.p && s.ul && s.p.map((x) => <p>{x}</p>)}
+        {s.link && <p><a href={`/${lang}${s.link[1]}`}>{s.link[0]}</a></p>}
+      </>
+    ))}
+    <p>{c.contact} <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
+    <p class="muted">{c.updated}</p>
   </div></section>
 </Base>
